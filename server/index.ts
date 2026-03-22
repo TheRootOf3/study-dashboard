@@ -8,6 +8,7 @@ import confusionLogRouter from './routes/confusionLog.js';
 import weekNotesRouter from './routes/weekNotes.js';
 import settingsRouter from './routes/settings.js';
 import backupRouter from './routes/backup.js';
+import subtaskCompletionsRouter from './routes/subtaskCompletions.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const PORT = 3001;
@@ -26,6 +27,7 @@ app.use('/api/confusion-log', confusionLogRouter);
 app.use('/api/week-notes', weekNotesRouter);
 app.use('/api/settings', settingsRouter);
 app.use('/api/backup', backupRouter);
+app.use('/api/subtask-completions', subtaskCompletionsRouter);
 
 // Serve static files in production
 if (process.env.NODE_ENV === 'production') {

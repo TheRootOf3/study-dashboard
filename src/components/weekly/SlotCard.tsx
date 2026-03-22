@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Train, Moon, BookOpen, Flame, ChevronDown, ChevronUp, ExternalLink, Clock } from 'lucide-react';
+import { Train, Moon, BookOpen, Flame, ChevronDown, ChevronUp, ExternalLink, Clock, Check } from 'lucide-react';
 import { Checkbox } from '../shared/Checkbox';
 import { MarkdownBlock } from '../shared/MarkdownBlock';
 import { useProgress } from '../../context/ProgressContext';
@@ -12,7 +12,7 @@ interface SlotCardProps {
 }
 
 export function SlotCard({ slot, compact = false }: SlotCardProps) {
-  const { state, toggleCompletion, updateSlotNotes, updateSlotDifficulty } = useProgress();
+  const { state, toggleCompletion, toggleSubtask, updateSlotNotes, updateSlotDifficulty } = useProgress();
   const completion = state.completions.get(slot.id);
   const isCompleted = !!completion?.completed;
   const [expanded, setExpanded] = useState(!compact);
@@ -25,9 +25,28 @@ export function SlotCard({ slot, compact = false }: SlotCardProps) {
   const hasCheckpoint = slot.tags.includes('checkpoint');
   const hasTimed = slot.tags.includes('timed');
   const hours = slot.estimatedMinutes / 60;
+  const hasSubtasks = slot.subtasks && slot.subtasks.length > 1;
 
-  const handleToggle = async (checked: boolean) => {
+  // Count completed subtasks
+  const completedSubtasks = hasSubtasks
+    ? slot.subtasks.filter(st => state.subtaskCompletions.has(st.id)).length
+    : 0;
+
+  const handleSlotToggle = async (checked: boolean) => {
     await toggleCompletion(slot.id, checked);
+    // When toggling the whole slot, also toggle all subtasks
+    if (hasSubtasks) {
+      for (const st of slot.subtasks) {
+        const isSubDone = state.subtaskCompletions.has(st.id);
+        if (checked !== isSubDone) {
+          await toggleSubtask(st.id, checked, slot.id, slot.subtasks.length);
+        }
+      }
+    }
+  };
+
+  const handleSubtaskToggle = async (subtaskId: string, checked: boolean) => {
+    await toggleSubtask(subtaskId, checked, slot.id, slot.subtasks.length);
   };
 
   const handleNotesSave = async () => {
@@ -49,7 +68,7 @@ export function SlotCard({ slot, compact = false }: SlotCardProps) {
     >
       {/* Header row */}
       <div className="flex items-start gap-3 p-3">
-        <Checkbox checked={isCompleted} onChange={handleToggle} size={28} />
+        <Checkbox checked={isCompleted} onChange={handleSlotToggle} size={28} />
         <div className="flex-1 min-w-0">
           <div className="flex items-center gap-2 flex-wrap">
             <Icon size={16} style={{ color: slot.isBookSlot ? 'var(--color-accent-book)' : 'var(--color-text-tertiary)' }} />
@@ -60,6 +79,11 @@ export function SlotCard({ slot, compact = false }: SlotCardProps) {
             <span className="text-xs flex items-center gap-1" style={{ color: 'var(--color-text-tertiary)' }}>
               <Clock size={12} /> {hours}h
             </span>
+            {hasSubtasks && (
+              <span className="text-xs font-mono" style={{ color: completedSubtasks === slot.subtasks.length ? 'var(--color-accent-secondary)' : 'var(--color-text-tertiary)' }}>
+                {completedSubtasks}/{slot.subtasks.length}
+              </span>
+            )}
             {hasCritical && (
               <span className="text-xs px-1.5 py-0.5 rounded-full flex items-center gap-1" style={{ backgroundColor: 'color-mix(in srgb, var(--color-accent-primary) 15%, transparent)', color: 'var(--color-accent-primary)' }}>
                 <Flame size={12} /> Critical
@@ -86,6 +110,42 @@ export function SlotCard({ slot, compact = false }: SlotCardProps) {
           {isCompleted && completion?.completed_at && (
             <div className="text-xs mt-0.5" style={{ color: 'var(--color-accent-secondary)' }}>
               Completed {formatRelativeTime(completion.completed_at)}
+            </div>
+          )}
+
+          {/* Subtask checklist */}
+          {expanded && hasSubtasks && (
+            <div className="mt-2 space-y-1">
+              {slot.subtasks.map(st => {
+                const isDone = state.subtaskCompletions.has(st.id);
+                return (
+                  <label
+                    key={st.id}
+                    className="flex items-start gap-2 py-1 px-2 rounded-md cursor-pointer hover:opacity-80 transition-colors"
+                    style={{ backgroundColor: isDone ? 'color-mix(in srgb, var(--color-accent-secondary) 6%, transparent)' : 'transparent' }}
+                  >
+                    <button
+                      onClick={() => handleSubtaskToggle(st.id, !isDone)}
+                      className="flex-shrink-0 mt-0.5 w-5 h-5 rounded border flex items-center justify-center transition-all cursor-pointer"
+                      style={{
+                        borderColor: isDone ? 'var(--color-accent-secondary)' : 'var(--color-border)',
+                        backgroundColor: isDone ? 'var(--color-accent-secondary)' : 'transparent',
+                      }}
+                    >
+                      {isDone && <Check size={12} color="white" strokeWidth={3} />}
+                    </button>
+                    <span
+                      className="text-sm leading-snug"
+                      style={{
+                        color: isDone ? 'var(--color-text-tertiary)' : 'var(--color-text-secondary)',
+                        textDecoration: isDone ? 'line-through' : 'none',
+                      }}
+                    >
+                      {st.label}
+                    </span>
+                  </label>
+                );
+              })}
             </div>
           )}
 

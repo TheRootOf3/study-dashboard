@@ -41,6 +41,12 @@ export function initDatabase(): void {
       theme TEXT DEFAULT 'light',
       day_mapping TEXT
     );
+
+    CREATE TABLE IF NOT EXISTS subtask_completions (
+      subtask_id TEXT PRIMARY KEY,
+      completed INTEGER NOT NULL DEFAULT 0,
+      completed_at TEXT
+    );
   `);
 }
 

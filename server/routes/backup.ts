@@ -3,7 +3,7 @@ import db from '../db.js';
 
 const router = Router();
 
-const TABLES = ['completions', 'confusion_log', 'week_notes', 'settings'] as const;
+const TABLES = ['completions', 'confusion_log', 'week_notes', 'settings', 'subtask_completions'] as const;
 
 // GET /api/backup - export entire DB as JSON
 router.get('/', (_req: Request, res: Response) => {
@@ -59,6 +59,16 @@ router.post('/', (req: Request, res: Response) => {
       `);
       for (const row of data.settings) {
         stmt.run(row.id, row.actual_start_date, row.theme, row.day_mapping);
+      }
+    }
+
+    if (data.subtask_completions) {
+      const stmt = db.prepare(`
+        INSERT INTO subtask_completions (subtask_id, completed, completed_at)
+        VALUES (?, ?, ?)
+      `);
+      for (const row of data.subtask_completions) {
+        stmt.run(row.subtask_id, row.completed, row.completed_at);
       }
     }
   });

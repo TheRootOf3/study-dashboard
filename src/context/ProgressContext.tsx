@@ -1,5 +1,5 @@
 import { createContext, useContext, useReducer, useEffect, useCallback, type ReactNode } from 'react';
-import { completionsApi, confusionApi, settingsApi, type Completion, type ConfusionEntry, type Settings } from '../api/client';
+import { completionsApi, confusionApi, settingsApi, subtaskCompletionsApi, type Completion, type ConfusionEntry, type Settings, type SubtaskCompletion } from '../api/client';
 import studyPlanData from '../data/studyPlan.json';
 import type { StudyPlan } from '../utils/progressCalc';
 import { DEFAULT_DAY_MAPPING, type DaySlotMapping } from '../utils/dateUtils';
@@ -8,6 +8,7 @@ const studyPlan = studyPlanData as StudyPlan;
 
 interface State {
   completions: Map<string, Completion>;
+  subtaskCompletions: Map<string, SubtaskCompletion>;
   confusionLog: ConfusionEntry[];
   settings: Settings;
   loading: boolean;
@@ -17,9 +18,10 @@ interface State {
 type Action =
   | { type: 'SET_LOADING'; loading: boolean }
   | { type: 'SET_ERROR'; error: string }
-  | { type: 'LOAD_DATA'; completions: Completion[]; confusionLog: ConfusionEntry[]; settings: Settings }
+  | { type: 'LOAD_DATA'; completions: Completion[]; subtaskCompletions: SubtaskCompletion[]; confusionLog: ConfusionEntry[]; settings: Settings }
   | { type: 'UPSERT_COMPLETION'; completion: Completion }
   | { type: 'REMOVE_COMPLETION'; slotId: string }
+  | { type: 'UPSERT_SUBTASK'; subtask: SubtaskCompletion }
   | { type: 'ADD_CONFUSION'; entry: ConfusionEntry }
   | { type: 'UPDATE_CONFUSION'; entry: ConfusionEntry }
   | { type: 'REMOVE_CONFUSION'; id: string }
@@ -35,7 +37,9 @@ function reducer(state: State, action: Action): State {
     case 'LOAD_DATA': {
       const map = new Map<string, Completion>();
       for (const c of action.completions) map.set(c.slot_id, c);
-      return { ...state, completions: map, confusionLog: action.confusionLog, settings: action.settings, loading: false };
+      const stMap = new Map<string, SubtaskCompletion>();
+      for (const s of action.subtaskCompletions) stMap.set(s.subtask_id, s);
+      return { ...state, completions: map, subtaskCompletions: stMap, confusionLog: action.confusionLog, settings: action.settings, loading: false };
     }
     case 'UPSERT_COMPLETION': {
       const map = new Map(state.completions);
@@ -46,6 +50,15 @@ function reducer(state: State, action: Action): State {
       const map = new Map(state.completions);
       map.delete(action.slotId);
       return { ...state, completions: map };
+    }
+    case 'UPSERT_SUBTASK': {
+      const stMap = new Map(state.subtaskCompletions);
+      if (action.subtask.completed) {
+        stMap.set(action.subtask.subtask_id, action.subtask);
+      } else {
+        stMap.delete(action.subtask.subtask_id);
+      }
+      return { ...state, subtaskCompletions: stMap };
     }
     case 'ADD_CONFUSION':
       return { ...state, confusionLog: [action.entry, ...state.confusionLog] };
@@ -67,6 +80,7 @@ interface ProgressContextValue {
   studyPlan: StudyPlan;
   dayMapping: DaySlotMapping;
   toggleCompletion: (slotId: string, completed: boolean) => Promise<void>;
+  toggleSubtask: (subtaskId: string, completed: boolean, slotId: string, totalSubtasks: number) => Promise<void>;
   updateSlotNotes: (slotId: string, notes: string) => Promise<void>;
   updateSlotDifficulty: (slotId: string, difficulty: number | null) => Promise<void>;
   addConfusionEntry: (data: { topic: string; description: string; weekId: string }) => Promise<void>;
@@ -81,6 +95,7 @@ const ProgressContext = createContext<ProgressContextValue | null>(null);
 export function ProgressProvider({ children }: { children: ReactNode }) {
   const [state, dispatch] = useReducer(reducer, {
     completions: new Map(),
+    subtaskCompletions: new Map(),
     confusionLog: [],
     settings: { actual_start_date: null, theme: 'light', day_mapping: null },
     loading: true,
@@ -90,12 +105,13 @@ export function ProgressProvider({ children }: { children: ReactNode }) {
   const loadData = useCallback(async () => {
     dispatch({ type: 'SET_LOADING', loading: true });
     try {
-      const [completions, confusionLog, settings] = await Promise.all([
+      const [completions, subtaskCompletions, confusionLog, settings] = await Promise.all([
         completionsApi.getAll(),
+        subtaskCompletionsApi.getAll(),
         confusionApi.getAll(),
         settingsApi.get(),
       ]);
-      dispatch({ type: 'LOAD_DATA', completions, confusionLog, settings });
+      dispatch({ type: 'LOAD_DATA', completions, subtaskCompletions, confusionLog, settings });
     } catch (e) {
       dispatch({ type: 'SET_ERROR', error: (e as Error).message });
     }
@@ -117,6 +133,40 @@ export function ProgressProvider({ children }: { children: ReactNode }) {
     });
     dispatch({ type: 'UPSERT_COMPLETION', completion: result });
   }, [state.completions]);
+
+  const toggleSubtask = useCallback(async (subtaskId: string, completed: boolean, slotId: string, totalSubtasks: number) => {
+    const result = await subtaskCompletionsApi.upsert(subtaskId, completed);
+    dispatch({ type: 'UPSERT_SUBTASK', subtask: result });
+
+    // Auto-complete the parent slot when all subtasks are done
+    // Count how many subtasks for this slot will be completed after this toggle
+    const slotPrefix = slotId + '-sub-';
+    let completedCount = 0;
+    for (const [id] of state.subtaskCompletions) {
+      if (id.startsWith(slotPrefix) && id !== subtaskId) completedCount++;
+    }
+    if (completed) completedCount++;
+
+    const allDone = completedCount >= totalSubtasks;
+    const existing = state.completions.get(slotId);
+    const currentlyCompleted = !!existing?.completed;
+
+    if (allDone && !currentlyCompleted) {
+      const res = await completionsApi.upsert(slotId, {
+        completed: 1,
+        notes: existing?.notes || '',
+        difficulty: existing?.difficulty ?? null,
+      });
+      dispatch({ type: 'UPSERT_COMPLETION', completion: res });
+    } else if (!allDone && currentlyCompleted) {
+      const res = await completionsApi.upsert(slotId, {
+        completed: 0,
+        notes: existing?.notes || '',
+        difficulty: existing?.difficulty ?? null,
+      });
+      dispatch({ type: 'UPSERT_COMPLETION', completion: res });
+    }
+  }, [state.subtaskCompletions, state.completions]);
 
   const updateSlotNotes = useCallback(async (slotId: string, notes: string) => {
     const existing = state.completions.get(slotId);
@@ -169,6 +219,7 @@ export function ProgressProvider({ children }: { children: ReactNode }) {
         studyPlan,
         dayMapping,
         toggleCompletion,
+        toggleSubtask,
         updateSlotNotes,
         updateSlotDifficulty,
         addConfusionEntry,

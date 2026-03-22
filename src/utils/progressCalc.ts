@@ -39,6 +39,11 @@ export interface Week {
   slots: Slot[];
 }
 
+export interface Subtask {
+  id: string;
+  label: string;
+}
+
 export interface Slot {
   id: string;
   type: 'train' | 'evening';
@@ -49,6 +54,7 @@ export interface Slot {
   estimatedMinutes: number;
   tags: string[];
   links: SlotLink[];
+  subtasks: Subtask[];
 }
 
 export interface SlotLink {

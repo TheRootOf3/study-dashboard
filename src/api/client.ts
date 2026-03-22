@@ -90,6 +90,22 @@ export const settingsApi = {
     request<Settings>('/settings', { method: 'PUT', body: JSON.stringify(data) }),
 };
 
+// Subtask Completions
+export interface SubtaskCompletion {
+  subtask_id: string;
+  completed: number;
+  completed_at: string | null;
+}
+
+export const subtaskCompletionsApi = {
+  getAll: () => request<SubtaskCompletion[]>('/subtask-completions'),
+  upsert: (subtaskId: string, completed: boolean) =>
+    request<SubtaskCompletion>(`/subtask-completions/${encodeURIComponent(subtaskId)}`, {
+      method: 'PUT',
+      body: JSON.stringify({ completed }),
+    }),
+};
+
 // Backup
 export const backupApi = {
   exportData: () => request<Record<string, unknown[]>>('/backup'),
