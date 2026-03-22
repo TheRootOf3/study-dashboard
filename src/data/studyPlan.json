@@ -754,7 +754,7 @@
               "subtasks": [
                 {
                   "id": "week-3-train-3-sub-1",
-                  "label": "Recitation videos for lectures 14–17."
+                  "label": "Recitation videos for lectures 14–17"
                 },
                 {
                   "id": "week-3-train-3-sub-2",
@@ -1376,7 +1376,7 @@
               "subtasks": [
                 {
                   "id": "week-6-train-2-sub-1",
-                  "label": "Lecture 33: Left and right inverses, pseudoinverse."
+                  "label": "Lecture 33: Left and right inverses, pseudoinverse"
                 },
                 {
                   "id": "week-6-train-2-sub-2",
@@ -1662,11 +1662,11 @@
               "subtasks": [
                 {
                   "id": "week-7-evening-2-sub-1",
-                  "label": "Interpretability exercise: Read §2 of Anthropic's transformer circuits paper."
+                  "label": "Interpretability exercise: Read §2 of Anthropic's transformer circuits paper"
                 },
                 {
                   "id": "week-7-evening-2-sub-2",
-                  "label": "Identify every place linear algebra appears (projections, low-rank decompositions, eigenvalues)."
+                  "label": "Identify every place linear algebra appears (projections, low-rank decompositions, eigenvalues)"
                 },
                 {
                   "id": "week-7-evening-2-sub-3",
@@ -1690,15 +1690,19 @@
               "subtasks": [
                 {
                   "id": "week-7-evening-3-sub-1",
-                  "label": "the SVD and what each component means"
+                  "label": "The SVD and what each component means"
                 },
                 {
                   "id": "week-7-evening-3-sub-2",
-                  "label": "the projection matrix formula"
+                  "label": "The projection matrix formula"
                 },
                 {
                   "id": "week-7-evening-3-sub-3",
-                  "label": "the eigendecomposition, and what it means for a matrix to be positive definite"
+                  "label": "The eigendecomposition"
+                },
+                {
+                  "id": "week-7-evening-3-sub-4",
+                  "label": "What it means for a matrix to be positive definite"
                 }
               ]
             }
@@ -1752,7 +1756,7 @@
               "subtasks": [
                 {
                   "id": "week-8-train-1-sub-1",
-                  "label": "Unit 1 (Vectors and Matrices): skim Parts A–C as review — you covered this thoroughly in 18"
+                  "label": "Unit 1 (Vectors and Matrices): skim Parts A–C as review — you covered this thoroughly in 18.06"
                 }
               ]
             },
@@ -2005,11 +2009,7 @@
               "subtasks": [
                 {
                   "id": "week-9-train-3-sub-1",
-                  "label": "Recitation videos for Unit 2 Parts B–C."
-                },
-                {
-                  "id": "week-9-train-3-sub-2",
-                  "label": "Re-derive the multivariable chain rule on paper"
+                  "label": "Recitation videos for Unit 2 Parts B–C. Re-derive the multivariable chain rule on paper"
                 }
               ]
             },
@@ -2206,7 +2206,7 @@
               "subtasks": [
                 {
                   "id": "week-10-train-3-sub-1",
-                  "label": "Unit 3 Part A. Key focus: derive *why* the Jacobian determinant appears in a change of variables"
+                  "label": "Recitation videos for Unit 3 Part A. Key focus: derive *why* the Jacobian determinant appears in a change of variables"
                 }
               ]
             },
@@ -2609,11 +2609,7 @@
               "subtasks": [
                 {
                   "id": "week-12-train-3-sub-1",
-                  "label": "Recitation videos for Unit 4 Part A."
-                },
-                {
-                  "id": "week-12-train-3-sub-2",
-                  "label": "Practice setting up triple integrals in all three coordinate systems"
+                  "label": "Recitation videos for Unit 4 Part A. Practice setting up triple integrals in all three coordinate systems"
                 }
               ]
             },
@@ -3072,7 +3068,7 @@
               "subtasks": [
                 {
                   "id": "week-14-evening-2-sub-1",
-                  "label": "Derivation exercise: Write out the full gradient computation for a 2-layer neural network from scratch using the multivariable chain rule."
+                  "label": "Derivation exercise: Write out the full gradient computation for a 2-layer neural network from scratch using the multivariable chain rule"
                 },
                 {
                   "id": "week-14-evening-2-sub-2",
@@ -3096,23 +3092,31 @@
               "subtasks": [
                 {
                   "id": "week-14-evening-3-sub-1",
-                  "label": "the multivariable chain rule"
+                  "label": "The multivariable chain rule"
                 },
                 {
                   "id": "week-14-evening-3-sub-2",
-                  "label": "the change-of-variables formula with Jacobian"
+                  "label": "The change-of-variables formula with Jacobian"
                 },
                 {
                   "id": "week-14-evening-3-sub-3",
-                  "label": "the statement of Green's theorem"
+                  "label": "The statement of Green's theorem"
                 },
                 {
                   "id": "week-14-evening-3-sub-4",
-                  "label": "the divergence theorem, and Stokes' theorem"
+                  "label": "The divergence theorem"
                 },
                 {
                   "id": "week-14-evening-3-sub-5",
-                  "label": "the gradient as the direction of steepest ascent, and why the Fisher information matrix transforms the gradient"
+                  "label": "Stokes' theorem"
+                },
+                {
+                  "id": "week-14-evening-3-sub-6",
+                  "label": "The gradient as the direction of steepest ascent"
+                },
+                {
+                  "id": "week-14-evening-3-sub-7",
+                  "label": "Why the Fisher information matrix transforms the gradient"
                 }
               ]
             }
@@ -3953,10 +3957,14 @@
                 },
                 {
                   "id": "week-18-evening-2-sub-2",
-                  "label": "Homework 5 + Key exercise: Derive the PDF of Y = g(X) using the CDF method. Do it for Y = X² where X ~ N(0,1) (60 min)"
+                  "label": "Homework 5"
                 },
                 {
                   "id": "week-18-evening-2-sub-3",
+                  "label": "Key exercise: Derive the PDF of Y = g(X) using the CDF method. Do it for Y = X² where X ~ N(0,1)"
+                },
+                {
+                  "id": "week-18-evening-2-sub-4",
                   "label": "Check solutions, note errors, update confusion log (15 min)"
                 }
               ]
@@ -4558,7 +4566,7 @@
               "subtasks": [
                 {
                   "id": "week-21-evening-2-sub-1",
-                  "label": "Re-do all exam problems you got wrong."
+                  "label": "Re-do all exam problems you got wrong"
                 },
                 {
                   "id": "week-21-evening-2-sub-2",
@@ -4586,15 +4594,19 @@
                 },
                 {
                   "id": "week-21-evening-3-sub-2",
-                  "label": "the law of total expectation"
+                  "label": "The law of total expectation"
                 },
                 {
                   "id": "week-21-evening-3-sub-3",
-                  "label": "the CLT statement"
+                  "label": "The CLT statement"
                 },
                 {
                   "id": "week-21-evening-3-sub-4",
-                  "label": "KL divergence definition and its asymmetry, and what superposition means geometrically"
+                  "label": "KL divergence definition and its asymmetry"
+                },
+                {
+                  "id": "week-21-evening-3-sub-5",
+                  "label": "What superposition means geometrically"
                 }
               ]
             }
@@ -5264,7 +5276,11 @@
               "subtasks": [
                 {
                   "id": "week-25-train-1-sub-1",
-                  "label": "Lecture 10 (slides) + Lecture 11: Goodness of fit"
+                  "label": "Lecture 10 (slides)"
+                },
+                {
+                  "id": "week-25-train-1-sub-2",
+                  "label": "Lecture 11: Goodness of fit"
                 }
               ]
             },
@@ -5411,10 +5427,14 @@
                 },
                 {
                   "id": "week-25-evening-2-sub-2",
-                  "label": "Key exercise: Derive the posterior for Gaussian prior + Gaussian likelihood. Show the posterior mean is a weighted average of prior mean and MLE. Connect to the book's discussion of empirical Bayes in deep nets (§2.3) (60 min)"
+                  "label": "Key exercise: Derive the posterior for Gaussian prior"
                 },
                 {
                   "id": "week-25-evening-2-sub-3",
+                  "label": "Gaussian likelihood. Show the posterior mean is a weighted average of prior mean and MLE. Connect to the book's discussion of empirical Bayes in deep nets (§2.3)"
+                },
+                {
+                  "id": "week-25-evening-2-sub-4",
                   "label": "Check solutions, note errors, update confusion log (15 min)"
                 }
               ]
@@ -5475,7 +5495,7 @@
               "subtasks": [
                 {
                   "id": "week-26-train-1-sub-1",
-                  "label": "Lecture 15: Regression."
+                  "label": "Lecture 15: Regression"
                 },
                 {
                   "id": "week-26-train-1-sub-2",
@@ -5804,19 +5824,23 @@
               "subtasks": [
                 {
                   "id": "week-27-evening-2-sub-1",
-                  "label": "derive MLE for a Gaussian"
+                  "label": "Derive MLE for a Gaussian"
                 },
                 {
                   "id": "week-27-evening-2-sub-2",
-                  "label": "state the asymptotic distribution of the MLE"
+                  "label": "State the asymptotic distribution of the MLE"
                 },
                 {
                   "id": "week-27-evening-2-sub-3",
-                  "label": "explain the Delta method"
+                  "label": "Explain the Delta method"
                 },
                 {
                   "id": "week-27-evening-2-sub-4",
-                  "label": "write the posterior for conjugate Bayesian inference, and state a PAC-Bayes bound"
+                  "label": "Write the posterior for conjugate Bayesian inference"
+                },
+                {
+                  "id": "week-27-evening-2-sub-5",
+                  "label": "State a PAC-Bayes bound"
                 }
               ]
             },
@@ -6035,11 +6059,7 @@
               "subtasks": [
                 {
                   "id": "week-28-evening-3-sub-1",
-                  "label": "Re-read key sections (30 min)"
-                },
-                {
-                  "id": "week-28-evening-3-sub-2",
-                  "label": "Work through exercises: Start ARENA exercises: implement a transformer from scratch in PyTorch (45 min)"
+                  "label": "Start ARENA exercises: implement a transformer from scratch in PyTorch"
                 }
               ]
             }
@@ -6223,11 +6243,7 @@
               "subtasks": [
                 {
                   "id": "week-29-evening-3-sub-1",
-                  "label": "Re-read key sections (30 min)"
-                },
-                {
-                  "id": "week-29-evening-3-sub-2",
-                  "label": "Work through exercises: ARENA exercises: use TransformerLens to inspect attention patterns in a small model (45 min)"
+                  "label": "ARENA exercises: use TransformerLens to inspect attention patterns in a small model"
                 }
               ]
             }
@@ -6411,11 +6427,7 @@
               "subtasks": [
                 {
                   "id": "week-30-evening-3-sub-1",
-                  "label": "Re-read key sections (30 min)"
-                },
-                {
-                  "id": "week-30-evening-3-sub-2",
-                  "label": "Work through exercises: ARENA exercises: train a linear probe on model activations (45 min)"
+                  "label": "ARENA exercises: train a linear probe on model activations"
                 }
               ]
             }
