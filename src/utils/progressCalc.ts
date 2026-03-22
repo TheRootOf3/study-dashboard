@@ -157,6 +157,83 @@ export function getStreakDays(completions: Map<string, Completion>, phases: Phas
   return streak;
 }
 
+export interface TargetDataPoint {
+  weekNumber: number;
+  expected: number;
+  actual: number;
+  label: string;
+}
+
+export function getExpectedSlotsAtWeek(weekNumber: number, phases: Phase[]): number {
+  let total = 0;
+  for (const phase of phases) {
+    for (const week of phase.weeks) {
+      if (week.weekNumber <= weekNumber) {
+        total += week.slots.length;
+      }
+    }
+  }
+  return total;
+}
+
+export function getActualSlotsAtWeek(weekNumber: number, phases: Phase[], completions: Map<string, Completion>): number {
+  let total = 0;
+  for (const phase of phases) {
+    for (const week of phase.weeks) {
+      if (week.weekNumber <= weekNumber) {
+        total += week.slots.filter(s => completions.get(s.id)?.completed).length;
+      }
+    }
+  }
+  return total;
+}
+
+export function getTargetChartData(
+  currentWeekNumber: number,
+  phases: Phase[],
+  completions: Map<string, Completion>,
+): TargetDataPoint[] {
+  const totalWeeks = phases.reduce((max, p) => Math.max(max, ...p.weeks.map(w => w.weekNumber)), 0);
+  const points: TargetDataPoint[] = [];
+
+  for (let w = 1; w <= totalWeeks; w++) {
+    const expected = getExpectedSlotsAtWeek(w, phases);
+    const actual = w <= currentWeekNumber ? getActualSlotsAtWeek(w, phases, completions) : 0;
+    points.push({ weekNumber: w, expected, actual, label: `Wk ${w}` });
+  }
+  return points;
+}
+
+export type TargetStatus = 'ahead' | 'on-track' | 'behind';
+
+export function getTargetStatus(
+  currentWeekNumber: number,
+  phases: Phase[],
+  completions: Map<string, Completion>,
+): { status: TargetStatus; expectedSlots: number; actualSlots: number; diff: number } {
+  const expectedSlots = getExpectedSlotsAtWeek(currentWeekNumber, phases);
+  const actualSlots = getActualSlotsAtWeek(currentWeekNumber, phases, completions);
+  const diff = actualSlots - expectedSlots;
+  const threshold = Math.max(2, Math.round(expectedSlots * 0.05));
+  let status: TargetStatus;
+  if (diff >= threshold) status = 'ahead';
+  else if (diff > -threshold) status = 'on-track';
+  else status = 'behind';
+  return { status, expectedSlots, actualSlots, diff };
+}
+
+export function getProjectedCompletionWeek(
+  currentWeekNumber: number,
+  phases: Phase[],
+  completions: Map<string, Completion>,
+): number | null {
+  const actualSlots = getActualSlotsAtWeek(currentWeekNumber, phases, completions);
+  if (actualSlots === 0 || currentWeekNumber === 0) return null;
+  const totalSlots = getOverallProgress(phases, completions).total;
+  const ratePerWeek = actualSlots / currentWeekNumber;
+  return Math.ceil(totalSlots / ratePerWeek);
+}
+
 export function getPhaseColor(phaseNumber: number): string {
   const colors: Record<number, string> = {
     1: 'var(--color-phase-1)',
