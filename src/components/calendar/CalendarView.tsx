@@ -1,6 +1,6 @@
 import { useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { format, getMonth, getYear, isSameDay, isSameMonth } from 'date-fns';
+import { format, isSameMonth } from 'date-fns';
 import { useProgress } from '../../context/ProgressContext';
 import { getMonthDays, getWeekNumberForDate, getDaySlotTypes, isToday } from '../../utils/dateUtils';
 import { getWeekByNumber, getPhaseForWeek, getPhaseColor } from '../../utils/progressCalc';

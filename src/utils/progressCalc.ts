@@ -23,7 +23,7 @@ export interface Phase {
   description: string;
   bookChapters: string;
   bookDescription: string;
-  weekRange: [number, number];
+  weekRange: number[];
   completionNote: string;
   weeks: Week[];
 }
@@ -121,7 +121,7 @@ export function getWeekByNumber(weekNumber: number, phases: Phase[]): Week | und
   return undefined;
 }
 
-export function getStreakDays(completions: Map<string, Completion>, phases: Phase[]): number {
+export function getStreakDays(completions: Map<string, Completion>, _phases: Phase[]): number {
   // Count consecutive days (backwards from today) where at least one scheduled slot was completed
   const allCompletedDates = new Set<string>();
   for (const [, c] of completions) {
@@ -158,48 +158,75 @@ export function getStreakDays(completions: Map<string, Completion>, phases: Phas
 }
 
 export interface TargetDataPoint {
-  weekNumber: number;
+  day: number;
   expected: number;
-  actual: number;
+  actual: number | null;
+  predicted: number | null;
   label: string;
 }
 
+/** Cumulative expected slots at end of a given day (0-indexed from plan start). */
+function getExpectedSlotsAtDay(day: number, phases: Phase[]): number {
+  // Each week is 7 days. By end of day D, weeks 1..floor(D/7)+1 should be done
+  // but more precisely: target is linear across the total plan duration.
+  const totalDays = phases.reduce((max, p) => Math.max(max, ...p.weeks.map(w => w.weekNumber)), 0) * 7;
+  const totalSlots = phases.reduce((sum, p) => sum + p.weeks.reduce((s, w) => s + w.slots.length, 0), 0);
+  return Math.round((day / totalDays) * totalSlots);
+}
+
 export function getExpectedSlotsAtWeek(weekNumber: number, phases: Phase[]): number {
+  return getExpectedSlotsAtDay(weekNumber * 7, phases);
+}
+
+/** Total actually completed slots (all time, regardless of week assignment). */
+function getTotalCompletedSlots(phases: Phase[], completions: Map<string, Completion>): number {
   let total = 0;
   for (const phase of phases) {
     for (const week of phase.weeks) {
-      if (week.weekNumber <= weekNumber) {
-        total += week.slots.length;
-      }
+      total += week.slots.filter(s => completions.get(s.id)?.completed).length;
     }
   }
   return total;
 }
 
 export function getActualSlotsAtWeek(weekNumber: number, phases: Phase[], completions: Map<string, Completion>): number {
-  let total = 0;
-  for (const phase of phases) {
-    for (const week of phase.weeks) {
-      if (week.weekNumber <= weekNumber) {
-        total += week.slots.filter(s => completions.get(s.id)?.completed).length;
-      }
-    }
-  }
-  return total;
+  // For the chart we use total completed (not per-week cumulative), since
+  // users can complete slots from any week at any time.
+  // But we still clamp: can't show more than what exists up to that week.
+  void weekNumber;
+  return getTotalCompletedSlots(phases, completions);
 }
 
 export function getTargetChartData(
-  currentWeekNumber: number,
+  currentDayInPlan: number,
   phases: Phase[],
   completions: Map<string, Completion>,
 ): TargetDataPoint[] {
   const totalWeeks = phases.reduce((max, p) => Math.max(max, ...p.weeks.map(w => w.weekNumber)), 0);
+  const totalDays = totalWeeks * 7;
+  const totalSlots = phases.reduce((sum, p) => sum + p.weeks.reduce((s, w) => s + w.slots.length, 0), 0);
   const points: TargetDataPoint[] = [];
 
-  for (let w = 1; w <= totalWeeks; w++) {
-    const expected = getExpectedSlotsAtWeek(w, phases);
-    const actual = w <= currentWeekNumber ? getActualSlotsAtWeek(w, phases, completions) : 0;
-    points.push({ weekNumber: w, expected, actual, label: `Wk ${w}` });
+  const actualNow = getTotalCompletedSlots(phases, completions);
+  const ratePerDay = currentDayInPlan > 0 ? actualNow / currentDayInPlan : 0;
+
+  // One data point per day, but label only week boundaries to avoid clutter
+  for (let d = 0; d <= totalDays; d++) {
+    const expected = getExpectedSlotsAtDay(d, phases);
+    // For "actual" we only know the current total, not day-by-day history.
+    // Show a straight line from 0 to actualNow up to today, then null.
+    const actualAtDay = d <= currentDayInPlan
+      ? Math.round(actualNow * (d / Math.max(currentDayInPlan, 1)))
+      : null;
+    const predicted = d >= currentDayInPlan
+      ? Math.min(Math.round(actualNow + ratePerDay * (d - currentDayInPlan)), totalSlots)
+      : null;
+
+    const weekNum = Math.floor(d / 7) + 1;
+    const dayInWeek = d % 7;
+    const label = dayInWeek === 0 ? `Wk ${weekNum}` : '';
+
+    points.push({ day: d, expected, actual: actualAtDay, predicted, label });
   }
   return points;
 }
@@ -211,9 +238,18 @@ export function getTargetStatus(
   phases: Phase[],
   completions: Map<string, Completion>,
 ): { status: TargetStatus; expectedSlots: number; actualSlots: number; diff: number } {
-  const expectedSlots = getExpectedSlotsAtWeek(currentWeekNumber, phases);
-  const actualSlots = getActualSlotsAtWeek(currentWeekNumber, phases, completions);
+  // Compare against PREVIOUS completed weeks only — don't penalise for the
+  // current in-progress week.
+  const compareWeek = Math.max(currentWeekNumber - 1, 0);
+  const expectedSlots = getExpectedSlotsAtWeek(compareWeek, phases);
+  const actualSlots = getTotalCompletedSlots(phases, completions);
   const diff = actualSlots - expectedSlots;
+
+  // In week 1 (no previous weeks), you're always on-track
+  if (currentWeekNumber <= 1) {
+    return { status: 'on-track', expectedSlots: 0, actualSlots, diff: actualSlots };
+  }
+
   const threshold = Math.max(2, Math.round(expectedSlots * 0.05));
   let status: TargetStatus;
   if (diff >= threshold) status = 'ahead';
@@ -227,7 +263,7 @@ export function getProjectedCompletionWeek(
   phases: Phase[],
   completions: Map<string, Completion>,
 ): number | null {
-  const actualSlots = getActualSlotsAtWeek(currentWeekNumber, phases, completions);
+  const actualSlots = getTotalCompletedSlots(phases, completions);
   if (actualSlots === 0 || currentWeekNumber === 0) return null;
   const totalSlots = getOverallProgress(phases, completions).total;
   const ratePerWeek = actualSlots / currentWeekNumber;

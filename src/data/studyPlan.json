@@ -363,10 +363,22 @@
                 },
                 {
                   "id": "week-1-evening-1-sub-2",
-                  "label": "Problems for Lectures 1–4 (geometry, elimination, multiplication, LU factorisation) (60 min)"
+                  "label": "Problems for Lecture 1: The Geometry of Linear Equations"
                 },
                 {
                   "id": "week-1-evening-1-sub-3",
+                  "label": "Problems for Lecture 2: Elimination with Matrices"
+                },
+                {
+                  "id": "week-1-evening-1-sub-4",
+                  "label": "Problems for Lecture 3: Multiplication and Inverse Matrices"
+                },
+                {
+                  "id": "week-1-evening-1-sub-5",
+                  "label": "Problems for Lecture 4: Factorization into A = LU"
+                },
+                {
+                  "id": "week-1-evening-1-sub-6",
                   "label": "Check solutions, note errors, update confusion log (15 min)"
                 }
               ]
@@ -393,10 +405,14 @@
                 },
                 {
                   "id": "week-1-evening-2-sub-2",
-                  "label": "Problems for Lectures 5–6 (vector spaces, column space, nullspace) (60 min)"
+                  "label": "Problems for Lecture 5: Transposes, Permutations, Vector Spaces"
                 },
                 {
                   "id": "week-1-evening-2-sub-3",
+                  "label": "Problems for Lecture 6: Column Space and Nullspace"
+                },
+                {
+                  "id": "week-1-evening-2-sub-4",
                   "label": "Check solutions, note errors, update confusion log (15 min)"
                 }
               ]
@@ -580,10 +596,14 @@
                 },
                 {
                   "id": "week-2-evening-1-sub-2",
-                  "label": "Problems for Lectures 7–8 (solving Ax = 0, solving Ax = b) (60 min)"
+                  "label": "Problems for Lecture 7: Solving Ax = 0: Pivot Variables, Special Solutions"
                 },
                 {
                   "id": "week-2-evening-1-sub-3",
+                  "label": "Problems for Lecture 8: Solving Ax = b: Row Reduced Form R"
+                },
+                {
+                  "id": "week-2-evening-1-sub-4",
                   "label": "Check solutions, note errors, update confusion log (15 min)"
                 }
               ]
@@ -610,10 +630,14 @@
                 },
                 {
                   "id": "week-2-evening-2-sub-2",
-                  "label": "Problems for Lectures 9–10 (independence/basis/dimension, four fundamental subspaces) (60 min)"
+                  "label": "Problems for Lecture 9: Independence, Basis and Dimension"
                 },
                 {
                   "id": "week-2-evening-2-sub-3",
+                  "label": "Problems for Lecture 10: The Four Fundamental Subspaces"
+                },
+                {
+                  "id": "week-2-evening-2-sub-4",
                   "label": "Check solutions, note errors, update confusion log (15 min)"
                 }
               ]
@@ -807,10 +831,14 @@
                 },
                 {
                   "id": "week-3-evening-1-sub-2",
-                  "label": "Problems for Lectures 15–16 (projections and least squares — critical for interpretability) (60 min)"
+                  "label": "Problems for Lecture 15: Projections onto Subspaces"
                 },
                 {
                   "id": "week-3-evening-1-sub-3",
+                  "label": "Problems for Lecture 16: Projection Matrices and Least Squares"
+                },
+                {
+                  "id": "week-3-evening-1-sub-4",
                   "label": "Check solutions, note errors, update confusion log (15 min)"
                 }
               ]
@@ -1027,10 +1055,18 @@
                 },
                 {
                   "id": "week-4-evening-1-sub-2",
-                  "label": "Problems for Lectures 18–20 (determinants) (60 min)"
+                  "label": "Problems for Lecture 18: Properties of Determinants"
                 },
                 {
                   "id": "week-4-evening-1-sub-3",
+                  "label": "Problems for Lecture 19: Determinant Formulas and Cofactors"
+                },
+                {
+                  "id": "week-4-evening-1-sub-4",
+                  "label": "Problems for Lecture 20: Cramer's Rule, Inverse Matrix and Volume"
+                },
+                {
+                  "id": "week-4-evening-1-sub-5",
                   "label": "Check solutions, note errors, update confusion log (15 min)"
                 }
               ]
@@ -1059,10 +1095,14 @@
                 },
                 {
                   "id": "week-4-evening-2-sub-2",
-                  "label": "Problems for Lectures 21–22 (eigenvalues, eigenvectors, diagonalisation — this is critical) (60 min)"
+                  "label": "Problems for Lecture 21: Eigenvalues and Eigenvectors"
                 },
                 {
                   "id": "week-4-evening-2-sub-3",
+                  "label": "Problems for Lecture 22: Diagonalization and Powers of A"
+                },
+                {
+                  "id": "week-4-evening-2-sub-4",
                   "label": "Check solutions, note errors, update confusion log (15 min)"
                 }
               ]
@@ -1455,10 +1495,14 @@
                 },
                 {
                   "id": "week-6-evening-1-sub-2",
-                  "label": "Problems for Lectures 30–31 and 33 (linear transformations, change of basis, pseudoinverse) (60 min)"
+                  "label": "Problems for Lecture 30: Linear Transformations and their Matrices"
                 },
                 {
                   "id": "week-6-evening-1-sub-3",
+                  "label": "Problems for Lecture 31: Change of Basis; Image Compression"
+                },
+                {
+                  "id": "week-6-evening-1-sub-4",
                   "label": "Check solutions, note errors, update confusion log (15 min)"
                 }
               ]
@@ -3293,7 +3337,7 @@
                 },
                 {
                   "id": "week-15-evening-1-sub-2",
-                  "label": "Strategic Practice 1 (counting) (60 min)"
+                  "label": "Strategic Practice 1"
                 },
                 {
                   "id": "week-15-evening-1-sub-3",
@@ -3331,11 +3375,11 @@
                 },
                 {
                   "id": "week-15-evening-2-sub-2",
-                  "label": "Homework 1"
+                  "label": "Strategic Practice 2"
                 },
                 {
                   "id": "week-15-evening-2-sub-3",
-                  "label": "Strategic Practice 2 (conditioning)"
+                  "label": "Homework 1"
                 },
                 {
                   "id": "week-15-evening-2-sub-4",
@@ -3514,7 +3558,7 @@
                 },
                 {
                   "id": "week-16-evening-1-sub-2",
-                  "label": "Strategic Practice 3 (random variables) (60 min)"
+                  "label": "Strategic Practice 3"
                 },
                 {
                   "id": "week-16-evening-1-sub-3",
@@ -3548,7 +3592,7 @@
                 },
                 {
                   "id": "week-16-evening-2-sub-2",
-                  "label": "Homework 3 — indicator r.v.s and linearity of expectation problems (these are gold) (60 min)"
+                  "label": "Homework 3"
                 },
                 {
                   "id": "week-16-evening-2-sub-3",
@@ -3727,7 +3771,7 @@
                 },
                 {
                   "id": "week-17-evening-1-sub-2",
-                  "label": "Strategic Practice 4 (continuous distributions) (60 min)"
+                  "label": "Strategic Practice 4"
                 },
                 {
                   "id": "week-17-evening-1-sub-3",
@@ -3761,7 +3805,7 @@
                 },
                 {
                   "id": "week-17-evening-2-sub-2",
-                  "label": "Homework 4 (60 min)"
+                  "label": "Homework 4"
                 },
                 {
                   "id": "week-17-evening-2-sub-3",
@@ -3937,7 +3981,7 @@
                 },
                 {
                   "id": "week-18-evening-1-sub-2",
-                  "label": "Strategic Practice 5 (joint distributions) (60 min)"
+                  "label": "Strategic Practice 5"
                 },
                 {
                   "id": "week-18-evening-1-sub-3",
@@ -3977,7 +4021,7 @@
                 },
                 {
                   "id": "week-18-evening-2-sub-3",
-                  "label": "Key exercise: Derive the PDF of Y = g(X) using the CDF method. Do it for Y = X² where X ~ N(0,1)"
+                  "label": "Key exercise:Derive the PDF of Y = g(X) using the CDF method. Do it for Y = X² where X ~ N(0,1)"
                 },
                 {
                   "id": "week-18-evening-2-sub-4",
@@ -4160,7 +4204,7 @@
                 },
                 {
                   "id": "week-19-evening-1-sub-2",
-                  "label": "Strategic Practice 6 (conditional expectation) (60 min)"
+                  "label": "Strategic Practice 6"
                 },
                 {
                   "id": "week-19-evening-1-sub-3",
@@ -4194,7 +4238,7 @@
                 },
                 {
                   "id": "week-19-evening-2-sub-2",
-                  "label": "Homework 7 — Adam's law and Eve's law problems (60 min)"
+                  "label": "Homework 7"
                 },
                 {
                   "id": "week-19-evening-2-sub-3",
@@ -4373,7 +4417,7 @@
                 },
                 {
                   "id": "week-20-evening-1-sub-2",
-                  "label": "Strategic Practice 7 (limit theorems) (60 min)"
+                  "label": "Strategic Practice 7"
                 },
                 {
                   "id": "week-20-evening-1-sub-3",
@@ -4407,7 +4451,7 @@
                 },
                 {
                   "id": "week-20-evening-2-sub-2",
-                  "label": "Homework 9 — Markov chain problems (60 min)"
+                  "label": "Homework 9"
                 },
                 {
                   "id": "week-20-evening-2-sub-3",
@@ -4779,7 +4823,7 @@
                 },
                 {
                   "id": "week-22-evening-1-sub-2",
-                  "label": "Problem Set 1 (60 min)"
+                  "label": "Problem Set 1"
                 },
                 {
                   "id": "week-22-evening-1-sub-3",
@@ -4815,7 +4859,7 @@
                 },
                 {
                   "id": "week-22-evening-2-sub-2",
-                  "label": "PS1 continued — derive MLE for Gaussian, Bernoulli, Poisson from scratch (60 min)"
+                  "label": "Problem Set 1"
                 },
                 {
                   "id": "week-22-evening-2-sub-3",
@@ -4994,7 +5038,7 @@
                 },
                 {
                   "id": "week-23-evening-1-sub-3",
-                  "label": "Problem Set 3 (MLE derivations)"
+                  "label": "Problem Set 3"
                 },
                 {
                   "id": "week-23-evening-1-sub-4",
@@ -5031,10 +5075,14 @@
                 },
                 {
                   "id": "week-23-evening-2-sub-2",
-                  "label": "PS3 continued — Key exercise: Derive the MLE for several distributions from scratch, then verify consistency (60 min)"
+                  "label": "Problem Set 3"
                 },
                 {
                   "id": "week-23-evening-2-sub-3",
+                  "label": "Key exercise:Derive the MLE for several distributions from scratch, then verify consistency"
+                },
+                {
+                  "id": "week-23-evening-2-sub-4",
                   "label": "Check solutions, note errors, update confusion log (15 min)"
                 }
               ]
@@ -5206,7 +5254,7 @@
                 },
                 {
                   "id": "week-24-evening-1-sub-3",
-                  "label": "Problem Set 5 (Fisher information, confidence intervals, testing)"
+                  "label": "Problem Set 5"
                 },
                 {
                   "id": "week-24-evening-1-sub-4",
@@ -5240,7 +5288,7 @@
                 },
                 {
                   "id": "week-24-evening-2-sub-2",
-                  "label": "Problem Set 6 (hypothesis testing, chi-squared) (60 min)"
+                  "label": "Problem Set 6"
                 },
                 {
                   "id": "week-24-evening-2-sub-3",
@@ -5423,7 +5471,7 @@
                 },
                 {
                   "id": "week-25-evening-1-sub-3",
-                  "label": "Problem Set 8 (Bayesian inference, regression)"
+                  "label": "Problem Set 8"
                 },
                 {
                   "id": "week-25-evening-1-sub-4",
@@ -5658,7 +5706,7 @@
                 },
                 {
                   "id": "week-26-evening-1-sub-4",
-                  "label": "Problem Set 11 (regression, GLMs, PCA)"
+                  "label": "Problem Set 11"
                 },
                 {
                   "id": "week-26-evening-1-sub-5",

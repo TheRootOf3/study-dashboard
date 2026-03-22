@@ -16,6 +16,13 @@ export function getWeekEndDate(weekNumber: number, actualStartDate?: string | nu
   return addDays(getWeekStartDate(weekNumber, actualStartDate), 6);
 }
 
+export function getCurrentDayInPlan(actualStartDate?: string | null): number {
+  const start = getPlanStartDate(actualStartDate);
+  const today = startOfDay(new Date());
+  if (isBefore(today, start)) return 0;
+  return Math.min(differenceInDays(today, start), TOTAL_WEEKS * 7);
+}
+
 export function getCurrentWeekNumber(actualStartDate?: string | null): number {
   const start = getPlanStartDate(actualStartDate);
   const today = startOfDay(new Date());

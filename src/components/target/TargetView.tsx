@@ -1,5 +1,4 @@
-import { Link } from 'react-router-dom';
-import { ArrowRight, TrendingUp, TrendingDown, Minus, Target } from 'lucide-react';
+import { TrendingUp, TrendingDown, Minus } from 'lucide-react';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, ReferenceLine } from 'recharts';
 import { useProgress } from '../../context/ProgressContext';
 import { useCurrentWeek } from '../../hooks/useCurrentWeek';
@@ -10,9 +9,9 @@ import {
   getOverallProgress,
   getPhaseProgress,
   getExpectedSlotsAtWeek,
-  getActualSlotsAtWeek,
   getPhaseColor,
 } from '../../utils/progressCalc';
+import { getCurrentDayInPlan } from '../../utils/dateUtils';
 import { ProgressBar } from '../shared/ProgressBar';
 
 const STATUS_CONFIG = {
@@ -24,8 +23,9 @@ const STATUS_CONFIG = {
 export function TargetView() {
   const { state, studyPlan } = useProgress();
   const { weekNumber } = useCurrentWeek();
+  const currentDay = getCurrentDayInPlan(state.settings.actual_start_date);
 
-  const chartData = getTargetChartData(weekNumber, studyPlan.phases, state.completions);
+  const chartData = getTargetChartData(currentDay, studyPlan.phases, state.completions);
   const target = getTargetStatus(weekNumber, studyPlan.phases, state.completions);
   const overall = getOverallProgress(studyPlan.phases, state.completions);
   const projectedWeek = getProjectedCompletionWeek(weekNumber, studyPlan.phases, state.completions);
@@ -105,15 +105,16 @@ export function TargetView() {
         style={{ borderColor: 'var(--color-border)', backgroundColor: 'var(--color-bg-secondary)' }}
       >
         <h3 className="text-sm font-semibold mb-4" style={{ color: 'var(--color-text-primary)' }}>
-          Expected vs Actual Progress
+          Progress: Actual vs Target
         </h3>
         <ResponsiveContainer width="100%" height={320}>
           <LineChart data={chartData} margin={{ top: 5, right: 20, bottom: 5, left: 0 }}>
             <CartesianGrid strokeDasharray="3 3" stroke="var(--color-border)" />
             <XAxis
-              dataKey="label"
+              dataKey="day"
               tick={{ fill: 'var(--color-text-tertiary)', fontSize: 11 }}
-              interval={2}
+              tickFormatter={(d: number) => d % 7 === 0 ? `Wk ${Math.floor(d / 7) + 1}` : ''}
+              interval={6}
             />
             <YAxis tick={{ fill: 'var(--color-text-tertiary)', fontSize: 11 }} />
             <Tooltip
@@ -124,21 +125,30 @@ export function TargetView() {
                 color: 'var(--color-text-primary)',
                 fontSize: 12,
               }}
-              formatter={(value: number, name: string) => [
-                `${value} slots`,
-                name === 'expected' ? 'Expected' : 'Actual',
-              ]}
+              labelFormatter={(d) => {
+                const day = Number(d);
+                const wk = Math.floor(day / 7) + 1;
+                const dayInWeek = (day % 7) + 1;
+                return `Week ${wk}, Day ${dayInWeek}`;
+              }}
+              formatter={(value, name) => {
+                const labels: Record<string, string> = { expected: 'Target', actual: 'Actual', predicted: 'Projected' };
+                return [`${value} slots`, labels[name as string] || String(name)];
+              }}
             />
             <Legend
-              formatter={(value: string) => (value === 'expected' ? 'Expected' : 'Actual')}
+              formatter={(value: string) => {
+                const labels: Record<string, string> = { expected: 'Target', actual: 'Actual', predicted: 'Projected' };
+                return labels[value] || value;
+              }}
               wrapperStyle={{ fontSize: 12 }}
             />
             <ReferenceLine
-              x={`Wk ${weekNumber}`}
+              x={currentDay}
               stroke="var(--color-text-tertiary)"
               strokeDasharray="4 4"
               label={{
-                value: 'Now',
+                value: 'Today',
                 position: 'top',
                 fill: 'var(--color-text-tertiary)',
                 fontSize: 11,
@@ -159,6 +169,16 @@ export function TargetView() {
               strokeWidth={2.5}
               dot={false}
               activeDot={{ r: 4 }}
+              connectNulls={false}
+            />
+            <Line
+              type="monotone"
+              dataKey="predicted"
+              stroke="var(--color-accent-secondary)"
+              strokeWidth={2}
+              strokeDasharray="4 3"
+              dot={false}
+              connectNulls={false}
             />
           </LineChart>
         </ResponsiveContainer>
