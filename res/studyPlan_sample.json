@@ -1,0 +1,422 @@
+{
+  "startDate": "2026-03-24",
+  "endDate": "2026-10-26",
+  "totalWeeks": 31,
+  "schedule": {
+    "description": "4 commute days per week (~2 hrs lecture/reading each), 3 evening sessions per week (~1.5 hrs focused problem work each)",
+    "totalHoursPerWeek": 14.5,
+    "sessionStructures": {
+      "problemEvening": {
+        "label": "Problem Evenings (Evening 1–2)",
+        "steps": [
+          { "duration": 15, "instruction": "Skim train notes, re-derive one key result from memory." },
+          { "duration": 60, "instruction": "Work through assigned problems without solutions open." },
+          { "duration": 15, "instruction": "Check solutions, note errors, update confusion log." }
+        ]
+      },
+      "bookEvening": {
+        "label": "Book Evening (Evening 3)",
+        "steps": [
+          { "duration": 30, "instruction": "Re-read key sections from the week's book chapter, annotate." },
+          { "duration": 45, "instruction": "Work through the book's worked examples and exercises." },
+          { "duration": 15, "instruction": "Write a short paragraph connecting the book material to the main course topic." }
+        ]
+      }
+    },
+    "defaultDayMapping": {
+      "monday":    ["train-1"],
+      "tuesday":   ["train-2", "evening-1"],
+      "wednesday": ["train-3"],
+      "thursday":  ["train-4", "evening-2"],
+      "friday":    [],
+      "saturday":  ["evening-3"],
+      "sunday":    []
+    }
+  },
+  "resources": [
+    { "name": "MIT 18.06SC Linear Algebra", "url": "https://ocw.mit.edu/courses/18-06sc-linear-algebra-fall-2011/", "category": "course", "phases": [1] },
+    { "name": "MIT 18.02SC Multivariable Calculus", "url": "https://ocw.mit.edu/courses/18-02sc-multivariable-calculus-fall-2010/", "category": "course", "phases": [2] },
+    { "name": "MIT 18.02 Recitation Notes (2024)", "url": "https://ocw.mit.edu/courses/res-18-016-multivariable-calculus-recitation-notes-fall-2024/", "category": "course", "phases": [2] },
+    { "name": "Harvard Stat 110 YouTube", "url": "https://www.youtube.com/playlist?list=PL2SOU6wwxB0uwwH80KTQ6ht66KWxbzTIo", "category": "course", "phases": [3] },
+    { "name": "Stat 110 Course Website", "url": "https://stat110.hsites.harvard.edu/", "category": "course", "phases": [3] },
+    { "name": "MIT 18.650 Statistics for Applications", "url": "https://ocw.mit.edu/courses/18-650-statistics-for-applications-fall-2016/", "category": "course", "phases": [4] },
+    { "name": "Mathematics for Machine Learning (PDF)", "url": "https://mml-book.github.io/book/mml-book.pdf", "category": "book", "phases": [5] },
+    { "name": "ARENA Chapter 1: Mechanistic Interpretability", "url": "https://www.arena.education/chapter1", "category": "course", "phases": [5] },
+    { "name": "3Blue1Brown: Essence of Linear Algebra", "url": "https://www.youtube.com/playlist?list=PLZHQObOWTQDPD3MizzM2xVFitgF8hE_ab", "category": "video", "phases": [1] },
+    { "name": "3Blue1Brown: Essence of Calculus", "url": "https://www.youtube.com/playlist?list=PLZHQObOWTQDMsr9K-rj53DwVRMYO3t5Yr", "category": "video", "phases": [2] },
+    { "name": "CS229 Probability Review", "url": "https://cs229.stanford.edu/section/cs229-prob.pdf", "category": "reference", "phases": [3] },
+    { "name": "Anthropic: A Mathematical Framework for Transformer Circuits", "url": "https://transformer-circuits.pub/2021/framework/index.html", "category": "paper", "phases": [1, 5] },
+    { "name": "Anthropic: Toy Models of Superposition", "url": "https://transformer-circuits.pub/2022/toy_model/index.html", "category": "paper", "phases": [4, 5] },
+    { "name": "Anthropic: Towards Monosemanticity", "url": "https://transformer-circuits.pub/2023/monosemantic-features/index.html", "category": "paper", "phases": [5] },
+    { "name": "Neel Nanda: Mech Interp Prerequisites", "url": "https://www.neelnanda.io/mechanistic-interpretability/prereqs", "category": "reference", "phases": [1, 5] },
+    { "name": "Neel Nanda: Transformer Circuits Walkthrough", "url": "https://www.neelnanda.io/mechanistic-interpretability/a-walkthrough-of-a-mathematical-framework-for-transformer-circuits", "category": "reference", "phases": [1, 5] }
+  ],
+  "phases": [
+    {
+      "id": "phase-1",
+      "number": 1,
+      "title": "Linear Algebra",
+      "course": "MIT 18.06SC — Linear Algebra (Gilbert Strang)",
+      "courseUrl": "https://ocw.mit.edu/courses/18-06sc-linear-algebra-fall-2011/",
+      "description": "The OCW Scholar version has lecture videos (~50 min each, so two per train ride), recitation videos, problem sets with solutions, and exams. Strang's geometric intuition is legendary and exactly what interpretability demands — you need to *see* what a matrix does, not just compute with it.",
+      "bookChapters": "Ch 1–2 (Information as Compression; Bayesian Predictive Inference) + Ch 3 start",
+      "bookDescription": "These chapters require minimal maths prerequisites and provide beautiful motivation for everything you're about to learn. They'll give you the information-theoretic lens — compression, codelength, log loss — that the book builds everything else on.",
+      "weekRange": [1, 7],
+      "completionNote": "Phase 1 complete. You can now reason fluently about what matrix equations mean geometrically — the single most important skill for mechanistic interpretability.",
+      "weeks": [
+        {
+          "id": "week-1",
+          "weekNumber": 1,
+          "dateRange": "24–30 March",
+          "startDate": "2026-03-24",
+          "endDate": "2026-03-30",
+          "title": "Vectors, Matrices & Elimination",
+          "isBuffer": false,
+          "slots": [
+            {
+              "id": "week-1-train-1",
+              "type": "train",
+              "slotNumber": 1,
+              "label": "Train 1",
+              "description": "Lecture 1: The geometry of linear equations. Lecture 2: Elimination with matrices",
+              "isBookSlot": false,
+              "estimatedMinutes": 120,
+              "tags": [],
+              "links": [
+                { "text": "MIT 18.06SC Course Page", "url": "https://ocw.mit.edu/courses/18-06sc-linear-algebra-fall-2011/" }
+              ]
+            },
+            {
+              "id": "week-1-train-2",
+              "type": "train",
+              "slotNumber": 2,
+              "label": "Train 2",
+              "description": "Lecture 3: Multiplication and inverse matrices. Lecture 4: Factorisation A = LU",
+              "isBookSlot": false,
+              "estimatedMinutes": 120,
+              "tags": [],
+              "links": [
+                { "text": "MIT 18.06SC Course Page", "url": "https://ocw.mit.edu/courses/18-06sc-linear-algebra-fall-2011/" }
+              ]
+            },
+            {
+              "id": "week-1-train-3",
+              "type": "train",
+              "slotNumber": 3,
+              "label": "Train 3",
+              "description": "Lecture 5: Transposes, permutations, vector spaces. Lecture 6: Column space and nullspace",
+              "isBookSlot": false,
+              "estimatedMinutes": 120,
+              "tags": [],
+              "links": [
+                { "text": "MIT 18.06SC Course Page", "url": "https://ocw.mit.edu/courses/18-06sc-linear-algebra-fall-2011/" }
+              ]
+            },
+            {
+              "id": "week-1-train-4",
+              "type": "train",
+              "slotNumber": 4,
+              "label": "Train 4",
+              "description": "**Book §1.1–1.2:** Shannon's insight, codelength = loss, cross entropy, perplexity",
+              "isBookSlot": true,
+              "estimatedMinutes": 120,
+              "tags": [],
+              "links": []
+            },
+            {
+              "id": "week-1-evening-1",
+              "type": "evening",
+              "slotNumber": 1,
+              "label": "Evening 1",
+              "description": "Problems for Lectures 1–4 (geometry, elimination, multiplication, LU factorisation)",
+              "isBookSlot": false,
+              "estimatedMinutes": 90,
+              "tags": [],
+              "links": [
+                { "text": "MIT 18.06SC Course Page", "url": "https://ocw.mit.edu/courses/18-06sc-linear-algebra-fall-2011/" }
+              ]
+            },
+            {
+              "id": "week-1-evening-2",
+              "type": "evening",
+              "slotNumber": 2,
+              "label": "Evening 2",
+              "description": "Problems for Lectures 5–6 (vector spaces, column space, nullspace)",
+              "isBookSlot": false,
+              "estimatedMinutes": 90,
+              "tags": [],
+              "links": [
+                { "text": "MIT 18.06SC Course Page", "url": "https://ocw.mit.edu/courses/18-06sc-linear-algebra-fall-2011/" }
+              ]
+            },
+            {
+              "id": "week-1-evening-3",
+              "type": "evening",
+              "slotNumber": 3,
+              "label": "Evening 3",
+              "description": "**Book exercises Ch 1** (information as compression). Connection: how does dimensionality of a vector space relate to \"capacity\" for encoding information?",
+              "isBookSlot": true,
+              "estimatedMinutes": 90,
+              "tags": ["connection"],
+              "links": []
+            }
+          ]
+        },
+        {
+          "id": "week-2",
+          "weekNumber": 2,
+          "dateRange": "31 March – 6 April",
+          "startDate": "2026-03-31",
+          "endDate": "2026-04-06",
+          "title": "Vector Spaces & the Four Subspaces",
+          "isBuffer": false,
+          "slots": [
+            {
+              "id": "week-2-train-1",
+              "type": "train",
+              "slotNumber": 1,
+              "label": "Train 1",
+              "description": "Lecture 7: Solving Ax = 0 (pivot variables, special solutions). Lecture 8: Solving Ax = b (row reduced form)",
+              "isBookSlot": false,
+              "estimatedMinutes": 120,
+              "tags": [],
+              "links": [
+                { "text": "MIT 18.06SC Course Page", "url": "https://ocw.mit.edu/courses/18-06sc-linear-algebra-fall-2011/" }
+              ]
+            },
+            {
+              "id": "week-2-train-2",
+              "type": "train",
+              "slotNumber": 2,
+              "label": "Train 2",
+              "description": "Lecture 9: Independence, basis, dimension. Lecture 10: The four fundamental subspaces",
+              "isBookSlot": false,
+              "estimatedMinutes": 120,
+              "tags": [],
+              "links": [
+                { "text": "MIT 18.06SC Course Page", "url": "https://ocw.mit.edu/courses/18-06sc-linear-algebra-fall-2011/" }
+              ]
+            },
+            {
+              "id": "week-2-train-3",
+              "type": "train",
+              "slotNumber": 3,
+              "label": "Train 3",
+              "description": "Lecture 11: Matrix spaces, rank 1 matrices. Lecture 12: Graphs, networks, incidence matrices",
+              "isBookSlot": false,
+              "estimatedMinutes": 120,
+              "tags": [],
+              "links": [
+                { "text": "MIT 18.06SC Course Page", "url": "https://ocw.mit.edu/courses/18-06sc-linear-algebra-fall-2011/" }
+              ]
+            },
+            {
+              "id": "week-2-train-4",
+              "type": "train",
+              "slotNumber": 4,
+              "label": "Train 4",
+              "description": "**Book §1.3–1.6:** Rate-distortion theory, generative models as compression, when cross entropy is not enough",
+              "isBookSlot": true,
+              "estimatedMinutes": 120,
+              "tags": [],
+              "links": []
+            },
+            {
+              "id": "week-2-evening-1",
+              "type": "evening",
+              "slotNumber": 1,
+              "label": "Evening 1",
+              "description": "Problems for Lectures 7–8 (solving Ax = 0, solving Ax = b)",
+              "isBookSlot": false,
+              "estimatedMinutes": 90,
+              "tags": [],
+              "links": [
+                { "text": "MIT 18.06SC Course Page", "url": "https://ocw.mit.edu/courses/18-06sc-linear-algebra-fall-2011/" }
+              ]
+            },
+            {
+              "id": "week-2-evening-2",
+              "type": "evening",
+              "slotNumber": 2,
+              "label": "Evening 2",
+              "description": "Problems for Lectures 9–10 (independence/basis/dimension, four fundamental subspaces)",
+              "isBookSlot": false,
+              "estimatedMinutes": 90,
+              "tags": [],
+              "links": [
+                { "text": "MIT 18.06SC Course Page", "url": "https://ocw.mit.edu/courses/18-06sc-linear-algebra-fall-2011/" }
+              ]
+            },
+            {
+              "id": "week-2-evening-3",
+              "type": "evening",
+              "slotNumber": 3,
+              "label": "Evening 3",
+              "description": "**Book exercises Ch 1 continued.** Connection: the four fundamental subspaces will reappear when you think about what a linear layer's weight matrix can and cannot represent",
+              "isBookSlot": true,
+              "estimatedMinutes": 90,
+              "tags": ["connection"],
+              "links": []
+            }
+          ]
+        },
+        {
+          "id": "week-3",
+          "weekNumber": 3,
+          "dateRange": "7–13 April",
+          "startDate": "2026-04-07",
+          "endDate": "2026-04-13",
+          "title": "Orthogonality & Projections",
+          "isBuffer": false,
+          "slots": [
+            {
+              "id": "week-3-train-1",
+              "type": "train",
+              "slotNumber": 1,
+              "label": "Train 1",
+              "description": "Lecture 14: Orthogonal vectors and subspaces. Lecture 15: Projections onto subspaces",
+              "isBookSlot": false,
+              "estimatedMinutes": 120,
+              "tags": [],
+              "links": [
+                { "text": "MIT 18.06SC Course Page", "url": "https://ocw.mit.edu/courses/18-06sc-linear-algebra-fall-2011/" }
+              ]
+            },
+            {
+              "id": "week-3-train-2",
+              "type": "train",
+              "slotNumber": 2,
+              "label": "Train 2",
+              "description": "Lecture 16: Projection matrices and least squares. Lecture 17: Orthogonal matrices and Gram-Schmidt",
+              "isBookSlot": false,
+              "estimatedMinutes": 120,
+              "tags": [],
+              "links": [
+                { "text": "MIT 18.06SC Course Page", "url": "https://ocw.mit.edu/courses/18-06sc-linear-algebra-fall-2011/" }
+              ]
+            },
+            {
+              "id": "week-3-train-3",
+              "type": "train",
+              "slotNumber": 3,
+              "label": "Train 3",
+              "description": "Recitation videos for lectures 14–17. Work through the projection derivation again on paper",
+              "isBookSlot": false,
+              "estimatedMinutes": 120,
+              "tags": [],
+              "links": [
+                { "text": "MIT 18.06SC Course Page", "url": "https://ocw.mit.edu/courses/18-06sc-linear-algebra-fall-2011/" }
+              ]
+            },
+            {
+              "id": "week-3-train-4",
+              "type": "train",
+              "slotNumber": 4,
+              "label": "Train 4",
+              "description": "**Book §2.1–2.2:** Posterior and posterior predictive, de Finetti and exchangeability",
+              "isBookSlot": true,
+              "estimatedMinutes": 120,
+              "tags": [],
+              "links": []
+            },
+            {
+              "id": "week-3-evening-1",
+              "type": "evening",
+              "slotNumber": 1,
+              "label": "Evening 1",
+              "description": "Problems for Lectures 15–16 (projections and least squares — **critical for interpretability**)",
+              "isBookSlot": false,
+              "estimatedMinutes": 90,
+              "tags": ["critical"],
+              "links": [
+                { "text": "MIT 18.06SC Course Page", "url": "https://ocw.mit.edu/courses/18-06sc-linear-algebra-fall-2011/" }
+              ]
+            },
+            {
+              "id": "week-3-evening-2",
+              "type": "evening",
+              "slotNumber": 2,
+              "label": "Evening 2",
+              "description": "Problems continued. **Key exercise:** derive the projection matrix P = A(AᵀA)⁻¹Aᵀ from scratch and explain geometrically why P² = P",
+              "isBookSlot": false,
+              "estimatedMinutes": 90,
+              "tags": ["key-exercise"],
+              "links": [
+                { "text": "MIT 18.06SC Course Page", "url": "https://ocw.mit.edu/courses/18-06sc-linear-algebra-fall-2011/" }
+              ]
+            },
+            {
+              "id": "week-3-evening-3",
+              "type": "evening",
+              "slotNumber": 3,
+              "label": "Evening 3",
+              "description": "**Book exercises Ch 2.** Connection: linear probes in interpretability are exactly least-squares projections — you're projecting activations onto a subspace to test if a concept is linearly represented",
+              "isBookSlot": true,
+              "estimatedMinutes": 90,
+              "tags": ["connection"],
+              "links": []
+            }
+          ]
+        },
+
+        "__TEMPLATE_NOTE__: Weeks 4–7 follow the same structure. Continue extracting from the markdown source. Week 7 has isBuffer: true."
+      ]
+    },
+
+    {
+      "id": "phase-2",
+      "number": 2,
+      "title": "Multivariable & Vector Calculus",
+      "course": "MIT 18.02SC — Multivariable Calculus (Denis Auroux)",
+      "courseUrl": "https://ocw.mit.edu/courses/18-02sc-multivariable-calculus-fall-2010/",
+      "description": "Full coverage over 7 weeks. Unit 1 (vectors and matrices) is compressed to a single train ride since you just covered this material in 18.06. Units 2–4 are covered in full, including line integrals, Green's theorem, triple integrals, the divergence theorem, and Stokes' theorem.",
+      "bookChapters": "Ch 3 continued + Ch 4 (geometry of probability, natural gradient, high-dimensional representations)",
+      "bookDescription": "The book chapters connect your growing calculus fluency to the geometry of probability distributions and high-dimensional spaces — the geometric foundation of superposition.",
+      "weekRange": [8, 14],
+      "completionNote": "Phase 2 complete. You now have full command of multivariable and vector calculus — gradients, Jacobians, line and surface integrals, and all three fundamental theorems.",
+      "weeks": "__EXTRACT_FROM_MARKDOWN__: Weeks 8–14, same slot structure as Phase 1. Week 14 has isBuffer: true."
+    },
+
+    {
+      "id": "phase-3",
+      "number": 3,
+      "title": "Probability",
+      "course": "Harvard Stat 110 — Probability (Joe Blitzstein)",
+      "courseUrl": "https://www.youtube.com/playlist?list=PL2SOU6wwxB0uwwH80KTQ6ht66KWxbzTIo",
+      "description": "Each lecture is ~50 min, so two fit per train ride. The book chapters for this phase connect directly to probability — you'll see the same concepts from two different angles.",
+      "bookChapters": "Ch 3 deep dive (revisiting with probability maturity) + Ch 6 (representations, interpretability core chapter)",
+      "bookDescription": "You'll revisit divergences, Fisher information, and information geometry with genuine probability fluency. Chapter 6 is the core interpretability chapter — bottleneck principle, attention heads, probing.",
+      "weekRange": [15, 21],
+      "completionNote": "Phase 3 complete. You now think in distributions, reason about conditional expectations fluently, and understand how information-theoretic ideas connect to neural network representations.",
+      "weeks": "__EXTRACT_FROM_MARKDOWN__: Weeks 15–21. Week 21 has isBuffer: true."
+    },
+
+    {
+      "id": "phase-4",
+      "number": 4,
+      "title": "Mathematical Statistics",
+      "course": "MIT 18.650 — Statistics for Applications (Philippe Rigollet)",
+      "courseUrl": "https://ocw.mit.edu/courses/18-650-statistics-for-applications-fall-2016/",
+      "description": "Each lecture is ~80 min (one per train ride). 24 lectures total (videos for lectures 10 and 16 missing — use slides). This course teaches you to *use* probability to do inference — the skills you need to make rigorous claims about what circuits do.",
+      "bookChapters": "Ch 6 deep dive (continued) + Ch 9 (PAC-Bayes and generalisation) + Ch 10–12 (selected)",
+      "bookDescription": "PAC-Bayes bounds, generalisation theory, and evaluation methodology — the theoretical backbone for making rigorous claims about interpretability findings.",
+      "weekRange": [22, 27],
+      "completionNote": "Phase 4 complete. You now have the statistical inference toolkit to make rigorous claims about what neural networks compute internally.",
+      "weeks": "__EXTRACT_FROM_MARKDOWN__: Weeks 22–27. Week 27 has isBuffer: true. Note: 18.650 problem sets do NOT have published solutions."
+    },
+
+    {
+      "id": "phase-5",
+      "number": 5,
+      "title": "ML Capstone + Interpretability Onramp",
+      "course": "MML Book + ARENA Chapter 1",
+      "courseUrl": "https://mml-book.github.io/book/mml-book.pdf",
+      "description": "Train time splits between MML reading and ARENA exercises. Evenings are for derivations and coding. This phase brings together everything from the previous four phases and applies it directly to mechanistic interpretability.",
+      "bookChapters": "Key papers + remaining book chapters",
+      "bookDescription": "The capstone: read the Anthropic papers with full mathematical maturity, implement interpretability tools in code, and write the final synthesis document.",
+      "weekRange": [28, 31],
+      "completionNote": "Phase 5 complete. You're ready to start doing original interpretability research.",
+      "weeks": "__EXTRACT_FROM_MARKDOWN__: Weeks 28–31. No buffer week in this phase."
+    }
+  ]
+}
