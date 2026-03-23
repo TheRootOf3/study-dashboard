@@ -107,6 +107,13 @@ export const subtaskCompletionsApi = {
     }),
 };
 
+// Study Plan
+export const studyPlanApi = {
+  get: () => request<Record<string, unknown>>('/study-plan'),
+  update: (data: Record<string, unknown>) =>
+    request<Record<string, unknown>>('/study-plan', { method: 'PUT', body: JSON.stringify(data) }),
+};
+
 // Backup
 export const backupApi = {
   exportData: () => request<Record<string, unknown[]>>('/backup'),

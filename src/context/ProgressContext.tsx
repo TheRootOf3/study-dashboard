@@ -1,13 +1,11 @@
 import { createContext, useContext, useReducer, useEffect, useCallback, useRef, type ReactNode } from 'react';
-import { completionsApi, confusionApi, settingsApi, subtaskCompletionsApi, type Completion, type ConfusionEntry, type Settings, type SubtaskCompletion } from '../api/client';
-import studyPlanData from '../data/studyPlan.json';
+import { completionsApi, confusionApi, settingsApi, subtaskCompletionsApi, studyPlanApi, type Completion, type ConfusionEntry, type Settings, type SubtaskCompletion } from '../api/client';
 import type { StudyPlan } from '../utils/progressCalc';
 import { type DaySlotMapping } from '../utils/dateUtils';
 import { DEFAULT_SCHEDULE_CONFIG, type ScheduleConfig } from '../utils/scheduleConfig';
 
-const studyPlan = studyPlanData as StudyPlan;
-
 interface State {
+  studyPlan: StudyPlan | null;
   completions: Map<string, Completion>;
   subtaskCompletions: Map<string, SubtaskCompletion>;
   confusionLog: ConfusionEntry[];
@@ -19,7 +17,9 @@ interface State {
 type Action =
   | { type: 'SET_LOADING'; loading: boolean }
   | { type: 'SET_ERROR'; error: string }
-  | { type: 'LOAD_DATA'; completions: Completion[]; subtaskCompletions: SubtaskCompletion[]; confusionLog: ConfusionEntry[]; settings: Settings }
+  | { type: 'SET_NO_PLAN' }
+  | { type: 'LOAD_DATA'; studyPlan: StudyPlan; completions: Completion[]; subtaskCompletions: SubtaskCompletion[]; confusionLog: ConfusionEntry[]; settings: Settings }
+  | { type: 'UPDATE_STUDY_PLAN'; studyPlan: StudyPlan }
   | { type: 'UPSERT_COMPLETION'; completion: Completion }
   | { type: 'REMOVE_COMPLETION'; slotId: string }
   | { type: 'UPSERT_SUBTASK'; subtask: SubtaskCompletion }
@@ -35,13 +35,17 @@ function reducer(state: State, action: Action): State {
       return { ...state, loading: action.loading };
     case 'SET_ERROR':
       return { ...state, error: action.error, loading: false };
+    case 'SET_NO_PLAN':
+      return { ...state, studyPlan: null, loading: false, error: null };
     case 'LOAD_DATA': {
       const map = new Map<string, Completion>();
       for (const c of action.completions) map.set(c.slot_id, c);
       const stMap = new Map<string, SubtaskCompletion>();
       for (const s of action.subtaskCompletions) stMap.set(s.subtask_id, s);
-      return { ...state, completions: map, subtaskCompletions: stMap, confusionLog: action.confusionLog, settings: action.settings, loading: false };
+      return { ...state, studyPlan: action.studyPlan, completions: map, subtaskCompletions: stMap, confusionLog: action.confusionLog, settings: action.settings, loading: false };
     }
+    case 'UPDATE_STUDY_PLAN':
+      return { ...state, studyPlan: action.studyPlan };
     case 'UPSERT_COMPLETION': {
       const map = new Map(state.completions);
       map.set(action.completion.slot_id, action.completion);
@@ -81,6 +85,7 @@ interface ProgressContextValue {
   studyPlan: StudyPlan;
   scheduleConfig: ScheduleConfig;
   dayMapping: DaySlotMapping;
+  updateStudyPlan: (plan: StudyPlan) => Promise<void>;
   toggleCompletion: (slotId: string, completed: boolean) => Promise<void>;
   toggleSubtask: (subtaskId: string, completed: boolean, slotId: string, totalSubtasks: number) => Promise<void>;
   updateSlotNotes: (slotId: string, notes: string) => Promise<void>;
@@ -96,6 +101,7 @@ const ProgressContext = createContext<ProgressContextValue | null>(null);
 
 export function ProgressProvider({ children }: { children: ReactNode }) {
   const [state, dispatch] = useReducer(reducer, {
+    studyPlan: null,
     completions: new Map(),
     subtaskCompletions: new Map(),
     confusionLog: [],
@@ -107,13 +113,33 @@ export function ProgressProvider({ children }: { children: ReactNode }) {
   const loadData = useCallback(async () => {
     dispatch({ type: 'SET_LOADING', loading: true });
     try {
+      let studyPlan: Record<string, unknown> | null;
+      try {
+        studyPlan = await studyPlanApi.get();
+      } catch {
+        // 404 means no study plan exists yet
+        studyPlan = null;
+      }
+
+      if (!studyPlan) {
+        // Still load settings so we can apply theme, but no plan to show
+        try {
+          const settings = await settingsApi.get();
+          dispatch({ type: 'UPDATE_SETTINGS', settings });
+        } catch {
+          // settings might fail too on fresh DB, that's fine
+        }
+        dispatch({ type: 'SET_NO_PLAN' });
+        return;
+      }
+
       const [completions, subtaskCompletions, confusionLog, settings] = await Promise.all([
         completionsApi.getAll(),
         subtaskCompletionsApi.getAll(),
         confusionApi.getAll(),
         settingsApi.get(),
       ]);
-      dispatch({ type: 'LOAD_DATA', completions, subtaskCompletions, confusionLog, settings });
+      dispatch({ type: 'LOAD_DATA', studyPlan: studyPlan as unknown as StudyPlan, completions, subtaskCompletions, confusionLog, settings });
     } catch (e) {
       dispatch({ type: 'SET_ERROR', error: (e as Error).message });
     }
@@ -221,12 +247,19 @@ export function ProgressProvider({ children }: { children: ReactNode }) {
     dispatch({ type: 'UPDATE_SETTINGS', settings });
   }, []);
 
+  const updateStudyPlan = useCallback(async (plan: StudyPlan) => {
+    const result = await studyPlanApi.update(plan as unknown as Record<string, unknown>);
+    dispatch({ type: 'UPDATE_STUDY_PLAN', studyPlan: result as unknown as StudyPlan });
+  }, []);
+
   const scheduleConfig: ScheduleConfig = state.settings.schedule_config
     ? JSON.parse(state.settings.schedule_config)
     : DEFAULT_SCHEDULE_CONFIG;
 
-  // dayMapping is now derived from scheduleConfig (kept for backward compat)
   const dayMapping: DaySlotMapping = scheduleConfig.dayMapping;
+
+  // While loading or if no plan, show a loading state
+  const studyPlan: StudyPlan = state.studyPlan || { startDate: '', endDate: '', totalWeeks: 0, schedule: { description: '', totalHoursPerWeek: 0, sessionStructures: {}, defaultDayMapping: {} }, resources: [], phases: [] };
 
   return (
     <ProgressContext.Provider
@@ -235,6 +268,7 @@ export function ProgressProvider({ children }: { children: ReactNode }) {
         studyPlan,
         scheduleConfig,
         dayMapping,
+        updateStudyPlan,
         toggleCompletion,
         toggleSubtask,
         updateSlotNotes,

@@ -1,5 +1,5 @@
 import { NavLink, useLocation } from 'react-router-dom';
-import { LayoutDashboard, Calendar, Target, BookOpen, Library, AlertCircle, Settings, ChevronDown, ChevronRight, Menu, X } from 'lucide-react';
+import { LayoutDashboard, Calendar, Target, BookOpen, Library, AlertCircle, ClipboardList, Settings, ChevronDown, ChevronRight, Menu, X } from 'lucide-react';
 import { useState } from 'react';
 import { useProgress } from '../../context/ProgressContext';
 import { ProgressBar } from '../shared/ProgressBar';
@@ -156,6 +156,10 @@ export function Sidebar({ isOpen, onClose }: { isOpen: boolean; onClose: () => v
                   {unresolvedCount}
                 </span>
               )}
+            </NavLink>
+            <NavLink to="/activity-log" onClick={onClose} className={({ isActive }) => navLinkClass(isActive)}
+              style={({ isActive }) => ({ color: isActive ? 'var(--color-accent-primary)' : 'var(--color-text-secondary)', backgroundColor: isActive ? 'var(--color-bg-tertiary)' : undefined })}>
+              <ClipboardList size={18} /> Activity Log
             </NavLink>
             <NavLink to="/settings" onClick={onClose} className={({ isActive }) => navLinkClass(isActive)}
               style={({ isActive }) => ({ color: isActive ? 'var(--color-accent-primary)' : 'var(--color-text-secondary)', backgroundColor: isActive ? 'var(--color-bg-tertiary)' : undefined })}>

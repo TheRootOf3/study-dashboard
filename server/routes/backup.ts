@@ -3,7 +3,7 @@ import db from '../db.js';
 
 const router = Router();
 
-const TABLES = ['completions', 'confusion_log', 'week_notes', 'settings', 'subtask_completions'] as const;
+const TABLES = ['completions', 'confusion_log', 'week_notes', 'settings', 'subtask_completions', 'study_plan'] as const;
 
 // GET /api/backup - export entire DB as JSON
 router.get('/', (_req: Request, res: Response) => {

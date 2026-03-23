@@ -134,7 +134,7 @@ export function WeekView() {
                   </h3>
                   <div className="space-y-3">
                     {studySlots.map(slot => (
-                      <SlotCard key={slot.id} slot={slot} />
+                      <SlotCard key={slot.id} slot={slot} weekNumber={weekNumber} siblingSlotIds={studySlots.map(s => s.id)} />
                     ))}
                     {customs.map(cs => (
                       <CustomSlotCard key={cs.key} slotKey={cs.key} weekNumber={weekNumber} config={scheduleConfig} />

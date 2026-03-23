@@ -1,25 +1,60 @@
-import { useState } from 'react';
-import { BookOpen, Flame, ChevronDown, ChevronUp, ExternalLink, Clock, Check } from 'lucide-react';
+import { useState, useRef, useEffect } from 'react';
+import { BookOpen, Flame, ChevronDown, ChevronUp, ExternalLink, Clock, Check, Pencil, ArrowUpDown } from 'lucide-react';
 import { Checkbox } from '../shared/Checkbox';
 import { MarkdownBlock } from '../shared/MarkdownBlock';
 import { useProgress } from '../../context/ProgressContext';
 import { formatRelativeTime } from '../../utils/dateUtils';
 import { getSlotDisplay } from '../../utils/scheduleConfig';
 import { getIcon } from '../../utils/iconMap';
+import { updateSlotInPlan, reorderSlotInPlan, moveSlotToWeek, getAllWeeks } from '../../utils/planEditor';
 import type { Slot } from '../../utils/progressCalc';
 
 interface SlotCardProps {
   slot: Slot;
   compact?: boolean;
+  /** Week number this slot belongs to. Required for editing features. */
+  weekNumber?: number;
+  /** All slot IDs in display order within the same group, for reordering. */
+  siblingSlotIds?: string[];
 }
 
-export function SlotCard({ slot, compact = false }: SlotCardProps) {
-  const { state, scheduleConfig, toggleCompletion, toggleSubtask, updateSlotNotes, updateSlotDifficulty } = useProgress();
+export function SlotCard({ slot, compact = false, weekNumber, siblingSlotIds }: SlotCardProps) {
+  const { state, studyPlan, scheduleConfig, toggleCompletion, toggleSubtask, updateSlotNotes, updateSlotDifficulty, updateStudyPlan } = useProgress();
   const completion = state.completions.get(slot.id);
   const isCompleted = !!completion?.completed;
   const [expanded, setExpanded] = useState(!compact);
   const [notesOpen, setNotesOpen] = useState(false);
   const [notesValue, setNotesValue] = useState(completion?.notes || '');
+
+  // Editing state
+  const [editingDescription, setEditingDescription] = useState(false);
+  const [descriptionValue, setDescriptionValue] = useState(slot.description);
+  const [moveMenuOpen, setMoveMenuOpen] = useState(false);
+  const [saving, setSaving] = useState(false);
+  const moveMenuRef = useRef<HTMLDivElement>(null);
+  const descTextareaRef = useRef<HTMLTextAreaElement>(null);
+
+  const canEdit = weekNumber !== undefined;
+
+  // Close move menu on outside click
+  useEffect(() => {
+    if (!moveMenuOpen) return;
+    const handler = (e: MouseEvent) => {
+      if (moveMenuRef.current && !moveMenuRef.current.contains(e.target as Node)) {
+        setMoveMenuOpen(false);
+      }
+    };
+    document.addEventListener('mousedown', handler);
+    return () => document.removeEventListener('mousedown', handler);
+  }, [moveMenuOpen]);
+
+  // Focus textarea when editing starts
+  useEffect(() => {
+    if (editingDescription && descTextareaRef.current) {
+      descTextareaRef.current.focus();
+      descTextareaRef.current.selectionStart = descTextareaRef.current.value.length;
+    }
+  }, [editingDescription]);
 
   const slotKey = `${slot.type}-${slot.slotNumber}`;
   const displayConfig = getSlotDisplay(slotKey, scheduleConfig);
@@ -57,6 +92,52 @@ export function SlotCard({ slot, compact = false }: SlotCardProps) {
     await updateSlotNotes(slot.id, notesValue);
     setNotesOpen(false);
   };
+
+  // --- Edit description ---
+  const handleDescriptionSave = async () => {
+    if (!canEdit || descriptionValue === slot.description) {
+      setEditingDescription(false);
+      return;
+    }
+    setSaving(true);
+    const newPlan = updateSlotInPlan(studyPlan, weekNumber!, slot.id, { description: descriptionValue });
+    await updateStudyPlan(newPlan);
+    setSaving(false);
+    setEditingDescription(false);
+  };
+
+  const handleDescriptionCancel = () => {
+    setDescriptionValue(slot.description);
+    setEditingDescription(false);
+  };
+
+  // --- Move to week ---
+  const handleMoveToWeek = async (targetWeekNumber: number) => {
+    if (!canEdit || targetWeekNumber === weekNumber) return;
+    setSaving(true);
+    setMoveMenuOpen(false);
+    const newPlan = moveSlotToWeek(studyPlan, weekNumber!, targetWeekNumber, slot.id);
+    await updateStudyPlan(newPlan);
+    setSaving(false);
+  };
+
+  // --- Reorder within week ---
+  const handleReorder = async (direction: 'up' | 'down') => {
+    if (!canEdit || !siblingSlotIds) return;
+    const idx = siblingSlotIds.indexOf(slot.id);
+    if (idx === -1) return;
+    const swapIdx = direction === 'up' ? idx - 1 : idx + 1;
+    if (swapIdx < 0 || swapIdx >= siblingSlotIds.length) return;
+    setSaving(true);
+    const newPlan = reorderSlotInPlan(studyPlan, weekNumber!, slot.id, siblingSlotIds[swapIdx]);
+    await updateStudyPlan(newPlan);
+    setSaving(false);
+  };
+
+  const canMoveUp = siblingSlotIds ? siblingSlotIds.indexOf(slot.id) > 0 : false;
+  const canMoveDown = siblingSlotIds ? siblingSlotIds.indexOf(slot.id) < siblingSlotIds.length - 1 : false;
+
+  const allWeeks = canEdit ? getAllWeeks(studyPlan) : [];
 
   const difficultyColors = ['', 'var(--color-accent-secondary)', 'var(--color-accent-warning)', 'var(--color-accent-primary)'];
   const difficultyLabels = ['', 'Easy', 'Medium', 'Hard'];
@@ -108,6 +189,9 @@ export function SlotCard({ slot, compact = false }: SlotCardProps) {
                 Timed
               </span>
             )}
+            {saving && (
+              <span className="text-xs" style={{ color: 'var(--color-text-tertiary)' }}>Saving...</span>
+            )}
           </div>
 
           {/* Completed timestamp */}
@@ -156,7 +240,41 @@ export function SlotCard({ slot, compact = false }: SlotCardProps) {
           {/* Expandable description */}
           {expanded && (
             <div className="mt-2">
-              <MarkdownBlock content={slot.description} />
+              {editingDescription ? (
+                <div>
+                  <textarea
+                    ref={descTextareaRef}
+                    value={descriptionValue}
+                    onChange={e => setDescriptionValue(e.target.value)}
+                    className="w-full rounded-md border p-2 text-sm resize-y font-mono"
+                    style={{
+                      borderColor: 'var(--color-accent-primary)',
+                      backgroundColor: 'var(--color-bg-primary)',
+                      color: 'var(--color-text-primary)',
+                      minHeight: 80,
+                    }}
+                  />
+                  <div className="flex gap-2 mt-1">
+                    <button
+                      onClick={handleDescriptionSave}
+                      disabled={saving}
+                      className="text-xs px-3 py-1 rounded cursor-pointer"
+                      style={{ backgroundColor: 'var(--color-accent-primary)', color: 'white' }}
+                    >
+                      Save
+                    </button>
+                    <button
+                      onClick={handleDescriptionCancel}
+                      className="text-xs px-3 py-1 rounded cursor-pointer"
+                      style={{ color: 'var(--color-text-tertiary)' }}
+                    >
+                      Cancel
+                    </button>
+                  </div>
+                </div>
+              ) : (
+                <MarkdownBlock content={slot.description} />
+              )}
 
               {/* Links */}
               {slot.links.length > 0 && (
@@ -173,6 +291,83 @@ export function SlotCard({ slot, compact = false }: SlotCardProps) {
                       <ExternalLink size={12} /> {link.text}
                     </a>
                   ))}
+                </div>
+              )}
+
+              {/* Edit toolbar — only when expanded and weekNumber is provided */}
+              {canEdit && !editingDescription && (
+                <div className="flex items-center gap-1 mt-2 pt-2 border-t" style={{ borderColor: 'var(--color-border)' }}>
+                  {/* Edit description */}
+                  <button
+                    onClick={() => { setDescriptionValue(slot.description); setEditingDescription(true); }}
+                    className="inline-flex items-center gap-1 text-xs px-2 py-1 rounded hover:opacity-80 cursor-pointer transition-opacity"
+                    style={{ color: 'var(--color-text-tertiary)' }}
+                    title="Edit description"
+                  >
+                    <Pencil size={12} /> Edit
+                  </button>
+
+                  {/* Move to week */}
+                  <div className="relative" ref={moveMenuRef}>
+                    <button
+                      onClick={() => setMoveMenuOpen(!moveMenuOpen)}
+                      className="inline-flex items-center gap-1 text-xs px-2 py-1 rounded hover:opacity-80 cursor-pointer transition-opacity"
+                      style={{ color: 'var(--color-text-tertiary)' }}
+                      title="Move to another week"
+                    >
+                      <ArrowUpDown size={12} /> Move to...
+                    </button>
+                    {moveMenuOpen && (
+                      <div
+                        className="absolute left-0 bottom-full mb-1 z-50 rounded-lg border shadow-lg overflow-y-auto"
+                        style={{
+                          backgroundColor: 'var(--color-bg-primary)',
+                          borderColor: 'var(--color-border)',
+                          maxHeight: 240,
+                          minWidth: 220,
+                        }}
+                      >
+                        {allWeeks.map(w => (
+                          <button
+                            key={w.weekNumber}
+                            disabled={w.weekNumber === weekNumber}
+                            onClick={() => handleMoveToWeek(w.weekNumber)}
+                            className="block w-full text-left text-xs px-3 py-1.5 hover:opacity-80 cursor-pointer transition-opacity disabled:opacity-40 disabled:cursor-default"
+                            style={{
+                              color: w.weekNumber === weekNumber ? 'var(--color-text-tertiary)' : 'var(--color-text-primary)',
+                              backgroundColor: w.weekNumber === weekNumber ? 'var(--color-bg-tertiary)' : 'transparent',
+                            }}
+                          >
+                            Week {w.weekNumber}: {w.title}
+                          </button>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+
+                  {/* Reorder up/down */}
+                  {siblingSlotIds && siblingSlotIds.length > 1 && (
+                    <>
+                      <button
+                        onClick={() => handleReorder('up')}
+                        disabled={!canMoveUp || saving}
+                        className="inline-flex items-center text-xs p-1 rounded hover:opacity-80 cursor-pointer transition-opacity disabled:opacity-30 disabled:cursor-default"
+                        style={{ color: 'var(--color-text-tertiary)' }}
+                        title="Move up"
+                      >
+                        <ChevronUp size={14} />
+                      </button>
+                      <button
+                        onClick={() => handleReorder('down')}
+                        disabled={!canMoveDown || saving}
+                        className="inline-flex items-center text-xs p-1 rounded hover:opacity-80 cursor-pointer transition-opacity disabled:opacity-30 disabled:cursor-default"
+                        style={{ color: 'var(--color-text-tertiary)' }}
+                        title="Move down"
+                      >
+                        <ChevronDown size={14} />
+                      </button>
+                    </>
+                  )}
                 </div>
               )}
 
