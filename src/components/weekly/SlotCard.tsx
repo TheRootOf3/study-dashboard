@@ -1,9 +1,11 @@
 import { useState } from 'react';
-import { Train, Moon, BookOpen, Flame, ChevronDown, ChevronUp, ExternalLink, Clock, Check } from 'lucide-react';
+import { BookOpen, Flame, ChevronDown, ChevronUp, ExternalLink, Clock, Check } from 'lucide-react';
 import { Checkbox } from '../shared/Checkbox';
 import { MarkdownBlock } from '../shared/MarkdownBlock';
 import { useProgress } from '../../context/ProgressContext';
 import { formatRelativeTime } from '../../utils/dateUtils';
+import { getSlotDisplay } from '../../utils/scheduleConfig';
+import { getIcon } from '../../utils/iconMap';
 import type { Slot } from '../../utils/progressCalc';
 
 interface SlotCardProps {
@@ -12,14 +14,16 @@ interface SlotCardProps {
 }
 
 export function SlotCard({ slot, compact = false }: SlotCardProps) {
-  const { state, toggleCompletion, toggleSubtask, updateSlotNotes, updateSlotDifficulty } = useProgress();
+  const { state, scheduleConfig, toggleCompletion, toggleSubtask, updateSlotNotes, updateSlotDifficulty } = useProgress();
   const completion = state.completions.get(slot.id);
   const isCompleted = !!completion?.completed;
   const [expanded, setExpanded] = useState(!compact);
   const [notesOpen, setNotesOpen] = useState(false);
   const [notesValue, setNotesValue] = useState(completion?.notes || '');
 
-  const Icon = slot.type === 'train' ? Train : Moon;
+  const slotKey = `${slot.type}-${slot.slotNumber}`;
+  const displayConfig = getSlotDisplay(slotKey, scheduleConfig);
+  const Icon = getIcon(displayConfig.icon);
   const hasCritical = slot.tags.includes('critical');
   const hasKeyExercise = slot.tags.includes('key-exercise');
   const hasCheckpoint = slot.tags.includes('checkpoint');
@@ -74,7 +78,7 @@ export function SlotCard({ slot, compact = false }: SlotCardProps) {
             <Icon size={16} style={{ color: slot.isBookSlot ? 'var(--color-accent-book)' : 'var(--color-text-tertiary)' }} />
             {slot.isBookSlot && <BookOpen size={14} style={{ color: 'var(--color-accent-book)' }} />}
             <span className="font-semibold text-sm" style={{ color: 'var(--color-text-primary)' }}>
-              {slot.label}
+              {displayConfig.label}
             </span>
             <span className="text-xs flex items-center gap-1" style={{ color: 'var(--color-text-tertiary)' }}>
               <Clock size={12} /> {hours}h

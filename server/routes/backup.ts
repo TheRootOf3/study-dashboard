@@ -54,11 +54,11 @@ router.post('/', (req: Request, res: Response) => {
 
     if (data.settings) {
       const stmt = db.prepare(`
-        INSERT INTO settings (id, actual_start_date, theme, day_mapping)
-        VALUES (?, ?, ?, ?)
+        INSERT INTO settings (id, actual_start_date, theme, day_mapping, schedule_config)
+        VALUES (?, ?, ?, ?, ?)
       `);
       for (const row of data.settings) {
-        stmt.run(row.id, row.actual_start_date, row.theme, row.day_mapping);
+        stmt.run(row.id, row.actual_start_date, row.theme, row.day_mapping, row.schedule_config);
       }
     }
 

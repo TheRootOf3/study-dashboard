@@ -39,7 +39,8 @@ export function initDatabase(): void {
       id INTEGER PRIMARY KEY CHECK (id = 1),
       actual_start_date TEXT,
       theme TEXT DEFAULT 'light',
-      day_mapping TEXT
+      day_mapping TEXT,
+      schedule_config TEXT
     );
 
     CREATE TABLE IF NOT EXISTS subtask_completions (

@@ -1,8 +1,9 @@
-import { createContext, useContext, useReducer, useEffect, useCallback, type ReactNode } from 'react';
+import { createContext, useContext, useReducer, useEffect, useCallback, useRef, type ReactNode } from 'react';
 import { completionsApi, confusionApi, settingsApi, subtaskCompletionsApi, type Completion, type ConfusionEntry, type Settings, type SubtaskCompletion } from '../api/client';
 import studyPlanData from '../data/studyPlan.json';
 import type { StudyPlan } from '../utils/progressCalc';
-import { DEFAULT_DAY_MAPPING, type DaySlotMapping } from '../utils/dateUtils';
+import { type DaySlotMapping } from '../utils/dateUtils';
+import { DEFAULT_SCHEDULE_CONFIG, type ScheduleConfig } from '../utils/scheduleConfig';
 
 const studyPlan = studyPlanData as StudyPlan;
 
@@ -78,6 +79,7 @@ function reducer(state: State, action: Action): State {
 interface ProgressContextValue {
   state: State;
   studyPlan: StudyPlan;
+  scheduleConfig: ScheduleConfig;
   dayMapping: DaySlotMapping;
   toggleCompletion: (slotId: string, completed: boolean) => Promise<void>;
   toggleSubtask: (subtaskId: string, completed: boolean, slotId: string, totalSubtasks: number) => Promise<void>;
@@ -97,7 +99,7 @@ export function ProgressProvider({ children }: { children: ReactNode }) {
     completions: new Map(),
     subtaskCompletions: new Map(),
     confusionLog: [],
-    settings: { actual_start_date: null, theme: 'light', day_mapping: null },
+    settings: { actual_start_date: null, theme: 'light', day_mapping: null, schedule_config: null },
     loading: true,
     error: null,
   });
@@ -119,7 +121,18 @@ export function ProgressProvider({ children }: { children: ReactNode }) {
 
   useEffect(() => { loadData(); }, [loadData]);
 
-  // Apply dark mode class when settings load or change
+  // On first load with a fresh DB, adopt the OS theme preference.
+  const systemThemeApplied = useRef(false);
+  useEffect(() => {
+    if (state.loading || systemThemeApplied.current) return;
+    systemThemeApplied.current = true;
+    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    if (prefersDark && state.settings.theme === 'light') {
+      updateSettings({ theme: 'dark' });
+    }
+  }, [state.loading]); // eslint-disable-line react-hooks/exhaustive-deps
+
+  // Always sync the dark class with the current theme setting
   useEffect(() => {
     document.documentElement.classList.toggle('dark', state.settings.theme === 'dark');
   }, [state.settings.theme]);
@@ -208,15 +221,19 @@ export function ProgressProvider({ children }: { children: ReactNode }) {
     dispatch({ type: 'UPDATE_SETTINGS', settings });
   }, []);
 
-  const dayMapping: DaySlotMapping = state.settings.day_mapping
-    ? JSON.parse(state.settings.day_mapping)
-    : DEFAULT_DAY_MAPPING;
+  const scheduleConfig: ScheduleConfig = state.settings.schedule_config
+    ? JSON.parse(state.settings.schedule_config)
+    : DEFAULT_SCHEDULE_CONFIG;
+
+  // dayMapping is now derived from scheduleConfig (kept for backward compat)
+  const dayMapping: DaySlotMapping = scheduleConfig.dayMapping;
 
   return (
     <ProgressContext.Provider
       value={{
         state,
         studyPlan,
+        scheduleConfig,
         dayMapping,
         toggleCompletion,
         toggleSubtask,

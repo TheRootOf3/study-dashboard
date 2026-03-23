@@ -82,6 +82,7 @@ export interface Settings {
   actual_start_date: string | null;
   theme: string;
   day_mapping: string | null;
+  schedule_config: string | null;
 }
 
 export const settingsApi = {

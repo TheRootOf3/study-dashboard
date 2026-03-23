@@ -24,7 +24,7 @@ router.put('/', (req: Request, res: Response) => {
   const fields: string[] = [];
   const values: unknown[] = [];
 
-  for (const key of ['actual_start_date', 'theme', 'day_mapping'] as const) {
+  for (const key of ['actual_start_date', 'theme', 'day_mapping', 'schedule_config'] as const) {
     if (req.body[key] !== undefined) {
       fields.push(`${key} = ?`);
       values.push(req.body[key]);
