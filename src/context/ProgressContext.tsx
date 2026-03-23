@@ -1,15 +1,14 @@
-import { createContext, useContext, useReducer, useEffect, useCallback, useRef, type ReactNode } from 'react';
-import { completionsApi, confusionApi, settingsApi, subtaskCompletionsApi, studyPlanApi, type Completion, type ConfusionEntry, type Settings, type SubtaskCompletion } from '../api/client';
+import { createContext, useContext, useReducer, useEffect, useCallback, type ReactNode } from 'react';
+import { completionsApi, confusionApi, subtaskCompletionsApi, studyPlanApi, type Completion, type ConfusionEntry, type SubtaskCompletion } from '../api/client';
 import type { StudyPlan } from '../utils/progressCalc';
 import { type DaySlotMapping } from '../utils/dateUtils';
-import { DEFAULT_SCHEDULE_CONFIG, type ScheduleConfig } from '../utils/scheduleConfig';
+import { DEFAULT_SCHEDULE_CONFIG, deriveScheduleConfigFromPlan, type ScheduleConfig } from '../utils/scheduleConfig';
 
 interface State {
   studyPlan: StudyPlan | null;
   completions: Map<string, Completion>;
   subtaskCompletions: Map<string, SubtaskCompletion>;
   confusionLog: ConfusionEntry[];
-  settings: Settings;
   loading: boolean;
   error: string | null;
 }
@@ -18,7 +17,7 @@ type Action =
   | { type: 'SET_LOADING'; loading: boolean }
   | { type: 'SET_ERROR'; error: string }
   | { type: 'SET_NO_PLAN' }
-  | { type: 'LOAD_DATA'; studyPlan: StudyPlan; completions: Completion[]; subtaskCompletions: SubtaskCompletion[]; confusionLog: ConfusionEntry[]; settings: Settings }
+  | { type: 'LOAD_DATA'; studyPlan: StudyPlan; completions: Completion[]; subtaskCompletions: SubtaskCompletion[]; confusionLog: ConfusionEntry[] }
   | { type: 'UPDATE_STUDY_PLAN'; studyPlan: StudyPlan }
   | { type: 'UPSERT_COMPLETION'; completion: Completion }
   | { type: 'REMOVE_COMPLETION'; slotId: string }
@@ -26,8 +25,7 @@ type Action =
   | { type: 'ADD_CONFUSION'; entry: ConfusionEntry }
   | { type: 'UPDATE_CONFUSION'; entry: ConfusionEntry }
   | { type: 'REMOVE_CONFUSION'; id: string }
-  | { type: 'SET_CONFUSION_LOG'; entries: ConfusionEntry[] }
-  | { type: 'UPDATE_SETTINGS'; settings: Settings };
+  | { type: 'SET_CONFUSION_LOG'; entries: ConfusionEntry[] };
 
 function reducer(state: State, action: Action): State {
   switch (action.type) {
@@ -42,7 +40,7 @@ function reducer(state: State, action: Action): State {
       for (const c of action.completions) map.set(c.slot_id, c);
       const stMap = new Map<string, SubtaskCompletion>();
       for (const s of action.subtaskCompletions) stMap.set(s.subtask_id, s);
-      return { ...state, studyPlan: action.studyPlan, completions: map, subtaskCompletions: stMap, confusionLog: action.confusionLog, settings: action.settings, loading: false };
+      return { ...state, studyPlan: action.studyPlan, completions: map, subtaskCompletions: stMap, confusionLog: action.confusionLog, loading: false };
     }
     case 'UPDATE_STUDY_PLAN':
       return { ...state, studyPlan: action.studyPlan };
@@ -73,8 +71,6 @@ function reducer(state: State, action: Action): State {
       return { ...state, confusionLog: state.confusionLog.filter(e => e.id !== action.id) };
     case 'SET_CONFUSION_LOG':
       return { ...state, confusionLog: action.entries };
-    case 'UPDATE_SETTINGS':
-      return { ...state, settings: action.settings };
     default:
       return state;
   }
@@ -82,6 +78,9 @@ function reducer(state: State, action: Action): State {
 
 interface ProgressContextValue {
   state: State;
+  projectId: string;
+  projectSlug: string;
+  actualStartDate: string | null;
   studyPlan: StudyPlan;
   scheduleConfig: ScheduleConfig;
   dayMapping: DaySlotMapping;
@@ -93,19 +92,25 @@ interface ProgressContextValue {
   addConfusionEntry: (data: { topic: string; description: string; weekId: string }) => Promise<void>;
   updateConfusionEntry: (id: string, data: Partial<Pick<ConfusionEntry, 'topic' | 'description' | 'resolution' | 'resolved'>>) => Promise<void>;
   removeConfusionEntry: (id: string) => Promise<void>;
-  updateSettings: (data: Partial<Settings>) => Promise<void>;
   refreshData: () => Promise<void>;
 }
 
 const ProgressContext = createContext<ProgressContextValue | null>(null);
 
-export function ProgressProvider({ children }: { children: ReactNode }) {
+interface ProgressProviderProps {
+  projectId: string;
+  projectSlug: string;
+  scheduleConfigJson: string | null;
+  actualStartDate: string | null;
+  children: ReactNode;
+}
+
+export function ProgressProvider({ projectId, projectSlug, scheduleConfigJson, actualStartDate, children }: ProgressProviderProps) {
   const [state, dispatch] = useReducer(reducer, {
     studyPlan: null,
     completions: new Map(),
     subtaskCompletions: new Map(),
     confusionLog: [],
-    settings: { actual_start_date: null, theme: 'light', day_mapping: null, schedule_config: null },
     loading: true,
     error: null,
   });
@@ -115,66 +120,42 @@ export function ProgressProvider({ children }: { children: ReactNode }) {
     try {
       let studyPlan: Record<string, unknown> | null;
       try {
-        studyPlan = await studyPlanApi.get();
+        studyPlan = await studyPlanApi(projectId).get();
       } catch {
         // 404 means no study plan exists yet
         studyPlan = null;
       }
 
       if (!studyPlan) {
-        // Still load settings so we can apply theme, but no plan to show
-        try {
-          const settings = await settingsApi.get();
-          dispatch({ type: 'UPDATE_SETTINGS', settings });
-        } catch {
-          // settings might fail too on fresh DB, that's fine
-        }
         dispatch({ type: 'SET_NO_PLAN' });
         return;
       }
 
-      const [completions, subtaskCompletions, confusionLog, settings] = await Promise.all([
-        completionsApi.getAll(),
-        subtaskCompletionsApi.getAll(),
-        confusionApi.getAll(),
-        settingsApi.get(),
+      const [completions, subtaskCompletions, confusionLog] = await Promise.all([
+        completionsApi(projectId).getAll(),
+        subtaskCompletionsApi(projectId).getAll(),
+        confusionApi(projectId).getAll(),
       ]);
-      dispatch({ type: 'LOAD_DATA', studyPlan: studyPlan as unknown as StudyPlan, completions, subtaskCompletions, confusionLog, settings });
+      dispatch({ type: 'LOAD_DATA', studyPlan: studyPlan as unknown as StudyPlan, completions, subtaskCompletions, confusionLog });
     } catch (e) {
       dispatch({ type: 'SET_ERROR', error: (e as Error).message });
     }
-  }, []);
+  }, [projectId]);
 
   useEffect(() => { loadData(); }, [loadData]);
 
-  // On first load with a fresh DB, adopt the OS theme preference.
-  const systemThemeApplied = useRef(false);
-  useEffect(() => {
-    if (state.loading || systemThemeApplied.current) return;
-    systemThemeApplied.current = true;
-    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-    if (prefersDark && state.settings.theme === 'light') {
-      updateSettings({ theme: 'dark' });
-    }
-  }, [state.loading]); // eslint-disable-line react-hooks/exhaustive-deps
-
-  // Always sync the dark class with the current theme setting
-  useEffect(() => {
-    document.documentElement.classList.toggle('dark', state.settings.theme === 'dark');
-  }, [state.settings.theme]);
-
   const toggleCompletion = useCallback(async (slotId: string, completed: boolean) => {
     const existing = state.completions.get(slotId);
-    const result = await completionsApi.upsert(slotId, {
+    const result = await completionsApi(projectId).upsert(slotId, {
       completed: completed ? 1 : 0,
       notes: existing?.notes || '',
       difficulty: existing?.difficulty ?? null,
     });
     dispatch({ type: 'UPSERT_COMPLETION', completion: result });
-  }, [state.completions]);
+  }, [state.completions, projectId]);
 
   const toggleSubtask = useCallback(async (subtaskId: string, completed: boolean, slotId: string, totalSubtasks: number) => {
-    const result = await subtaskCompletionsApi.upsert(subtaskId, completed);
+    const result = await subtaskCompletionsApi(projectId).upsert(subtaskId, completed);
     dispatch({ type: 'UPSERT_SUBTASK', subtask: result });
 
     // Auto-complete the parent slot when all subtasks are done
@@ -191,80 +172,81 @@ export function ProgressProvider({ children }: { children: ReactNode }) {
     const currentlyCompleted = !!existing?.completed;
 
     if (allDone && !currentlyCompleted) {
-      const res = await completionsApi.upsert(slotId, {
+      const res = await completionsApi(projectId).upsert(slotId, {
         completed: 1,
         notes: existing?.notes || '',
         difficulty: existing?.difficulty ?? null,
       });
       dispatch({ type: 'UPSERT_COMPLETION', completion: res });
     } else if (!allDone && currentlyCompleted) {
-      const res = await completionsApi.upsert(slotId, {
+      const res = await completionsApi(projectId).upsert(slotId, {
         completed: 0,
         notes: existing?.notes || '',
         difficulty: existing?.difficulty ?? null,
       });
       dispatch({ type: 'UPSERT_COMPLETION', completion: res });
     }
-  }, [state.subtaskCompletions, state.completions]);
+  }, [state.subtaskCompletions, state.completions, projectId]);
 
   const updateSlotNotes = useCallback(async (slotId: string, notes: string) => {
     const existing = state.completions.get(slotId);
-    const result = await completionsApi.upsert(slotId, {
+    const result = await completionsApi(projectId).upsert(slotId, {
       completed: existing?.completed ?? 0,
       notes,
       difficulty: existing?.difficulty ?? null,
     });
     dispatch({ type: 'UPSERT_COMPLETION', completion: result });
-  }, [state.completions]);
+  }, [state.completions, projectId]);
 
   const updateSlotDifficulty = useCallback(async (slotId: string, difficulty: number | null) => {
     const existing = state.completions.get(slotId);
-    const result = await completionsApi.upsert(slotId, {
+    const result = await completionsApi(projectId).upsert(slotId, {
       completed: existing?.completed ?? 0,
       notes: existing?.notes || '',
       difficulty,
     });
     dispatch({ type: 'UPSERT_COMPLETION', completion: result });
-  }, [state.completions]);
+  }, [state.completions, projectId]);
 
   const addConfusionEntry = useCallback(async (data: { topic: string; description: string; weekId: string }) => {
-    const entry = await confusionApi.create(data);
+    const entry = await confusionApi(projectId).create(data);
     dispatch({ type: 'ADD_CONFUSION', entry });
-  }, []);
+  }, [projectId]);
 
   const updateConfusionEntry = useCallback(async (id: string, data: Partial<Pick<ConfusionEntry, 'topic' | 'description' | 'resolution' | 'resolved'>>) => {
-    const entry = await confusionApi.update(id, data);
+    const entry = await confusionApi(projectId).update(id, data);
     dispatch({ type: 'UPDATE_CONFUSION', entry });
-  }, []);
+  }, [projectId]);
 
   const removeConfusionEntry = useCallback(async (id: string) => {
-    await confusionApi.remove(id);
+    await confusionApi(projectId).remove(id);
     dispatch({ type: 'REMOVE_CONFUSION', id });
-  }, []);
-
-  const updateSettings = useCallback(async (data: Partial<Settings>) => {
-    const settings = await settingsApi.update(data);
-    dispatch({ type: 'UPDATE_SETTINGS', settings });
-  }, []);
+  }, [projectId]);
 
   const updateStudyPlan = useCallback(async (plan: StudyPlan) => {
-    const result = await studyPlanApi.update(plan as unknown as Record<string, unknown>);
+    const result = await studyPlanApi(projectId).update(plan as unknown as Record<string, unknown>);
     dispatch({ type: 'UPDATE_STUDY_PLAN', studyPlan: result as unknown as StudyPlan });
-  }, []);
+  }, [projectId]);
 
-  const scheduleConfig: ScheduleConfig = state.settings.schedule_config
-    ? JSON.parse(state.settings.schedule_config)
-    : DEFAULT_SCHEDULE_CONFIG;
+  // Derive schedule config: use saved config if available, otherwise auto-generate from the plan's slot types
+  const scheduleConfig: ScheduleConfig = scheduleConfigJson
+    ? JSON.parse(scheduleConfigJson)
+    : state.studyPlan
+      ? deriveScheduleConfigFromPlan(state.studyPlan.phases)
+      : DEFAULT_SCHEDULE_CONFIG;
 
   const dayMapping: DaySlotMapping = scheduleConfig.dayMapping;
 
-  // While loading or if no plan, show a loading state
-  const studyPlan: StudyPlan = state.studyPlan || { startDate: '', endDate: '', totalWeeks: 0, schedule: { description: '', totalHoursPerWeek: 0, sessionStructures: {}, defaultDayMapping: {} }, resources: [], phases: [] };
+  // While loading or if no plan, provide a fallback study plan object
+  const studyPlan: StudyPlan = state.studyPlan || { startDate: actualStartDate || '', endDate: '', totalWeeks: 0, schedule: { description: '', totalHoursPerWeek: 0, sessionStructures: {}, defaultDayMapping: {} }, resources: [], phases: [] };
 
   return (
     <ProgressContext.Provider
       value={{
         state,
+        projectId,
+        projectSlug,
+        actualStartDate,
         studyPlan,
         scheduleConfig,
         dayMapping,
@@ -276,7 +258,6 @@ export function ProgressProvider({ children }: { children: ReactNode }) {
         addConfusionEntry,
         updateConfusionEntry,
         removeConfusionEntry,
-        updateSettings,
         refreshData: loadData,
       }}
     >
@@ -290,3 +271,10 @@ export function useProgress() {
   if (!ctx) throw new Error('useProgress must be used within ProgressProvider');
   return ctx;
 }
+
+/** Returns the ProgressContext value or null if outside a ProgressProvider. */
+export function useProgressOptional() {
+  return useContext(ProgressContext);
+}
+
+export type { ProgressContextValue };

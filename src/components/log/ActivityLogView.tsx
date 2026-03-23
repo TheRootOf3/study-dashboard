@@ -7,7 +7,7 @@ import { getIcon } from '../../utils/iconMap';
 import { getWeekByNumber, getPhaseForWeek, getPhaseColor } from '../../utils/progressCalc';
 
 export function ActivityLogView() {
-  const { state, studyPlan, scheduleConfig } = useProgress();
+  const { state, projectSlug, studyPlan, scheduleConfig } = useProgress();
   const [filter, setFilter] = useState<'all' | 'slots' | 'subtasks'>('all');
 
   // Build a unified log of all completion events, sorted newest first
@@ -172,11 +172,11 @@ export function ActivityLogView() {
                           )}
                         </div>
                         <div className="text-xs mt-0.5" style={{ color: 'var(--color-text-tertiary)' }}>
-                          <Link to={`/week/${entry.weekNumber}`} className="hover:underline" style={{ color: phaseColor }}>
+                          <Link to={`/p/${projectSlug}/week/${entry.weekNumber}`} className="hover:underline" style={{ color: phaseColor }}>
                             Phase {entry.phaseNumber}: {entry.phaseTitle}
                           </Link>
                           {' · '}
-                          <Link to={`/week/${entry.weekNumber}`} className="hover:underline">
+                          <Link to={`/p/${projectSlug}/week/${entry.weekNumber}`} className="hover:underline">
                             Week {entry.weekNumber}: {entry.weekTitle}
                           </Link>
                         </div>

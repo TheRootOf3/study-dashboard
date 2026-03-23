@@ -1,10 +1,10 @@
 import { addDays, differenceInDays, differenceInWeeks, format, isWithinInterval, parseISO, startOfDay, isBefore, isAfter, startOfWeek, endOfWeek, eachDayOfInterval, getDay } from 'date-fns';
 
-const PLAN_START = '2026-03-24';
-const TOTAL_WEEKS = 31;
+const DEFAULT_START = '2026-03-24';
+const DEFAULT_TOTAL_WEEKS = 31;
 
 export function getPlanStartDate(actualStartDate?: string | null): Date {
-  return parseISO(actualStartDate || PLAN_START);
+  return parseISO(actualStartDate || DEFAULT_START);
 }
 
 export function getWeekStartDate(weekNumber: number, actualStartDate?: string | null): Date {
@@ -16,23 +16,25 @@ export function getWeekEndDate(weekNumber: number, actualStartDate?: string | nu
   return addDays(getWeekStartDate(weekNumber, actualStartDate), 6);
 }
 
-export function getCurrentDayInPlan(actualStartDate?: string | null): number {
+export function getCurrentDayInPlan(actualStartDate?: string | null, totalWeeks?: number): number {
+  const tw = totalWeeks ?? DEFAULT_TOTAL_WEEKS;
   const start = getPlanStartDate(actualStartDate);
   const today = startOfDay(new Date());
   if (isBefore(today, start)) return 0;
-  return Math.min(differenceInDays(today, start), TOTAL_WEEKS * 7);
+  return Math.min(differenceInDays(today, start), tw * 7);
 }
 
-export function getCurrentWeekNumber(actualStartDate?: string | null): number {
+export function getCurrentWeekNumber(actualStartDate?: string | null, totalWeeks?: number): number {
+  const tw = totalWeeks ?? DEFAULT_TOTAL_WEEKS;
   const start = getPlanStartDate(actualStartDate);
   const today = startOfDay(new Date());
   if (isBefore(today, start)) return 1;
   const weeksSince = differenceInWeeks(today, start);
-  return Math.min(weeksSince + 1, TOTAL_WEEKS);
+  return Math.min(weeksSince + 1, tw);
 }
 
-export function isCurrentWeek(weekNumber: number, actualStartDate?: string | null): boolean {
-  return getCurrentWeekNumber(actualStartDate) === weekNumber;
+export function isCurrentWeek(weekNumber: number, actualStartDate?: string | null, totalWeeks?: number): boolean {
+  return getCurrentWeekNumber(actualStartDate, totalWeeks) === weekNumber;
 }
 
 export function isToday(date: Date): boolean {
@@ -41,17 +43,18 @@ export function isToday(date: Date): boolean {
   return differenceInDays(today, d) === 0;
 }
 
-export function isPastWeek(weekNumber: number, actualStartDate?: string | null): boolean {
-  return weekNumber < getCurrentWeekNumber(actualStartDate);
+export function isPastWeek(weekNumber: number, actualStartDate?: string | null, totalWeeks?: number): boolean {
+  return weekNumber < getCurrentWeekNumber(actualStartDate, totalWeeks);
 }
 
-export function isFutureWeek(weekNumber: number, actualStartDate?: string | null): boolean {
-  return weekNumber > getCurrentWeekNumber(actualStartDate);
+export function isFutureWeek(weekNumber: number, actualStartDate?: string | null, totalWeeks?: number): boolean {
+  return weekNumber > getCurrentWeekNumber(actualStartDate, totalWeeks);
 }
 
-export function getTimeProgress(actualStartDate?: string | null): number {
+export function getTimeProgress(actualStartDate?: string | null, totalWeeks?: number): number {
+  const tw = totalWeeks ?? DEFAULT_TOTAL_WEEKS;
   const start = getPlanStartDate(actualStartDate);
-  const end = addDays(start, TOTAL_WEEKS * 7);
+  const end = addDays(start, tw * 7);
   const today = new Date();
   if (isBefore(today, start)) return 0;
   if (isAfter(today, end)) return 100;
@@ -80,16 +83,6 @@ export function formatRelativeTime(isoDate: string): string {
 
 export type DaySlotMapping = Record<string, string[]>;
 
-export const DEFAULT_DAY_MAPPING: DaySlotMapping = {
-  monday: ['train-1'],
-  tuesday: ['train-2', 'evening-1'],
-  wednesday: ['train-3'],
-  thursday: ['train-4', 'evening-2'],
-  friday: [],
-  saturday: ['evening-3'],
-  sunday: [],
-};
-
 const DAY_INDEX_TO_NAME: Record<number, string> = {
   0: 'sunday',
   1: 'monday',
@@ -100,16 +93,14 @@ const DAY_INDEX_TO_NAME: Record<number, string> = {
   6: 'saturday',
 };
 
-export function getTodaySlotTypes(dayMapping?: DaySlotMapping | null): string[] {
-  const mapping = dayMapping || DEFAULT_DAY_MAPPING;
+export function getTodaySlotTypes(dayMapping: DaySlotMapping): string[] {
   const dayName = DAY_INDEX_TO_NAME[getDay(new Date())];
-  return mapping[dayName] || [];
+  return dayMapping[dayName] || [];
 }
 
-export function getDaySlotTypes(date: Date, dayMapping?: DaySlotMapping | null): string[] {
-  const mapping = dayMapping || DEFAULT_DAY_MAPPING;
+export function getDaySlotTypes(date: Date, dayMapping: DaySlotMapping): string[] {
   const dayName = DAY_INDEX_TO_NAME[getDay(date)];
-  return mapping[dayName] || [];
+  return dayMapping[dayName] || [];
 }
 
 export function getMonthDays(year: number, month: number): Date[] {
@@ -118,9 +109,10 @@ export function getMonthDays(year: number, month: number): Date[] {
   return eachDayOfInterval({ start, end });
 }
 
-export function getWeekNumberForDate(date: Date, actualStartDate?: string | null): number | null {
+export function getWeekNumberForDate(date: Date, actualStartDate?: string | null, totalWeeks?: number): number | null {
+  const tw = totalWeeks ?? DEFAULT_TOTAL_WEEKS;
   const start = getPlanStartDate(actualStartDate);
-  const end = addDays(start, TOTAL_WEEKS * 7 - 1);
+  const end = addDays(start, tw * 7 - 1);
   if (isBefore(date, start) || isAfter(date, end)) return null;
   return Math.floor(differenceInDays(date, start) / 7) + 1;
 }

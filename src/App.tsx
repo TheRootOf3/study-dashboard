@@ -1,13 +1,13 @@
 import { BrowserRouter } from 'react-router-dom';
-import { ProgressProvider } from './context/ProgressContext';
+import { ProjectsProvider } from './context/ProjectsContext';
 import { AppGate } from './AppGate';
 
 function App() {
   return (
     <BrowserRouter>
-      <ProgressProvider>
+      <ProjectsProvider>
         <AppGate />
-      </ProgressProvider>
+      </ProjectsProvider>
     </BrowserRouter>
   );
 }

@@ -17,12 +17,6 @@ export interface ScheduleConfig {
   dayMapping: Record<string, string[]>;     // day name -> slot keys
 }
 
-/** The slot keys that exist in the default study plan (for reference) */
-export const STUDY_PLAN_SLOT_KEYS = [
-  'train-1', 'train-2', 'train-3', 'train-4',
-  'evening-1', 'evening-2', 'evening-3',
-] as const;
-
 export const DEFAULT_SCHEDULE_CONFIG: ScheduleConfig = {
   sessionTypes: [
     { id: 'commute', label: 'Commute', icon: 'train' },
@@ -124,7 +118,8 @@ export function groupSlotsByType<T extends { type: string; slotNumber: number }>
   for (const slot of slots) {
     const key = `${slot.type}-${slot.slotNumber}`;
     const def = config.slots.find(s => s.key === key);
-    const typeId = def?.typeId || 'other';
+    // Fall back to the slot's own type field if config doesn't know this slot
+    const typeId = def?.typeId || slot.type;
     if (!groups.has(typeId)) groups.set(typeId, []);
     groups.get(typeId)!.push(slot);
   }
@@ -149,4 +144,73 @@ export function nextCustomSlotKey(config: ScheduleConfig): string {
   });
   const max = existing.length > 0 ? Math.max(...existing) : 0;
   return `custom-${max + 1}`;
+}
+
+/** Default icon guesses for common slot type names */
+const TYPE_ICON_HINTS: Record<string, string> = {
+  lecture: 'graduation-cap',
+  practice: 'pencil-line',
+  reading: 'book-open',
+  review: 'book-open',
+  exercise: 'pencil-line',
+  session: 'book-open',
+  train: 'train',
+  evening: 'moon',
+  commute: 'train',
+  study: 'book-open',
+  deep: 'graduation-cap',
+  light: 'pencil-line',
+};
+
+/**
+ * Auto-generate a ScheduleConfig from a study plan's slot types.
+ * Scans all weeks to discover unique slot types and slot keys,
+ * then creates session types and slot definitions.
+ */
+export function deriveScheduleConfigFromPlan(phases: { weeks: { slots: { type: string; slotNumber: number; label: string }[] }[] }[]): ScheduleConfig {
+  const typeSet = new Map<string, number>(); // type -> max slotNumber
+  const slotKeys: string[] = [];
+  const seenKeys = new Set<string>();
+
+  for (const phase of phases) {
+    for (const week of phase.weeks) {
+      for (const slot of week.slots) {
+        const key = `${slot.type}-${slot.slotNumber}`;
+        const prev = typeSet.get(slot.type) || 0;
+        typeSet.set(slot.type, Math.max(prev, slot.slotNumber));
+        if (!seenKeys.has(key)) {
+          seenKeys.add(key);
+          slotKeys.push(key);
+        }
+      }
+    }
+  }
+
+  const sessionTypes: SessionType[] = Array.from(typeSet.keys()).map(type => ({
+    id: type,
+    label: type.charAt(0).toUpperCase() + type.slice(1),
+    icon: TYPE_ICON_HINTS[type.toLowerCase()] || 'circle',
+  }));
+
+  const slots: SlotDefinition[] = slotKeys.map(key => {
+    const [type, numStr] = key.split('-');
+    const st = sessionTypes.find(t => t.id === type);
+    return {
+      key,
+      typeId: type,
+      label: `${st?.label || type} ${numStr}`,
+      isCustom: false,
+    };
+  });
+
+  // Simple day mapping: spread slots across weekdays
+  const days = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'];
+  const dayMapping: Record<string, string[]> = {};
+  for (const d of days) dayMapping[d] = [];
+  slots.forEach((s, i) => {
+    const dayIdx = i % 5; // spread across Mon-Fri by default
+    dayMapping[days[dayIdx]].push(s.key);
+  });
+
+  return { sessionTypes, slots, dayMapping };
 }

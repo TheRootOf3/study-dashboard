@@ -1,14 +1,14 @@
 import type { StudyPlan, Slot } from './progressCalc';
 
 /** Fields that represent the "content" of a slot (swappable between slots). */
-type SlotContent = Pick<Slot, 'description' | 'subtasks' | 'links' | 'tags' | 'isBookSlot' | 'estimatedMinutes'>;
+type SlotContent = Pick<Slot, 'description' | 'subtasks' | 'links' | 'tags' | 'isAdditionalContent' | 'estimatedMinutes'>;
 
 /**
  * Swap the content fields between two slots, keeping id/type/slotNumber/label in place.
  * Mutates both slots in-place for convenience; callers should work on a deep copy of the plan.
  */
 export function swapSlotContent(a: Slot, b: Slot): void {
-  const fields: (keyof SlotContent)[] = ['description', 'subtasks', 'links', 'tags', 'isBookSlot', 'estimatedMinutes'];
+  const fields: (keyof SlotContent)[] = ['description', 'subtasks', 'links', 'tags', 'isAdditionalContent', 'estimatedMinutes'];
   for (const key of fields) {
     const tmp = a[key];
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -26,7 +26,7 @@ export function updateSlotInPlan(
   plan: StudyPlan,
   weekNumber: number,
   slotId: string,
-  updates: Partial<Pick<Slot, 'description' | 'subtasks' | 'links' | 'tags' | 'isBookSlot' | 'estimatedMinutes'>>,
+  updates: Partial<Pick<Slot, 'description' | 'subtasks' | 'links' | 'tags' | 'isAdditionalContent' | 'estimatedMinutes'>>,
 ): StudyPlan {
   const copy: StudyPlan = JSON.parse(JSON.stringify(plan));
   for (const phase of copy.phases) {

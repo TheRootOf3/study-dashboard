@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from 'react';
-import { BookOpen, Flame, ChevronDown, ChevronUp, ExternalLink, Clock, Check, Pencil, ArrowUpDown } from 'lucide-react';
+import { Flame, ChevronDown, ChevronUp, ExternalLink, Clock, Check, Pencil, ArrowUpDown } from 'lucide-react';
 import { Checkbox } from '../shared/Checkbox';
 import { MarkdownBlock } from '../shared/MarkdownBlock';
 import { useProgress } from '../../context/ProgressContext';
@@ -146,8 +146,17 @@ export function SlotCard({ slot, compact = false, weekNumber, siblingSlotIds }: 
     <div
       className="rounded-lg border transition-all duration-200"
       style={{
-        borderColor: isCompleted ? 'var(--color-accent-secondary)' : 'var(--color-border)',
-        backgroundColor: isCompleted ? 'color-mix(in srgb, var(--color-accent-secondary) 5%, var(--color-bg-secondary))' : 'var(--color-bg-secondary)',
+        borderColor: isCompleted
+          ? 'var(--color-accent-secondary)'
+          : slot.isAdditionalContent
+            ? 'color-mix(in srgb, var(--color-accent-book) 40%, var(--color-border))'
+            : 'var(--color-border)',
+        borderLeft: slot.isAdditionalContent ? '3px solid var(--color-accent-book)' : undefined,
+        backgroundColor: isCompleted
+          ? 'color-mix(in srgb, var(--color-accent-secondary) 5%, var(--color-bg-secondary))'
+          : slot.isAdditionalContent
+            ? 'color-mix(in srgb, var(--color-accent-book) 4%, var(--color-bg-secondary))'
+            : 'var(--color-bg-secondary)',
         opacity: isCompleted ? 0.85 : 1,
       }}
     >
@@ -156,9 +165,13 @@ export function SlotCard({ slot, compact = false, weekNumber, siblingSlotIds }: 
         <Checkbox checked={isCompleted} onChange={handleSlotToggle} size={28} />
         <div className="flex-1 min-w-0">
           <div className="flex items-center gap-2 flex-wrap">
-            <Icon size={16} style={{ color: slot.isBookSlot ? 'var(--color-accent-book)' : 'var(--color-text-tertiary)' }} />
-            {slot.isBookSlot && <BookOpen size={14} style={{ color: 'var(--color-accent-book)' }} />}
-            <span className="font-semibold text-sm" style={{ color: 'var(--color-text-primary)' }}>
+            <Icon size={16} style={{ color: slot.isAdditionalContent ? 'var(--color-accent-book)' : 'var(--color-text-tertiary)' }} />
+            {slot.isAdditionalContent && (
+              <span className="text-xs px-1.5 py-0.5 rounded" style={{ backgroundColor: 'color-mix(in srgb, var(--color-accent-book) 15%, transparent)', color: 'var(--color-accent-book)' }}>
+                Additional
+              </span>
+            )}
+            <span className="font-semibold text-sm" style={{ color: slot.isAdditionalContent ? 'var(--color-accent-book)' : 'var(--color-text-primary)' }}>
               {displayConfig.label}
             </span>
             <span className="text-xs flex items-center gap-1" style={{ color: 'var(--color-text-tertiary)' }}>

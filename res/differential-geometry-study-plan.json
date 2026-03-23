@@ -1,0 +1,2410 @@
+{
+  "startDate": "2026-03-30",
+  "endDate": "2026-09-13",
+  "totalWeeks": 24,
+  "schedule": {
+    "description": "5 weekday sessions of ~2 hours each. Monday–Wednesday focus on lectures/theory, Thursday on exercises/practice, Friday on reading and connections to loss landscapes.",
+    "totalHoursPerWeek": 10,
+    "sessionStructures": {
+      "lecture": { "label": "Lecture & Theory", "days": ["Mon", "Tue", "Wed"], "durationMinutes": 120 },
+      "practice": { "label": "Exercises & Practice", "days": ["Thu"], "durationMinutes": 120 },
+      "reading": { "label": "Reading & Connections", "days": ["Fri"], "durationMinutes": 120 }
+    },
+    "defaultDayMapping": {
+      "Mon": "lecture",
+      "Tue": "lecture",
+      "Wed": "lecture",
+      "Thu": "practice",
+      "Fri": "reading"
+    }
+  },
+  "resources": [
+    { "name": "3Blue1Brown – Essence of Linear Algebra", "url": "https://www.youtube.com/playlist?list=PLZHQObOWTQDPD3MizzM2xVFitgF8hE_ab", "category": "video", "phases": [1] },
+    { "name": "3Blue1Brown – Essence of Calculus", "url": "https://www.youtube.com/playlist?list=PLZHQObOWTQDMsr9K-rj53DwVRMYO3t5Yr", "category": "video", "phases": [1] },
+    { "name": "Khan Academy – Multivariable Calculus", "url": "https://www.khanacademy.org/math/multivariable-calculus", "category": "course", "phases": [1] },
+    { "name": "MIT 18.02 – Multivariable Calculus (OCW)", "url": "https://ocw.mit.edu/courses/18-02sc-multivariable-calculus-fall-2010/", "category": "course", "phases": [1] },
+    { "name": "Visual Differential Geometry and Forms – Tristan Needham", "url": "https://www.vdgf.space/", "category": "book", "phases": [1, 2, 3] },
+    { "name": "Discrete Differential Geometry – Keenan Crane (CMU)", "url": "https://www.youtube.com/playlist?list=PL9_jI1bdZmz0hIrNCMQW1YmZysAiIYSSS", "category": "course", "phases": [2, 3, 4] },
+    { "name": "Keenan Crane – DDG Course Notes (PDF)", "url": "https://www.cs.cmu.edu/~kmcrane/Projects/DDG/paper.pdf", "category": "reference", "phases": [2, 3, 4] },
+    { "name": "Do Carmo – Differential Geometry of Curves and Surfaces", "url": "https://www.amazon.com/Differential-Geometry-Curves-Surfaces-Mathematics/dp/0486806995", "category": "book", "phases": [2] },
+    { "name": "Lee – Introduction to Smooth Manifolds (2nd ed.)", "url": "https://link.springer.com/book/10.1007/978-1-4419-9982-5", "category": "book", "phases": [3, 4] },
+    { "name": "Absil et al. – Optimization Algorithms on Matrix Manifolds", "url": "https://press.princeton.edu/absil", "category": "book", "phases": [4, 5] },
+    { "name": "Li et al. – Visualizing the Loss Landscape of Neural Nets (2018)", "url": "https://arxiv.org/abs/1712.09913", "category": "paper", "phases": [5] },
+    { "name": "Amari – Information Geometry and Its Applications", "url": "https://link.springer.com/book/10.1007/978-4-431-55978-8", "category": "book", "phases": [5] },
+    { "name": "Sagun et al. – Empirical Analysis of the Hessian of Over-Parametrized NNs", "url": "https://arxiv.org/abs/1706.04454", "category": "paper", "phases": [5] },
+    { "name": "Dauphin et al. – Identifying and Attacking the Saddle Point Problem (2014)", "url": "https://arxiv.org/abs/1406.2572", "category": "paper", "phases": [5] },
+    { "name": "Geometry of Neural Network Loss Surfaces via Random Matrix Theory (Pennington & Worah 2017)", "url": "https://arxiv.org/abs/1710.09163", "category": "paper", "phases": [5] },
+    { "name": "Eigencurve – Measuring Curvature of the Loss Landscape", "url": "https://arxiv.org/abs/2012.04299", "category": "paper", "phases": [5] },
+    { "name": "Topological Properties of the Loss Landscape (Ballard et al.)", "url": "https://arxiv.org/abs/1511.06422", "category": "paper", "phases": [5] },
+    { "name": "Frederick & Bhatt – A Physics Perspective on Loss Landscape", "url": "https://arxiv.org/abs/2301.00206", "category": "paper", "phases": [5] }
+  ],
+  "phases": [
+    {
+      "id": "phase-1",
+      "number": 1,
+      "title": "Mathematical Foundations",
+      "course": "Khan Academy Multivariable Calculus + 3Blue1Brown",
+      "courseUrl": "https://www.khanacademy.org/math/multivariable-calculus",
+      "description": "Rebuild the core mathematical fluency you'll need for everything ahead: linear algebra (eigenvalues, quadratic forms, spectral decomposition), multivariable calculus (gradients, Jacobians, Hessians), and just enough topology (open sets, continuity, compactness) to read manifold definitions comfortably. This phase moves fast because you already have CS intuition — we're formalising what you half-know.",
+      "bookChapters": "Needham, Visual Differential Geometry and Forms — Ch. 1–3 (Euclidean Geometry, revisiting vectors and transformations)",
+      "bookDescription": "Needham gives a beautifully visual, intuition-first treatment. Read chapters 1–3 as a parallel track — they reframe linear algebra and calculus in the geometric language you'll use for the rest of the plan.",
+      "weekRange": [1, 5],
+      "completionNote": "You can confidently compute eigendecompositions, Hessians, and Taylor expansions in multiple dimensions. You understand what 'open set', 'homeomorphism', and 'continuity' mean topologically. You can explain why the Hessian of a loss function at a critical point tells you about local curvature.",
+      "weeks": [
+        {
+          "id": "week-1",
+          "weekNumber": 1,
+          "dateRange": "30 Mar – 3 Apr",
+          "startDate": "2026-03-30",
+          "endDate": "2026-04-03",
+          "title": "Linear Algebra Revival: Eigenvalues, Quadratic Forms, Spectral Theorem",
+          "isBuffer": false,
+          "slots": [
+            {
+              "id": "week-1-lecture-1",
+              "type": "lecture",
+              "slotNumber": 1,
+              "label": "Session 1 — Linear Maps & Eigenvalues",
+              "description": "Watch 3Blue1Brown's **Essence of Linear Algebra** chapters 1–7 (linear transformations through eigenvalues). Focus on the geometric interpretation: eigenvectors are directions preserved by the transformation, eigenvalues are how much they stretch.\n\n**Connection:** In a neural network's loss landscape, the Hessian matrix at a critical point is a linear map. Its eigenvalues tell you about curvature — positive means a valley, negative means a ridge, zero means a flat direction.",
+              "isBookSlot": false,
+              "estimatedMinutes": 120,
+              "tags": ["critical", "connection"],
+              "links": [
+                { "text": "3B1B: Essence of Linear Algebra (full playlist)", "url": "https://www.youtube.com/playlist?list=PLZHQObOWTQDPD3MizzM2xVFitgF8hE_ab" },
+                { "text": "Ch 1: Vectors, what even are they?", "url": "https://www.youtube.com/watch?v=fNk_zzaMoSs" },
+                { "text": "Ch 14: Eigenvectors and Eigenvalues", "url": "https://www.youtube.com/watch?v=PFDu9oVAE1g" }
+              ],
+              "subtasks": [
+                { "id": "week-1-lecture-1-sub-1", "label": "Watch 3B1B chapters 1–4 (vectors, span, transformations, matrix multiplication)" },
+                { "id": "week-1-lecture-1-sub-2", "label": "Watch 3B1B chapters 5–7 (determinant, inverse, column space, null space)" },
+                { "id": "week-1-lecture-1-sub-3", "label": "Write down 3 sentences explaining eigenvalues geometrically in your own words" }
+              ]
+            },
+            {
+              "id": "week-1-lecture-2",
+              "type": "lecture",
+              "slotNumber": 2,
+              "label": "Session 2 — Spectral Decomposition & Quadratic Forms",
+              "description": "Watch 3B1B eigen chapters (13–14), then study the **spectral theorem for symmetric matrices**: any real symmetric matrix can be decomposed as Q Λ Qᵀ. Then study quadratic forms: x^T A x, and how eigenvalues determine whether the quadratic form is positive definite, negative definite, or indefinite.\n\n**Connection:** The Hessian of a loss function is symmetric. Its spectral decomposition gives you the principal curvature directions. Positive definite Hessian = local minimum. Indefinite = saddle point. This is the core geometric content of loss landscape analysis.",
+              "isBookSlot": false,
+              "estimatedMinutes": 120,
+              "tags": ["critical", "connection"],
+              "links": [
+                { "text": "3B1B Ch 14: Eigenvectors and Eigenvalues", "url": "https://www.youtube.com/watch?v=PFDu9oVAE1g" },
+                { "text": "MIT OCW 18.06: Symmetric Matrices & Positive Definiteness", "url": "https://ocw.mit.edu/courses/18-06sc-linear-algebra-fall-2011/pages/positive-definite-matrices-and-applications/" }
+              ],
+              "subtasks": [
+                { "id": "week-1-lecture-2-sub-1", "label": "Watch 3B1B chapters 13–14 (change of basis, eigenvectors)" },
+                { "id": "week-1-lecture-2-sub-2", "label": "Read/watch spectral theorem for real symmetric matrices" },
+                { "id": "week-1-lecture-2-sub-3", "label": "Work through: classify x^T A x for 3 example matrices by computing eigenvalues" },
+                { "id": "week-1-lecture-2-sub-4", "label": "Write down the connection between Hessian eigenvalues and critical point type" }
+              ]
+            },
+            {
+              "id": "week-1-lecture-3",
+              "type": "lecture",
+              "slotNumber": 3,
+              "label": "Session 3 — SVD and Matrix Norms",
+              "description": "Study the **Singular Value Decomposition** (SVD): every matrix A = U Σ Vᵀ. Understand singular values as the semi-axes of the ellipsoid that A maps the unit sphere to. Study Frobenius norm, operator norm, and their relation to singular values.\n\n**Connection:** SVD appears everywhere in NN interpretability — weight matrix decomposition, low-rank approximations, and the filter normalisation used in Li et al.'s loss landscape visualisation paper.",
+              "isBookSlot": false,
+              "estimatedMinutes": 120,
+              "tags": ["connection"],
+              "links": [
+                { "text": "3B1B companion: SVD visual intuition (Steve Brunton)", "url": "https://www.youtube.com/watch?v=nbBvuuNVfco" },
+                { "text": "MIT OCW 18.06: SVD", "url": "https://ocw.mit.edu/courses/18-06sc-linear-algebra-fall-2011/pages/least-squares-determinants-and-eigenvalues/singular-value-decomposition/" }
+              ],
+              "subtasks": [
+                { "id": "week-1-lecture-3-sub-1", "label": "Watch Steve Brunton's SVD lecture" },
+                { "id": "week-1-lecture-3-sub-2", "label": "Compute SVD of a 3×2 matrix by hand" },
+                { "id": "week-1-lecture-3-sub-3", "label": "Understand: how SVD relates to eigendecomposition for symmetric matrices" }
+              ]
+            },
+            {
+              "id": "week-1-practice-1",
+              "type": "practice",
+              "slotNumber": 4,
+              "label": "Session 4 — Coding Linear Algebra",
+              "description": "Implement key concepts in Python/NumPy. This cements your understanding and connects the math to your ML workflow.\n\n- Compute eigenvalues/eigenvectors of a random symmetric matrix\n- Verify the spectral theorem: reconstruct A from Q Λ Qᵀ\n- Classify random quadratic forms as pos. def / neg. def / indefinite\n- Compute SVD and verify A = U Σ Vᵀ",
+              "isBookSlot": false,
+              "estimatedMinutes": 120,
+              "tags": ["key-exercise"],
+              "links": [
+                { "text": "NumPy linalg reference", "url": "https://numpy.org/doc/stable/reference/routines.linalg.html" }
+              ],
+              "subtasks": [
+                { "id": "week-1-practice-1-sub-1", "label": "Implement eigendecomposition and verify spectral theorem" },
+                { "id": "week-1-practice-1-sub-2", "label": "Write a function to classify a symmetric matrix (pos def, neg def, indefinite, semidefinite)" },
+                { "id": "week-1-practice-1-sub-3", "label": "Compute SVD and reconstruct the original matrix" },
+                { "id": "week-1-practice-1-sub-4", "label": "Compute the Hessian of f(x,y) = x² + 3xy + y² at (0,0) and classify the critical point" }
+              ]
+            },
+            {
+              "id": "week-1-reading-1",
+              "type": "reading",
+              "slotNumber": 5,
+              "label": "Session 5 — Needham Ch. 1: Euclidean Geometry Revisited",
+              "description": "Read Needham's **Visual Differential Geometry and Forms**, Chapter 1. This reframes basic geometric ideas (angles, distances, transformations) in a way that builds toward differential geometry. Needham writes for visual thinkers — perfect for a CS background.\n\nTake notes on any concepts that feel new or that you'd explain differently than a typical textbook.",
+              "isBookSlot": true,
+              "estimatedMinutes": 120,
+              "tags": [],
+              "links": [
+                { "text": "Needham – Visual Differential Geometry (book site)", "url": "https://www.vdgf.space/" }
+              ],
+              "subtasks": [
+                { "id": "week-1-reading-1-sub-1", "label": "Read Needham Ch. 1 (first half)" },
+                { "id": "week-1-reading-1-sub-2", "label": "Read Needham Ch. 1 (second half)" },
+                { "id": "week-1-reading-1-sub-3", "label": "Write a half-page summary of key geometric ideas from the chapter" }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "week-2",
+          "weekNumber": 2,
+          "dateRange": "6–10 Apr",
+          "startDate": "2026-04-06",
+          "endDate": "2026-04-10",
+          "title": "Multivariable Calculus: Gradients, Jacobians, Hessians, Taylor Expansion",
+          "isBuffer": false,
+          "slots": [
+            {
+              "id": "week-2-lecture-1",
+              "type": "lecture",
+              "slotNumber": 1,
+              "label": "Session 1 — Gradients and Directional Derivatives",
+              "description": "Study the **gradient** as the direction of steepest ascent, **directional derivatives**, and the geometric meaning of the gradient being perpendicular to level sets.\n\n**Connection:** Gradient descent literally follows −∇L. Understanding that ∇L is perpendicular to the loss contour at every point is foundational for understanding optimisation trajectories geometrically.",
+              "isBookSlot": false,
+              "estimatedMinutes": 120,
+              "tags": ["critical", "connection"],
+              "links": [
+                { "text": "Khan Academy: Gradient", "url": "https://www.khanacademy.org/math/multivariable-calculus/multivariable-derivatives/gradient-and-directional-derivatives/v/gradient" },
+                { "text": "3B1B: Gradient (from Multivariable Calc)", "url": "https://www.youtube.com/watch?v=tIpKfDc295M" }
+              ],
+              "subtasks": [
+                { "id": "week-2-lecture-1-sub-1", "label": "Watch 3B1B or Khan gradient/directional derivative videos" },
+                { "id": "week-2-lecture-1-sub-2", "label": "Prove: gradient is perpendicular to level sets (follow the proof in notes)" },
+                { "id": "week-2-lecture-1-sub-3", "label": "Compute gradients and directional derivatives for 3 example functions" }
+              ]
+            },
+            {
+              "id": "week-2-lecture-2",
+              "type": "lecture",
+              "slotNumber": 2,
+              "label": "Session 2 — Jacobians and the Chain Rule",
+              "description": "Study the **Jacobian matrix** as the best linear approximation to a map f: ℝⁿ → ℝᵐ. The multivariable chain rule says J(g∘f) = J(g) · J(f) — matrix multiplication!\n\n**Connection:** Backpropagation is literally the chain rule applied layer by layer. The Jacobian of each layer composes. Understanding this geometrically (each layer's Jacobian stretches/rotates the tangent space) is key to understanding how gradients flow through deep networks.",
+              "isBookSlot": false,
+              "estimatedMinutes": 120,
+              "tags": ["critical", "connection"],
+              "links": [
+                { "text": "Khan Academy: Jacobian", "url": "https://www.khanacademy.org/math/multivariable-calculus/multivariable-derivatives/jacobian/v/the-jacobian-matrix" },
+                { "text": "Khan Academy: Multivariable chain rule", "url": "https://www.khanacademy.org/math/multivariable-calculus/multivariable-derivatives/multivariable-chain-rule/v/multivariable-chain-rule" }
+              ],
+              "subtasks": [
+                { "id": "week-2-lecture-2-sub-1", "label": "Watch Jacobian lectures" },
+                { "id": "week-2-lecture-2-sub-2", "label": "Compute Jacobians for 3 maps (e.g. polar coordinates, simple neural net layer)" },
+                { "id": "week-2-lecture-2-sub-3", "label": "Verify chain rule: compute J(g∘f) directly and as J(g)·J(f)" },
+                { "id": "week-2-lecture-2-sub-4", "label": "Write down how backpropagation is the chain rule in Jacobian form" }
+              ]
+            },
+            {
+              "id": "week-2-lecture-3",
+              "type": "lecture",
+              "slotNumber": 3,
+              "label": "Session 3 — Hessians and Multivariable Taylor Expansion",
+              "description": "Study the **Hessian** H(f) as the matrix of second partial derivatives. The second-order Taylor expansion is f(x+h) ≈ f(x) + ∇f·h + ½ hᵀ H h. The Hessian captures the **curvature** of f at a point.\n\n**Connection:** Near a critical point of the loss L (where ∇L = 0), the loss is approximately L(θ+δ) ≈ L(θ) + ½ δᵀ H δ. The Hessian's eigenvalues determine the curvature in each principal direction. Large positive eigenvalues = sharp minima. Small eigenvalues = flat directions. This is the basis of the 'sharp vs flat minima' debate in deep learning.",
+              "isBookSlot": false,
+              "estimatedMinutes": 120,
+              "tags": ["critical", "connection"],
+              "links": [
+                { "text": "Khan Academy: Second partial derivatives & Hessian", "url": "https://www.khanacademy.org/math/multivariable-calculus/applications-of-multivariable-derivatives/quadratic-approximations/v/quadratic-approximation" },
+                { "text": "MIT OCW 18.02: Second derivative test", "url": "https://ocw.mit.edu/courses/18-02sc-multivariable-calculus-fall-2010/" }
+              ],
+              "subtasks": [
+                { "id": "week-2-lecture-3-sub-1", "label": "Watch Hessian / second-order Taylor lectures" },
+                { "id": "week-2-lecture-3-sub-2", "label": "Compute Hessians for 3 functions and classify critical points" },
+                { "id": "week-2-lecture-3-sub-3", "label": "Write the quadratic approximation of a 2D loss near a critical point" },
+                { "id": "week-2-lecture-3-sub-4", "label": "Understand: what makes a minimum 'sharp' vs 'flat' in Hessian terms" }
+              ]
+            },
+            {
+              "id": "week-2-practice-1",
+              "type": "practice",
+              "slotNumber": 4,
+              "label": "Session 4 — Hessian Computation in PyTorch",
+              "description": "Use PyTorch autograd to compute gradients and Hessians of small neural networks. Visualise loss surfaces of toy 2D problems.\n\n- Train a tiny MLP on a 2D toy dataset\n- Compute the full Hessian at the trained weights using torch.autograd.functional.hessian\n- Compute eigenvalues of the Hessian\n- Plot the loss surface in 2D and overlay eigenvectors at the minimum",
+              "isBookSlot": false,
+              "estimatedMinutes": 120,
+              "tags": ["key-exercise"],
+              "links": [
+                { "text": "PyTorch: torch.autograd.functional.hessian", "url": "https://pytorch.org/docs/stable/generated/torch.autograd.functional.hessian.html" }
+              ],
+              "subtasks": [
+                { "id": "week-2-practice-1-sub-1", "label": "Train a tiny MLP (2 hidden units) on a 2D dataset" },
+                { "id": "week-2-practice-1-sub-2", "label": "Compute full Hessian at trained weights" },
+                { "id": "week-2-practice-1-sub-3", "label": "Compute and plot eigenvalue spectrum of the Hessian" },
+                { "id": "week-2-practice-1-sub-4", "label": "Plot 2D loss surface and overlay principal curvature directions" }
+              ]
+            },
+            {
+              "id": "week-2-reading-1",
+              "type": "reading",
+              "slotNumber": 5,
+              "label": "Session 5 — Needham Ch. 2 & Intro Topology",
+              "description": "Read Needham Ch. 2, then spend 45 min on basic **point-set topology**: open sets, closed sets, continuity as preimage-of-open-is-open, compactness, connectedness. You don't need to go deep — just enough to read 'let M be a smooth manifold' without panic.\n\nRecommended: Munkres Ch. 2 §12–17 or any topology primer notes.",
+              "isBookSlot": true,
+              "estimatedMinutes": 120,
+              "tags": [],
+              "links": [
+                { "text": "Topology Without Tears (free PDF textbook)", "url": "https://www.topologywithouttears.net/" },
+                { "text": "Needham – Visual Differential Geometry (book site)", "url": "https://www.vdgf.space/" }
+              ],
+              "subtasks": [
+                { "id": "week-2-reading-1-sub-1", "label": "Read Needham Ch. 2" },
+                { "id": "week-2-reading-1-sub-2", "label": "Read a topology primer: open/closed sets, continuity, compactness (~45 min)" },
+                { "id": "week-2-reading-1-sub-3", "label": "Write down definitions of: open set, continuous map, homeomorphism, compact set" }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "week-3",
+          "weekNumber": 3,
+          "dateRange": "13–17 Apr",
+          "startDate": "2026-04-13",
+          "endDate": "2026-04-17",
+          "title": "Implicit Function Theorem, Level Sets, and Parametric Surfaces",
+          "isBuffer": false,
+          "slots": [
+            {
+              "id": "week-3-lecture-1",
+              "type": "lecture",
+              "slotNumber": 1,
+              "label": "Session 1 — Implicit Function Theorem",
+              "description": "Study the **Implicit Function Theorem** (IFT): if F(x,y) = 0 and ∂F/∂y ≠ 0, then locally y = g(x). The IFT is the rigorous foundation for 'level sets are smooth curves/surfaces'. Also study the **Inverse Function Theorem**.\n\n**Connection:** The loss level sets {θ : L(θ) = c} are implicitly defined surfaces in parameter space. The IFT guarantees they are smooth manifolds (when ∇L ≠ 0). Understanding this is key to thinking about loss landscapes geometrically.",
+              "isBookSlot": false,
+              "estimatedMinutes": 120,
+              "tags": ["critical", "connection"],
+              "links": [
+                { "text": "Khan Academy: Implicit differentiation (multivariable)", "url": "https://www.khanacademy.org/math/multivariable-calculus/multivariable-derivatives" },
+                { "text": "MIT OCW 18.02: Implicit functions", "url": "https://ocw.mit.edu/courses/18-02sc-multivariable-calculus-fall-2010/" }
+              ],
+              "subtasks": [
+                { "id": "week-3-lecture-1-sub-1", "label": "Study the statement and geometric meaning of the Implicit Function Theorem" },
+                { "id": "week-3-lecture-1-sub-2", "label": "Work through 2 examples of applying IFT" },
+                { "id": "week-3-lecture-1-sub-3", "label": "Study the Inverse Function Theorem and its relation to IFT" }
+              ]
+            },
+            {
+              "id": "week-3-lecture-2",
+              "type": "lecture",
+              "slotNumber": 2,
+              "label": "Session 2 — Parametric Curves and Surfaces",
+              "description": "Study **parametric representations** of curves γ(t) and surfaces σ(u,v). Understand the difference between a parametrisation and the geometric object itself. Study regular parametrisations (non-vanishing tangent/Jacobian).\n\nThis is your first encounter with the idea that will become 'charts on a manifold': a parametrisation is a map from ℝⁿ into a geometric object.",
+              "isBookSlot": false,
+              "estimatedMinutes": 120,
+              "tags": [],
+              "links": [
+                { "text": "Khan Academy: Parametric surfaces", "url": "https://www.khanacademy.org/math/multivariable-calculus/integrating-multivariable-functions/surface-integrals-in-physics/v/introduction-to-parametrizing-a-surface-with-two-parameters" }
+              ],
+              "subtasks": [
+                { "id": "week-3-lecture-2-sub-1", "label": "Study parametric curves: γ(t) = (x(t), y(t), z(t)), tangent vectors, arc length" },
+                { "id": "week-3-lecture-2-sub-2", "label": "Study parametric surfaces: σ(u,v), tangent plane, normal vector" },
+                { "id": "week-3-lecture-2-sub-3", "label": "Parametrise: sphere, torus, and graph of a function z = f(x,y)" }
+              ]
+            },
+            {
+              "id": "week-3-lecture-3",
+              "type": "lecture",
+              "slotNumber": 3,
+              "label": "Session 3 — Level Sets as Manifolds",
+              "description": "Bring together IFT + parametrisation: a level set F(x) = c, when ∇F ≠ 0, is a smooth manifold that can be locally parametrised. Study the tangent space to a level set: it's the kernel of the gradient.\n\n**Connection:** The loss level sets {θ : L(θ) = c} form a foliation of parameter space. The gradient ∇L is perpendicular to each level set. Gradient descent crosses level sets; the geometry of these level sets determines how optimization behaves.",
+              "isBookSlot": false,
+              "estimatedMinutes": 120,
+              "tags": ["connection"],
+              "links": [
+                { "text": "MIT OCW 18.02: Level curves and surfaces", "url": "https://ocw.mit.edu/courses/18-02sc-multivariable-calculus-fall-2010/" }
+              ],
+              "subtasks": [
+                { "id": "week-3-lecture-3-sub-1", "label": "Prove: tangent space to a level set = ker(∇F)" },
+                { "id": "week-3-lecture-3-sub-2", "label": "Visualise level sets of simple 2D functions and their gradients" },
+                { "id": "week-3-lecture-3-sub-3", "label": "Write a paragraph connecting loss level sets to gradient descent trajectories" }
+              ]
+            },
+            {
+              "id": "week-3-practice-1",
+              "type": "practice",
+              "slotNumber": 4,
+              "label": "Session 4 — Visualising Level Sets and Gradient Flows",
+              "description": "Code up visualisations:\n- Plot level sets of f(x,y) for several functions\n- Overlay gradient vectors (arrows perpendicular to contours)\n- Simulate gradient descent on a 2D loss surface and overlay the trajectory on the contour plot\n- Visualise how trajectory crosses level sets",
+              "isBookSlot": false,
+              "estimatedMinutes": 120,
+              "tags": ["key-exercise"],
+              "links": [
+                { "text": "Matplotlib contour plots", "url": "https://matplotlib.org/stable/gallery/images_contours_and_fields/contour_demo.html" }
+              ],
+              "subtasks": [
+                { "id": "week-3-practice-1-sub-1", "label": "Plot contours and gradient field for 3 functions" },
+                { "id": "week-3-practice-1-sub-2", "label": "Implement gradient descent on a 2D function and plot trajectory on contours" },
+                { "id": "week-3-practice-1-sub-3", "label": "Experiment: observe trajectory behaviour near saddle points vs minima" }
+              ]
+            },
+            {
+              "id": "week-3-reading-1",
+              "type": "reading",
+              "slotNumber": 5,
+              "label": "Session 5 — Needham Ch. 3",
+              "description": "Read Needham Ch. 3 on **curvature** in the plane. Needham introduces curvature as the rate at which the tangent vector rotates — a beautifully intuitive approach. This sets up the generalisation to surface curvature next phase.",
+              "isBookSlot": true,
+              "estimatedMinutes": 120,
+              "tags": [],
+              "links": [
+                { "text": "Needham – Visual Differential Geometry (book site)", "url": "https://www.vdgf.space/" }
+              ],
+              "subtasks": [
+                { "id": "week-3-reading-1-sub-1", "label": "Read Needham Ch. 3 (curvature of plane curves)" },
+                { "id": "week-3-reading-1-sub-2", "label": "Work through at least 3 of the exercises" }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "week-4",
+          "weekNumber": 4,
+          "dateRange": "20–24 Apr",
+          "startDate": "2026-04-20",
+          "endDate": "2026-04-24",
+          "title": "Inner Products, Metrics, and Coordinate-Free Thinking",
+          "isBuffer": false,
+          "slots": [
+            {
+              "id": "week-4-lecture-1",
+              "type": "lecture",
+              "slotNumber": 1,
+              "label": "Session 1 — Inner Products and Metrics",
+              "description": "Study **inner product spaces**, bilinear forms, and the concept of a **metric** as a way to measure lengths and angles. The standard Euclidean metric gᵢⱼ = δᵢⱼ. Non-standard metrics: how changing the inner product changes geometry.\n\n**Connection:** In parameter space, the 'natural' metric isn't Euclidean — it's the **Fisher information metric**, where distances reflect statistical distinguishability. Natural gradient descent uses this non-Euclidean metric instead of the Euclidean one.",
+              "isBookSlot": false,
+              "estimatedMinutes": 120,
+              "tags": ["critical", "connection"],
+              "links": [
+                { "text": "Khan Academy: Inner products", "url": "https://www.khanacademy.org/math/linear-algebra/alternate-bases/orthonormal-basis/v/linear-algebra-introduction-to-orthonormal-bases" }
+              ],
+              "subtasks": [
+                { "id": "week-4-lecture-1-sub-1", "label": "Study inner product axioms and bilinear forms" },
+                { "id": "week-4-lecture-1-sub-2", "label": "Compute lengths and angles under a non-standard metric" },
+                { "id": "week-4-lecture-1-sub-3", "label": "Read about Fisher information metric (conceptual overview only)" }
+              ]
+            },
+            {
+              "id": "week-4-lecture-2",
+              "type": "lecture",
+              "slotNumber": 2,
+              "label": "Session 2 — Coordinate Systems and Change of Coordinates",
+              "description": "Study how vectors, matrices, and especially **metrics** transform under change of coordinates. The metric transforms as g' = JᵀgJ where J is the Jacobian of the coordinate change. This is your gateway to **tensor transformation laws**.\n\nPractice: express the Euclidean metric in polar coordinates.",
+              "isBookSlot": false,
+              "estimatedMinutes": 120,
+              "tags": [],
+              "links": [
+                { "text": "Eigenchris: Tensors for Beginners (YouTube)", "url": "https://www.youtube.com/playlist?list=PLJHszsWbB6hrkmmq57lX8BV-o-YIOFsiG" }
+              ],
+              "subtasks": [
+                { "id": "week-4-lecture-2-sub-1", "label": "Study how metric components transform under coordinate change" },
+                { "id": "week-4-lecture-2-sub-2", "label": "Compute the Euclidean metric in polar coordinates" },
+                { "id": "week-4-lecture-2-sub-3", "label": "Watch first 3 videos of Eigenchris 'Tensors for Beginners'" }
+              ]
+            },
+            {
+              "id": "week-4-lecture-3",
+              "type": "lecture",
+              "slotNumber": 3,
+              "label": "Session 3 — Intro to Tensors",
+              "description": "A tensor is an object that transforms 'correctly' under coordinate changes. Study **covectors** (dual vectors, 1-forms), the distinction between upper and lower indices, and **tensor products**. You don't need the full machinery yet — just enough to read expressions like gᵢⱼ, Γⁱⱼₖ, Rⁱⱼₖₗ without panic.",
+              "isBookSlot": false,
+              "estimatedMinutes": 120,
+              "tags": [],
+              "links": [
+                { "text": "Eigenchris: Tensors for Beginners (playlist)", "url": "https://www.youtube.com/playlist?list=PLJHszsWbB6hrkmmq57lX8BV-o-YIOFsiG" }
+              ],
+              "subtasks": [
+                { "id": "week-4-lecture-3-sub-1", "label": "Study covectors / dual vectors / 1-forms" },
+                { "id": "week-4-lecture-3-sub-2", "label": "Understand upper vs lower indices and Einstein summation convention" },
+                { "id": "week-4-lecture-3-sub-3", "label": "Watch Eigenchris videos 4–8" }
+              ]
+            },
+            {
+              "id": "week-4-practice-1",
+              "type": "practice",
+              "slotNumber": 4,
+              "label": "Session 4 — Metric Computations",
+              "description": "Practice problems:\n- Compute metric tensor in various coordinate systems (polar, spherical, cylindrical)\n- Given a metric, compute lengths of curves, angles between vectors\n- Implement: compute lengths of curves numerically under different metrics in Python",
+              "isBookSlot": false,
+              "estimatedMinutes": 120,
+              "tags": ["key-exercise"],
+              "links": [],
+              "subtasks": [
+                { "id": "week-4-practice-1-sub-1", "label": "Compute metric tensors in polar, spherical, and cylindrical coords" },
+                { "id": "week-4-practice-1-sub-2", "label": "Compute the length of a curve on the sphere using the spherical metric" },
+                { "id": "week-4-practice-1-sub-3", "label": "Code: numerically compute curve length under different metrics" }
+              ]
+            },
+            {
+              "id": "week-4-reading-1",
+              "type": "reading",
+              "slotNumber": 5,
+              "label": "Session 5 — Foundations Review & Self-Assessment",
+              "description": "Consolidation day. Review your notes from weeks 1–4. Try to write from memory:\n- Spectral theorem statement\n- Second-order Taylor expansion\n- Implicit Function Theorem statement\n- Metric transformation law\n\nIdentify gaps and revisit weak areas.",
+              "isBookSlot": false,
+              "estimatedMinutes": 120,
+              "tags": ["checkpoint", "from-scratch"],
+              "links": [],
+              "subtasks": [
+                { "id": "week-4-reading-1-sub-1", "label": "Write spectral theorem statement from memory" },
+                { "id": "week-4-reading-1-sub-2", "label": "Write second-order Taylor expansion from memory" },
+                { "id": "week-4-reading-1-sub-3", "label": "Write IFT statement from memory" },
+                { "id": "week-4-reading-1-sub-4", "label": "List 5 connections between foundations and loss landscapes" },
+                { "id": "week-4-reading-1-sub-5", "label": "Identify and note your 3 weakest topics for targeted review" }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "week-5",
+          "weekNumber": 5,
+          "dateRange": "27 Apr – 1 May",
+          "startDate": "2026-04-27",
+          "endDate": "2026-05-01",
+          "title": "Buffer: Consolidation & Catch-Up",
+          "isBuffer": true,
+          "slots": [
+            {
+              "id": "week-5-lecture-1",
+              "type": "lecture",
+              "slotNumber": 1,
+              "label": "Session 1 — Revisit Weakest Topics",
+              "description": "Return to the topics you flagged last Friday. Re-watch videos, redo exercises, or find alternative explanations. Don't move forward with shaky foundations.",
+              "isBookSlot": false,
+              "estimatedMinutes": 120,
+              "tags": [],
+              "links": [],
+              "subtasks": [
+                { "id": "week-5-lecture-1-sub-1", "label": "Revisit weak topic #1" },
+                { "id": "week-5-lecture-1-sub-2", "label": "Revisit weak topic #2" }
+              ]
+            },
+            {
+              "id": "week-5-lecture-2",
+              "type": "lecture",
+              "slotNumber": 2,
+              "label": "Session 2 — Revisit Remaining Gaps",
+              "description": "Continue gap-filling. Try different resources if the original ones didn't click.",
+              "isBookSlot": false,
+              "estimatedMinutes": 120,
+              "tags": [],
+              "links": [],
+              "subtasks": [
+                { "id": "week-5-lecture-2-sub-1", "label": "Revisit weak topic #3 or explore alternative explanations" },
+                { "id": "week-5-lecture-2-sub-2", "label": "Try at least one problem from each weak area" }
+              ]
+            },
+            {
+              "id": "week-5-practice-1",
+              "type": "practice",
+              "slotNumber": 3,
+              "label": "Session 3 — Phase 1 Comprehensive Problem Set",
+              "description": "Work through a self-designed problem set covering all Phase 1 material. Time yourself.\n\n- Eigendecomposition of a 3×3 symmetric matrix\n- Compute Hessian and classify critical points of f(x,y,z)\n- Compute metric in a non-standard coordinate system\n- Apply IFT to find a local parametrisation",
+              "isBookSlot": false,
+              "estimatedMinutes": 120,
+              "tags": ["checkpoint", "timed"],
+              "links": [],
+              "subtasks": [
+                { "id": "week-5-practice-1-sub-1", "label": "Eigendecomposition problem" },
+                { "id": "week-5-practice-1-sub-2", "label": "Hessian and critical point classification problem" },
+                { "id": "week-5-practice-1-sub-3", "label": "Metric tensor computation problem" },
+                { "id": "week-5-practice-1-sub-4", "label": "IFT application problem" }
+              ]
+            },
+            {
+              "id": "week-5-practice-2",
+              "type": "practice",
+              "slotNumber": 4,
+              "label": "Session 4 — ML Integration: Loss Landscape Mini-Project",
+              "description": "Bring it all together: train a small CNN on MNIST, compute the Hessian (or top eigenvalues via Lanczos), visualise the loss surface using random 2D slices through parameter space. This preview will motivate everything in Phases 2–5.",
+              "isBookSlot": false,
+              "estimatedMinutes": 120,
+              "tags": ["key-exercise"],
+              "links": [
+                { "text": "PyHessian: Hessian computation library", "url": "https://github.com/amirgholami/PyHessian" }
+              ],
+              "subtasks": [
+                { "id": "week-5-practice-2-sub-1", "label": "Train a small CNN on MNIST" },
+                { "id": "week-5-practice-2-sub-2", "label": "Compute top eigenvalues of the Hessian using PyHessian or Lanczos iteration" },
+                { "id": "week-5-practice-2-sub-3", "label": "Visualise 2D slice of loss surface (random directions in parameter space)" },
+                { "id": "week-5-practice-2-sub-4", "label": "Journal: write observations connecting eigenvalues to what you see in the loss surface" }
+              ]
+            },
+            {
+              "id": "week-5-reading-1",
+              "type": "reading",
+              "slotNumber": 5,
+              "label": "Session 5 — Phase 1 Reflection",
+              "description": "Write a 1-page reflection: what have you learned, what was hardest, what connections to your PhD are becoming clearer? Read ahead: skim Keenan Crane's DDG Lecture 1 to get excited about Phase 2.",
+              "isBookSlot": false,
+              "estimatedMinutes": 120,
+              "tags": [],
+              "links": [
+                { "text": "Keenan Crane: DDG Lecture 1", "url": "https://www.youtube.com/watch?v=mas-PUA3OvA&list=PL9_jI1bdZmz0hIrNCMQW1YmZysAiIYSSS&index=1" }
+              ],
+              "subtasks": [
+                { "id": "week-5-reading-1-sub-1", "label": "Write 1-page Phase 1 reflection" },
+                { "id": "week-5-reading-1-sub-2", "label": "Skim DDG Lecture 1 preview" }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "phase-2",
+      "number": 2,
+      "title": "Classical Differential Geometry: Curves and Surfaces",
+      "course": "Discrete Differential Geometry – Keenan Crane (CMU)",
+      "courseUrl": "https://www.youtube.com/playlist?list=PL9_jI1bdZmz0hIrNCMQW1YmZysAiIYSSS",
+      "description": "The classical theory of curves and surfaces in ℝ³. You'll learn curvature, the first and second fundamental forms, Gaussian and mean curvature, and geodesics. Keenan Crane's DDG course is ideal — it's designed for CS students, uses computational thinking, and connects to discrete/computational geometry. This phase builds the geometric vocabulary you'll later generalise to abstract manifolds.",
+      "bookChapters": "Do Carmo – Differential Geometry of Curves and Surfaces, Ch. 1–4",
+      "bookDescription": "Do Carmo is the classic reference. It's more rigorous than Crane's lectures — use it as a parallel track for deeper proofs and exercises. Chapters 1–4 cover curves, regular surfaces, the Gauss map, and intrinsic geometry.",
+      "weekRange": [6, 11],
+      "completionNote": "You can compute curvatures of curves and surfaces, understand what the first and second fundamental forms measure, know Gauss's Theorema Egregium (curvature is intrinsic), and understand geodesics as locally shortest paths. You can explain why the geometry of a loss surface is determined by its metric, not its embedding.",
+      "weeks": [
+        {
+          "id": "week-6",
+          "weekNumber": 6,
+          "dateRange": "4–8 May",
+          "startDate": "2026-05-04",
+          "endDate": "2026-05-08",
+          "title": "Curvature of Curves: Frenet–Serret, Arc Length, Torsion",
+          "isBuffer": false,
+          "slots": [
+            {
+              "id": "week-6-lecture-1",
+              "type": "lecture",
+              "slotNumber": 1,
+              "label": "Session 1 — Curves, Arc Length, Curvature",
+              "description": "Watch DDG Lectures 1–2. Study **arc-length parametrisation**, **curvature** κ = |dT/ds| as the rate of turning of the tangent vector. The Frenet frame {T, N, B}.",
+              "isBookSlot": false,
+              "estimatedMinutes": 120,
+              "tags": ["critical"],
+              "links": [
+                { "text": "DDG Lecture 1: Overview", "url": "https://www.youtube.com/watch?v=mas-PUA3OvA&list=PL9_jI1bdZmz0hIrNCMQW1YmZysAiIYSSS&index=1" },
+                { "text": "DDG Lecture 2: Combinatorial Surfaces", "url": "https://www.youtube.com/watch?v=DGe_5xxl-3E&list=PL9_jI1bdZmz0hIrNCMQW1YmZysAiIYSSS&index=2" }
+              ],
+              "subtasks": [
+                { "id": "week-6-lecture-1-sub-1", "label": "Watch DDG Lectures 1–2" },
+                { "id": "week-6-lecture-1-sub-2", "label": "Study arc-length parametrisation and curvature formula" },
+                { "id": "week-6-lecture-1-sub-3", "label": "Compute curvature for a helix and a parabola" }
+              ]
+            },
+            {
+              "id": "week-6-lecture-2",
+              "type": "lecture",
+              "slotNumber": 2,
+              "label": "Session 2 — Frenet–Serret Frame and Torsion",
+              "description": "Study the full **Frenet–Serret apparatus**: T, N, B, curvature κ, and torsion τ. The Frenet equations describe how the frame evolves along the curve. Torsion measures how much the curve twists out of its osculating plane.",
+              "isBookSlot": false,
+              "estimatedMinutes": 120,
+              "tags": [],
+              "links": [
+                { "text": "Do Carmo Ch. 1: Curves", "url": "https://www.amazon.com/Differential-Geometry-Curves-Surfaces-Mathematics/dp/0486806995" }
+              ],
+              "subtasks": [
+                { "id": "week-6-lecture-2-sub-1", "label": "Write down and understand the 3 Frenet–Serret equations" },
+                { "id": "week-6-lecture-2-sub-2", "label": "Compute κ and τ for a helix" },
+                { "id": "week-6-lecture-2-sub-3", "label": "Understand: torsion measures deviation from planarity" }
+              ]
+            },
+            {
+              "id": "week-6-lecture-3",
+              "type": "lecture",
+              "slotNumber": 3,
+              "label": "Session 3 — DDG Lectures 3–4",
+              "description": "Continue with DDG. Lecture 3 covers **exterior algebra** (a way to think about areas and volumes algebraically). Lecture 4 covers **differential forms on surfaces**. These may feel abstract — that's okay. Focus on the geometric intuition Crane provides.",
+              "isBookSlot": false,
+              "estimatedMinutes": 120,
+              "tags": [],
+              "links": [
+                { "text": "DDG Lecture 3", "url": "https://www.youtube.com/watch?v=jcVGcME0qKg&list=PL9_jI1bdZmz0hIrNCMQW1YmZysAiIYSSS&index=3" },
+                { "text": "DDG Lecture 4", "url": "https://www.youtube.com/watch?v=FxIU0RJD-3Y&list=PL9_jI1bdZmz0hIrNCMQW1YmZysAiIYSSS&index=4" }
+              ],
+              "subtasks": [
+                { "id": "week-6-lecture-3-sub-1", "label": "Watch DDG Lecture 3 (exterior algebra)" },
+                { "id": "week-6-lecture-3-sub-2", "label": "Watch DDG Lecture 4 (differential forms)" },
+                { "id": "week-6-lecture-3-sub-3", "label": "Note: what is a k-form intuitively?" }
+              ]
+            },
+            {
+              "id": "week-6-practice-1",
+              "type": "practice",
+              "slotNumber": 4,
+              "label": "Session 4 — Curve Computations",
+              "description": "Compute curvature and torsion for several curves. Plot curves with their Frenet frames in 3D using matplotlib.",
+              "isBookSlot": false,
+              "estimatedMinutes": 120,
+              "tags": ["key-exercise"],
+              "links": [],
+              "subtasks": [
+                { "id": "week-6-practice-1-sub-1", "label": "Compute κ and τ for 3 different space curves" },
+                { "id": "week-6-practice-1-sub-2", "label": "Plot a curve in 3D with Frenet frame vectors overlaid" },
+                { "id": "week-6-practice-1-sub-3", "label": "Do Carmo Ch. 1 exercises: at least 4 problems" }
+              ]
+            },
+            {
+              "id": "week-6-reading-1",
+              "type": "reading",
+              "slotNumber": 5,
+              "label": "Session 5 — Do Carmo Ch. 1",
+              "description": "Read Do Carmo Ch. 1 alongside Needham's treatment of curvature. Compare the two approaches — Do Carmo is formal, Needham is visual. Both are valuable.",
+              "isBookSlot": true,
+              "estimatedMinutes": 120,
+              "tags": [],
+              "links": [],
+              "subtasks": [
+                { "id": "week-6-reading-1-sub-1", "label": "Read Do Carmo Ch. 1 (curves)" },
+                { "id": "week-6-reading-1-sub-2", "label": "Compare Do Carmo's and Needham's approaches to curvature" }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "week-7",
+          "weekNumber": 7,
+          "dateRange": "11–15 May",
+          "startDate": "2026-05-11",
+          "endDate": "2026-05-15",
+          "title": "Surfaces: First Fundamental Form (Metric on Surfaces)",
+          "isBuffer": false,
+          "slots": [
+            {
+              "id": "week-7-lecture-1",
+              "type": "lecture",
+              "slotNumber": 1,
+              "label": "Session 1 — Regular Surfaces and the First Fundamental Form",
+              "description": "Study **regular surfaces** in ℝ³ and the **first fundamental form** I = E du² + 2F du dv + G dv². This is the **metric** induced on the surface from the ambient ℝ³. It lets you compute lengths, angles, and areas intrinsically on the surface.\n\n**Connection:** The parameter space of a neural network is a high-dimensional surface. The Fisher information metric is the natural 'first fundamental form' on this statistical manifold. Standard gradient descent uses the Euclidean metric; natural gradient descent uses the Fisher metric.",
+              "isBookSlot": false,
+              "estimatedMinutes": 120,
+              "tags": ["critical", "connection"],
+              "links": [
+                { "text": "DDG Lecture 5", "url": "https://www.youtube.com/watch?v=e-erMrqBd1w&list=PL9_jI1bdZmz0hIrNCMQW1YmZysAiIYSSS&index=5" }
+              ],
+              "subtasks": [
+                { "id": "week-7-lecture-1-sub-1", "label": "Watch DDG Lecture 5" },
+                { "id": "week-7-lecture-1-sub-2", "label": "Derive the first fundamental form for the sphere and the torus" },
+                { "id": "week-7-lecture-1-sub-3", "label": "Compute E, F, G for 2 parametrised surfaces" }
+              ]
+            },
+            {
+              "id": "week-7-lecture-2",
+              "type": "lecture",
+              "slotNumber": 2,
+              "label": "Session 2 — Lengths, Angles, Areas from the Metric",
+              "description": "Use the first fundamental form to compute **arc lengths of curves on surfaces**, **angles between curves**, and **areas of regions**. These are all determined by E, F, G — you don't need to know how the surface sits in 3D, only the metric.",
+              "isBookSlot": false,
+              "estimatedMinutes": 120,
+              "tags": [],
+              "links": [],
+              "subtasks": [
+                { "id": "week-7-lecture-2-sub-1", "label": "Compute length of a curve on the sphere using the first fundamental form" },
+                { "id": "week-7-lecture-2-sub-2", "label": "Compute area of a region on a surface" },
+                { "id": "week-7-lecture-2-sub-3", "label": "Prove: angle between coordinate curves is cos θ = F/√(EG)" }
+              ]
+            },
+            {
+              "id": "week-7-lecture-3",
+              "type": "lecture",
+              "slotNumber": 3,
+              "label": "Session 3 — Isometries and Intrinsic Geometry",
+              "description": "An **isometry** preserves the first fundamental form (metric). Study: when are two surfaces isometric? A cylinder is isometric to a plane (you can unroll it). A sphere is NOT isometric to a plane (you can't flatten a globe without distortion). The metric captures all intrinsic geometry.\n\n**Connection:** Reparametrising a neural network (changing coordinates in weight space) is an isometry of the parameter manifold if the metric is preserved. Different parametrisations of the same model can have very different Euclidean geometry but the same Riemannian geometry.",
+              "isBookSlot": false,
+              "estimatedMinutes": 120,
+              "tags": ["connection"],
+              "links": [],
+              "subtasks": [
+                { "id": "week-7-lecture-3-sub-1", "label": "Prove: a cylinder is locally isometric to a plane" },
+                { "id": "week-7-lecture-3-sub-2", "label": "Understand why a sphere cannot be isometric to a plane" },
+                { "id": "week-7-lecture-3-sub-3", "label": "Define isometry and local isometry formally" }
+              ]
+            },
+            {
+              "id": "week-7-practice-1",
+              "type": "practice",
+              "slotNumber": 4,
+              "label": "Session 4 — First Fundamental Form Computations",
+              "description": "Practice computing E, F, G for various surfaces. Compute lengths, areas, and check isometry conditions. Do Carmo Ch. 2 exercises.",
+              "isBookSlot": false,
+              "estimatedMinutes": 120,
+              "tags": ["key-exercise"],
+              "links": [],
+              "subtasks": [
+                { "id": "week-7-practice-1-sub-1", "label": "Compute first fundamental form for 4 surfaces (including non-trivial ones)" },
+                { "id": "week-7-practice-1-sub-2", "label": "Do Carmo Ch. 2 exercises: at least 5 problems" },
+                { "id": "week-7-practice-1-sub-3", "label": "Numerically compute geodesic distances on a surface in Python" }
+              ]
+            },
+            {
+              "id": "week-7-reading-1",
+              "type": "reading",
+              "slotNumber": 5,
+              "label": "Session 5 — Do Carmo Ch. 2",
+              "description": "Read Do Carmo Ch. 2 (Regular Surfaces). This gives the rigorous foundation for everything you've been studying computationally.",
+              "isBookSlot": true,
+              "estimatedMinutes": 120,
+              "tags": [],
+              "links": [],
+              "subtasks": [
+                { "id": "week-7-reading-1-sub-1", "label": "Read Do Carmo Ch. 2 (first half)" },
+                { "id": "week-7-reading-1-sub-2", "label": "Read Do Carmo Ch. 2 (second half)" }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "week-8",
+          "weekNumber": 8,
+          "dateRange": "18–22 May",
+          "startDate": "2026-05-18",
+          "endDate": "2026-05-22",
+          "title": "Gauss Map, Second Fundamental Form, Curvature of Surfaces",
+          "isBuffer": false,
+          "slots": [
+            {
+              "id": "week-8-lecture-1",
+              "type": "lecture",
+              "slotNumber": 1,
+              "label": "Session 1 — The Gauss Map and Shape Operator",
+              "description": "The **Gauss map** N: S → S² assigns to each point its unit normal. The **shape operator** (or Weingarten map) dN measures how the normal changes — this is the key to surface curvature. The shape operator is a linear map on the tangent plane.",
+              "isBookSlot": false,
+              "estimatedMinutes": 120,
+              "tags": ["critical"],
+              "links": [
+                { "text": "DDG Lecture 6", "url": "https://www.youtube.com/watch?v=soVKIhKHSto&list=PL9_jI1bdZmz0hIrNCMQW1YmZysAiIYSSS&index=6" }
+              ],
+              "subtasks": [
+                { "id": "week-8-lecture-1-sub-1", "label": "Watch DDG Lecture 6" },
+                { "id": "week-8-lecture-1-sub-2", "label": "Define the Gauss map and shape operator" },
+                { "id": "week-8-lecture-1-sub-3", "label": "Compute shape operator for a sphere and a cylinder" }
+              ]
+            },
+            {
+              "id": "week-8-lecture-2",
+              "type": "lecture",
+              "slotNumber": 2,
+              "label": "Session 2 — Principal, Gaussian, and Mean Curvature",
+              "description": "The eigenvalues of the shape operator are the **principal curvatures** κ₁, κ₂. **Gaussian curvature** K = κ₁κ₂ (product). **Mean curvature** H = (κ₁+κ₂)/2 (average). The **second fundamental form** II = e du² + 2f du dv + g dv² encodes this.\n\n**Connection:** Gaussian curvature is analogous to the product of Hessian eigenvalues (the determinant of the Hessian). At a saddle point, the Hessian has eigenvalues of opposite sign → negative determinant. On a surface, a saddle has K < 0. The analogy is deep and becomes exact in the right setting.",
+              "isBookSlot": false,
+              "estimatedMinutes": 120,
+              "tags": ["critical", "connection"],
+              "links": [
+                { "text": "DDG Lecture 7", "url": "https://www.youtube.com/watch?v=NlU1m-OfumE&list=PL9_jI1bdZmz0hIrNCMQW1YmZysAiIYSSS&index=7" }
+              ],
+              "subtasks": [
+                { "id": "week-8-lecture-2-sub-1", "label": "Watch DDG Lecture 7" },
+                { "id": "week-8-lecture-2-sub-2", "label": "Compute K and H for sphere, cylinder, and saddle surface z = xy" },
+                { "id": "week-8-lecture-2-sub-3", "label": "Understand: K > 0 (bowl), K < 0 (saddle), K = 0 (flat/cylindrical)" },
+                { "id": "week-8-lecture-2-sub-4", "label": "Write the analogy: Gaussian curvature ↔ determinant of Hessian" }
+              ]
+            },
+            {
+              "id": "week-8-lecture-3",
+              "type": "lecture",
+              "slotNumber": 3,
+              "label": "Session 3 — Gauss's Theorema Egregium",
+              "description": "**Theorema Egregium** (Remarkable Theorem): Gaussian curvature K depends only on the first fundamental form — it's **intrinsic**! You don't need to know how the surface sits in 3D. This is one of the most beautiful results in mathematics.\n\n**Connection:** This means curvature of the loss landscape is an intrinsic property of the parameter manifold with its metric. It doesn't depend on how you embed or visualise the landscape — it's a property of the geometry itself.",
+              "isBookSlot": false,
+              "estimatedMinutes": 120,
+              "tags": ["critical", "connection"],
+              "links": [],
+              "subtasks": [
+                { "id": "week-8-lecture-3-sub-1", "label": "Study the statement of Theorema Egregium" },
+                { "id": "week-8-lecture-3-sub-2", "label": "Understand the proof sketch: K can be expressed using only E, F, G and their derivatives" },
+                { "id": "week-8-lecture-3-sub-3", "label": "Reflect: why is this 'remarkable'? What does it mean for loss landscapes?" }
+              ]
+            },
+            {
+              "id": "week-8-practice-1",
+              "type": "practice",
+              "slotNumber": 4,
+              "label": "Session 4 — Curvature Computations",
+              "description": "Compute principal curvatures, Gaussian curvature, and mean curvature for various surfaces. Visualise curvature on surfaces using colour maps.",
+              "isBookSlot": false,
+              "estimatedMinutes": 120,
+              "tags": ["key-exercise"],
+              "links": [],
+              "subtasks": [
+                { "id": "week-8-practice-1-sub-1", "label": "Compute K and H for 4 surfaces by hand" },
+                { "id": "week-8-practice-1-sub-2", "label": "Code: colour-map Gaussian curvature on a mesh surface" },
+                { "id": "week-8-practice-1-sub-3", "label": "Do Carmo Ch. 3 exercises: at least 4 problems" }
+              ]
+            },
+            {
+              "id": "week-8-reading-1",
+              "type": "reading",
+              "slotNumber": 5,
+              "label": "Session 5 — Do Carmo Ch. 3 (Gauss Map)",
+              "description": "Read Do Carmo Ch. 3 for the full rigorous treatment of the Gauss map and curvature.",
+              "isBookSlot": true,
+              "estimatedMinutes": 120,
+              "tags": [],
+              "links": [],
+              "subtasks": [
+                { "id": "week-8-reading-1-sub-1", "label": "Read Do Carmo Ch. 3" },
+                { "id": "week-8-reading-1-sub-2", "label": "Work through Do Carmo's proof of Theorema Egregium" }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "week-9",
+          "weekNumber": 9,
+          "dateRange": "25–29 May",
+          "startDate": "2026-05-25",
+          "endDate": "2026-05-29",
+          "title": "Geodesics and Intrinsic Geometry of Surfaces",
+          "isBuffer": false,
+          "slots": [
+            {
+              "id": "week-9-lecture-1",
+              "type": "lecture",
+              "slotNumber": 1,
+              "label": "Session 1 — Geodesics: Shortest Paths on Surfaces",
+              "description": "A **geodesic** is a curve on a surface with zero geodesic curvature — it's the surface analogue of a straight line. Study the geodesic equation: the acceleration is always normal to the surface.\n\n**Connection:** In optimization on manifolds, the natural analogue of 'gradient descent in a straight line' is 'follow a geodesic'. The geodesic equation on the loss landscape with the Fisher metric gives natural gradient descent.",
+              "isBookSlot": false,
+              "estimatedMinutes": 120,
+              "tags": ["critical", "connection"],
+              "links": [
+                { "text": "DDG Lecture 8", "url": "https://www.youtube.com/watch?v=kGXr1SF3WmA&list=PL9_jI1bdZmz0hIrNCMQW1YmZysAiIYSSS&index=8" }
+              ],
+              "subtasks": [
+                { "id": "week-9-lecture-1-sub-1", "label": "Watch DDG Lecture 8" },
+                { "id": "week-9-lecture-1-sub-2", "label": "Derive the geodesic equation on a surface" },
+                { "id": "week-9-lecture-1-sub-3", "label": "Find geodesics on the sphere (great circles) and the cylinder" }
+              ]
+            },
+            {
+              "id": "week-9-lecture-2",
+              "type": "lecture",
+              "slotNumber": 2,
+              "label": "Session 2 — Geodesics continued; Parallel Transport",
+              "description": "Study **parallel transport**: how to move a vector along a curve without 'turning' it (relative to the surface). The failure of parallel transport around a loop is related to curvature. Study the **Christoffel symbols** as the 'correction terms' for differentiating on a curved surface.",
+              "isBookSlot": false,
+              "estimatedMinutes": 120,
+              "tags": ["critical"],
+              "links": [],
+              "subtasks": [
+                { "id": "week-9-lecture-2-sub-1", "label": "Study parallel transport along curves on surfaces" },
+                { "id": "week-9-lecture-2-sub-2", "label": "Compute Christoffel symbols for the sphere" },
+                { "id": "week-9-lecture-2-sub-3", "label": "Understand: parallel transport around a closed loop on a sphere rotates a vector by the enclosed solid angle" }
+              ]
+            },
+            {
+              "id": "week-9-lecture-3",
+              "type": "lecture",
+              "slotNumber": 3,
+              "label": "Session 3 — Gauss–Bonnet Theorem (Survey)",
+              "description": "The **Gauss–Bonnet theorem** connects curvature to topology: ∫∫ K dA = 2π χ(S). The total Gaussian curvature of a closed surface equals 2π times its Euler characteristic. A sphere has χ = 2, a torus has χ = 0.\n\nThis is a survey — understand the statement and its meaning, don't worry about the full proof.",
+              "isBookSlot": false,
+              "estimatedMinutes": 120,
+              "tags": ["connection"],
+              "links": [
+                { "text": "DDG Lecture 9", "url": "https://www.youtube.com/watch?v=kGXr1SF3WmA&list=PL9_jI1bdZmz0hIrNCMQW1YmZysAiIYSSS&index=9" }
+              ],
+              "subtasks": [
+                { "id": "week-9-lecture-3-sub-1", "label": "Watch DDG Lecture 9" },
+                { "id": "week-9-lecture-3-sub-2", "label": "State the Gauss–Bonnet theorem and verify for the sphere" },
+                { "id": "week-9-lecture-3-sub-3", "label": "Understand: Euler characteristic and what it measures topologically" }
+              ]
+            },
+            {
+              "id": "week-9-practice-1",
+              "type": "practice",
+              "slotNumber": 4,
+              "label": "Session 4 — Geodesic Computations",
+              "description": "Solve the geodesic equation numerically for several surfaces. Visualise geodesics and parallel transport.",
+              "isBookSlot": false,
+              "estimatedMinutes": 120,
+              "tags": ["key-exercise"],
+              "links": [],
+              "subtasks": [
+                { "id": "week-9-practice-1-sub-1", "label": "Numerically solve geodesic equation on a sphere and torus" },
+                { "id": "week-9-practice-1-sub-2", "label": "Visualise parallel transport of a vector around a loop on a sphere" },
+                { "id": "week-9-practice-1-sub-3", "label": "Do Carmo Ch. 4 exercises: at least 4 problems" }
+              ]
+            },
+            {
+              "id": "week-9-reading-1",
+              "type": "reading",
+              "slotNumber": 5,
+              "label": "Session 5 — Do Carmo Ch. 4 + DDG Notes",
+              "description": "Read Do Carmo Ch. 4 (intrinsic geometry, geodesics, Gauss–Bonnet). Also skim the corresponding sections in Crane's DDG notes PDF.",
+              "isBookSlot": true,
+              "estimatedMinutes": 120,
+              "tags": [],
+              "links": [
+                { "text": "DDG Course Notes (PDF)", "url": "https://www.cs.cmu.edu/~kmcrane/Projects/DDG/paper.pdf" }
+              ],
+              "subtasks": [
+                { "id": "week-9-reading-1-sub-1", "label": "Read Do Carmo Ch. 4" },
+                { "id": "week-9-reading-1-sub-2", "label": "Skim corresponding DDG notes sections" }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "week-10",
+          "weekNumber": 10,
+          "dateRange": "1–5 Jun",
+          "startDate": "2026-06-01",
+          "endDate": "2026-06-05",
+          "title": "Buffer: Phase 2 Consolidation",
+          "isBuffer": true,
+          "slots": [
+            {
+              "id": "week-10-lecture-1",
+              "type": "lecture",
+              "slotNumber": 1,
+              "label": "Session 1 — Review: Curvature Concepts",
+              "description": "Review principal curvatures, Gaussian curvature, mean curvature, Theorema Egregium. Try to state each concept from memory, then check.",
+              "isBookSlot": false,
+              "estimatedMinutes": 120,
+              "tags": ["checkpoint", "from-scratch"],
+              "links": [],
+              "subtasks": [
+                { "id": "week-10-lecture-1-sub-1", "label": "From memory: define principal curvatures, K, H" },
+                { "id": "week-10-lecture-1-sub-2", "label": "From memory: state Theorema Egregium" },
+                { "id": "week-10-lecture-1-sub-3", "label": "From memory: write geodesic equation" }
+              ]
+            },
+            {
+              "id": "week-10-practice-1",
+              "type": "practice",
+              "slotNumber": 2,
+              "label": "Session 2 — Comprehensive Problem Set",
+              "description": "Timed problem set covering all Phase 2 material. Include curvature computation, geodesics, parallel transport, and Gauss–Bonnet.",
+              "isBookSlot": false,
+              "estimatedMinutes": 120,
+              "tags": ["checkpoint", "timed"],
+              "links": [],
+              "subtasks": [
+                { "id": "week-10-practice-1-sub-1", "label": "Curvature computation problems (30 min)" },
+                { "id": "week-10-practice-1-sub-2", "label": "Geodesic problems (30 min)" },
+                { "id": "week-10-practice-1-sub-3", "label": "Gauss–Bonnet application problem (20 min)" },
+                { "id": "week-10-practice-1-sub-4", "label": "Review and correct mistakes (40 min)" }
+              ]
+            },
+            {
+              "id": "week-10-practice-2",
+              "type": "practice",
+              "slotNumber": 3,
+              "label": "Session 3 — Catch-Up on Weak Areas",
+              "description": "Revisit topics that were difficult. Rewatch DDG lectures or reread Do Carmo sections as needed.",
+              "isBookSlot": false,
+              "estimatedMinutes": 120,
+              "tags": [],
+              "links": [],
+              "subtasks": [
+                { "id": "week-10-practice-2-sub-1", "label": "Identify and revisit weakest 2 topics from Phase 2" },
+                { "id": "week-10-practice-2-sub-2", "label": "Redo exercises from those topics" }
+              ]
+            },
+            {
+              "id": "week-10-practice-3",
+              "type": "practice",
+              "slotNumber": 4,
+              "label": "Session 4 — Loss Landscape Connection Mini-Project",
+              "description": "Use surface curvature concepts on a loss surface: take a 2D slice of a small network's loss landscape and compute approximate Gaussian curvature at the minimum. Compare to the Hessian eigenvalue analysis from Phase 1.",
+              "isBookSlot": false,
+              "estimatedMinutes": 120,
+              "tags": ["key-exercise", "connection"],
+              "links": [],
+              "subtasks": [
+                { "id": "week-10-practice-3-sub-1", "label": "Generate 2D loss surface slice from a trained small network" },
+                { "id": "week-10-practice-3-sub-2", "label": "Approximate Gaussian curvature at the minimum numerically" },
+                { "id": "week-10-practice-3-sub-3", "label": "Compare to Hessian eigenvalue analysis — do they agree?" }
+              ]
+            },
+            {
+              "id": "week-10-reading-1",
+              "type": "reading",
+              "slotNumber": 5,
+              "label": "Session 5 — Phase 2 Reflection",
+              "description": "Write a reflection on Phase 2. What geometric intuitions have you built? How do curves and surfaces connect to your PhD?",
+              "isBookSlot": false,
+              "estimatedMinutes": 120,
+              "tags": [],
+              "links": [],
+              "subtasks": [
+                { "id": "week-10-reading-1-sub-1", "label": "Write 1-page Phase 2 reflection" },
+                { "id": "week-10-reading-1-sub-2", "label": "Preview Lee Ch. 1 for Phase 3" }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "phase-3",
+      "number": 3,
+      "title": "Smooth Manifolds: Going Abstract",
+      "course": "Frederic Schuller – Lectures on Geometrical Anatomy of Theoretical Physics",
+      "courseUrl": "https://www.youtube.com/playlist?list=PLPH7f_7ZlzxTi6kS4vCmv4ZKm9u8g5yic",
+      "description": "The leap from surfaces in ℝ³ to abstract manifolds. You'll learn coordinate charts, smooth maps, tangent spaces as derivations, cotangent spaces, vector fields, and differential forms. This is where the mathematics becomes powerful enough to describe the parameter space of a neural network as a genuine geometric object. Schuller's lectures are rigorous but clear, aimed at physicists — a good match for your applied goals.",
+      "bookChapters": "Lee – Introduction to Smooth Manifolds, Ch. 1–6, 11",
+      "bookDescription": "Lee is the gold standard textbook. It's thorough and well-written. Use it as reference alongside the lectures — you don't need to read every proof, but the definitions and key theorems are essential.",
+      "weekRange": [11, 16],
+      "completionNote": "You can define a smooth manifold from charts, compute tangent vectors as derivations, work with covectors and differential forms, understand vector fields and their flows, and see parameter space as a manifold. You can read papers that say 'consider the manifold of network parameters with metric g'.",
+      "weeks": [
+        {
+          "id": "week-11",
+          "weekNumber": 11,
+          "dateRange": "8–12 Jun",
+          "startDate": "2026-06-08",
+          "endDate": "2026-06-12",
+          "title": "Topological & Smooth Manifolds, Charts, Atlases",
+          "isBuffer": false,
+          "slots": [
+            {
+              "id": "week-11-lecture-1",
+              "type": "lecture",
+              "slotNumber": 1,
+              "label": "Session 1 — Topological Manifolds and Charts",
+              "description": "A manifold is a space that **locally looks like ℝⁿ**. A **chart** (U, φ) is a homeomorphism from an open subset U of the manifold to an open subset of ℝⁿ. An **atlas** is a collection of charts covering the manifold. Study examples: sphere, torus, projective space.\n\n**Connection:** The parameter space of a neural network with n weights is an open subset of ℝⁿ — it's already a manifold! But the interesting geometry comes from the metric we put on it, not from its trivial topology.",
+              "isBookSlot": false,
+              "estimatedMinutes": 120,
+              "tags": ["critical", "connection"],
+              "links": [
+                { "text": "Schuller Lecture 1: Topology", "url": "https://www.youtube.com/watch?v=7G4SqIboeig&list=PLPH7f_7ZlzxTi6kS4vCmv4ZKm9u8g5yic&index=1" },
+                { "text": "Lee Ch. 1: Smooth Manifolds", "url": "https://link.springer.com/book/10.1007/978-1-4419-9982-5" }
+              ],
+              "subtasks": [
+                { "id": "week-11-lecture-1-sub-1", "label": "Watch Schuller Lecture 1 (topology review)" },
+                { "id": "week-11-lecture-1-sub-2", "label": "Read Lee Ch. 1 §1.1–1.3 (topological manifolds, charts, atlases)" },
+                { "id": "week-11-lecture-1-sub-3", "label": "Define chart, atlas, and give 3 examples of manifolds with explicit charts" }
+              ]
+            },
+            {
+              "id": "week-11-lecture-2",
+              "type": "lecture",
+              "slotNumber": 2,
+              "label": "Session 2 — Smooth Structures and Smooth Maps",
+              "description": "A **smooth structure** is a maximal atlas where all transition maps φⱼ ∘ φᵢ⁻¹ are smooth (C∞). A **smooth map** between manifolds is smooth in every chart. Study the transition map / compatibility condition carefully — this is the foundation of everything.",
+              "isBookSlot": false,
+              "estimatedMinutes": 120,
+              "tags": ["critical"],
+              "links": [
+                { "text": "Schuller Lecture 2: Topological Manifolds", "url": "https://www.youtube.com/watch?v=93f-ayezCqE&list=PLPH7f_7ZlzxTi6kS4vCmv4ZKm9u8g5yic&index=2" }
+              ],
+              "subtasks": [
+                { "id": "week-11-lecture-2-sub-1", "label": "Watch Schuller Lecture 2" },
+                { "id": "week-11-lecture-2-sub-2", "label": "Read Lee Ch. 1 §1.4–1.6 (smooth structures, smooth maps)" },
+                { "id": "week-11-lecture-2-sub-3", "label": "Compute transition maps for the sphere with stereographic projection charts" }
+              ]
+            },
+            {
+              "id": "week-11-lecture-3",
+              "type": "lecture",
+              "slotNumber": 3,
+              "label": "Session 3 — Examples of Manifolds",
+              "description": "Study important manifold examples: **Lie groups** (GL(n), O(n), SO(n)), **projective spaces**, **Grassmannians**, **product manifolds**. Many of these appear in ML: orthogonal weight matrices live on O(n), low-rank weight matrices live on Grassmannians.",
+              "isBookSlot": false,
+              "estimatedMinutes": 120,
+              "tags": ["connection"],
+              "links": [],
+              "subtasks": [
+                { "id": "week-11-lecture-3-sub-1", "label": "Study Lie groups: GL(n), O(n), SO(n) as manifolds" },
+                { "id": "week-11-lecture-3-sub-2", "label": "Study Grassmannians (spaces of k-dimensional subspaces)" },
+                { "id": "week-11-lecture-3-sub-3", "label": "Note: where do these manifolds appear in ML/neural networks?" }
+              ]
+            },
+            {
+              "id": "week-11-practice-1",
+              "type": "practice",
+              "slotNumber": 4,
+              "label": "Session 4 — Chart Computations",
+              "description": "Practice constructing charts, computing transition maps, and verifying smoothness. Lee Ch. 1 exercises.",
+              "isBookSlot": false,
+              "estimatedMinutes": 120,
+              "tags": ["key-exercise"],
+              "links": [],
+              "subtasks": [
+                { "id": "week-11-practice-1-sub-1", "label": "Construct explicit charts for RP² and verify transition map smoothness" },
+                { "id": "week-11-practice-1-sub-2", "label": "Lee Ch. 1 exercises: at least 5 problems" },
+                { "id": "week-11-practice-1-sub-3", "label": "Show that SO(n) is a manifold of dimension n(n-1)/2" }
+              ]
+            },
+            {
+              "id": "week-11-reading-1",
+              "type": "reading",
+              "slotNumber": 5,
+              "label": "Session 5 — Lee Ch. 1 Deep Read",
+              "description": "Finish reading Lee Ch. 1. Focus on: partition of unity (a technical tool you'll need later), examples, and the key definitions.",
+              "isBookSlot": true,
+              "estimatedMinutes": 120,
+              "tags": [],
+              "links": [],
+              "subtasks": [
+                { "id": "week-11-reading-1-sub-1", "label": "Finish Lee Ch. 1" },
+                { "id": "week-11-reading-1-sub-2", "label": "Make a cheat sheet: all key definitions from Ch. 1" }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "week-12",
+          "weekNumber": 12,
+          "dateRange": "15–19 Jun",
+          "startDate": "2026-06-15",
+          "endDate": "2026-06-19",
+          "title": "Tangent Spaces, Tangent Bundle, Pushforward",
+          "isBuffer": false,
+          "slots": [
+            {
+              "id": "week-12-lecture-1",
+              "type": "lecture",
+              "slotNumber": 1,
+              "label": "Session 1 — Tangent Vectors as Derivations",
+              "description": "On an abstract manifold, a **tangent vector** at p is a derivation: a linear map v: C∞(M) → ℝ satisfying the Leibniz rule. In coordinates, v = vⁱ ∂/∂xⁱ. The **tangent space** TₚM is the vector space of all tangent vectors at p.\n\nThis is the hardest conceptual leap. Spend time on it.",
+              "isBookSlot": false,
+              "estimatedMinutes": 120,
+              "tags": ["critical"],
+              "links": [
+                { "text": "Schuller Lecture 5: Tangent Spaces", "url": "https://www.youtube.com/watch?v=pepU_7NJSGM&list=PLPH7f_7ZlzxTi6kS4vCmv4ZKm9u8g5yic&index=5" },
+                { "text": "Lee Ch. 3: Tangent Vectors", "url": "https://link.springer.com/book/10.1007/978-1-4419-9982-5" }
+              ],
+              "subtasks": [
+                { "id": "week-12-lecture-1-sub-1", "label": "Watch Schuller Lecture 5" },
+                { "id": "week-12-lecture-1-sub-2", "label": "Read Lee Ch. 3 (tangent vectors)" },
+                { "id": "week-12-lecture-1-sub-3", "label": "Verify: ∂/∂xⁱ are derivations and form a basis for TₚM" },
+                { "id": "week-12-lecture-1-sub-4", "label": "Write in your own words: what IS a tangent vector on an abstract manifold?" }
+              ]
+            },
+            {
+              "id": "week-12-lecture-2",
+              "type": "lecture",
+              "slotNumber": 2,
+              "label": "Session 2 — The Pushforward (Differential of a Map)",
+              "description": "If F: M → N is smooth, the **pushforward** (or differential) dF_p: TₚM → T_{F(p)}N maps tangent vectors forward. In coordinates, dF is represented by the Jacobian matrix. This generalises the Jacobian from Phase 1 to manifolds.",
+              "isBookSlot": false,
+              "estimatedMinutes": 120,
+              "tags": ["critical"],
+              "links": [
+                { "text": "Schuller Lecture 6", "url": "https://www.youtube.com/watch?v=2wTUqBaFNHU&list=PLPH7f_7ZlzxTi6kS4vCmv4ZKm9u8g5yic&index=6" }
+              ],
+              "subtasks": [
+                { "id": "week-12-lecture-2-sub-1", "label": "Watch Schuller Lecture 6" },
+                { "id": "week-12-lecture-2-sub-2", "label": "Compute pushforward of the inclusion S² ↪ ℝ³" },
+                { "id": "week-12-lecture-2-sub-3", "label": "Verify: in coordinates, pushforward = Jacobian matrix" }
+              ]
+            },
+            {
+              "id": "week-12-lecture-3",
+              "type": "lecture",
+              "slotNumber": 3,
+              "label": "Session 3 — Tangent Bundle and Vector Fields",
+              "description": "The **tangent bundle** TM = ⋃ TₚM is itself a manifold (of dimension 2n). A **vector field** is a smooth assignment of a tangent vector to each point: X: M → TM. Vector fields generate **flows** — families of diffeomorphisms.\n\n**Connection:** The gradient vector field ∇L on the parameter manifold generates the gradient flow — the continuous-time limit of gradient descent. The geometry of this flow is determined by the metric.",
+              "isBookSlot": false,
+              "estimatedMinutes": 120,
+              "tags": ["connection"],
+              "links": [],
+              "subtasks": [
+                { "id": "week-12-lecture-3-sub-1", "label": "Define tangent bundle and verify it's a 2n-dimensional manifold" },
+                { "id": "week-12-lecture-3-sub-2", "label": "Define vector field and flow" },
+                { "id": "week-12-lecture-3-sub-3", "label": "Understand: gradient descent as following the flow of -∇L" }
+              ]
+            },
+            {
+              "id": "week-12-practice-1",
+              "type": "practice",
+              "slotNumber": 4,
+              "label": "Session 4 — Tangent Space Exercises",
+              "description": "Lee Ch. 3 exercises. Practice computing tangent spaces, pushforwards, and working with vector fields in coordinates.",
+              "isBookSlot": false,
+              "estimatedMinutes": 120,
+              "tags": ["key-exercise"],
+              "links": [],
+              "subtasks": [
+                { "id": "week-12-practice-1-sub-1", "label": "Lee Ch. 3 exercises: at least 5 problems" },
+                { "id": "week-12-practice-1-sub-2", "label": "Compute tangent space of SO(3) at the identity" },
+                { "id": "week-12-practice-1-sub-3", "label": "Compute the pushforward of a rotation map on S²" }
+              ]
+            },
+            {
+              "id": "week-12-reading-1",
+              "type": "reading",
+              "slotNumber": 5,
+              "label": "Session 5 — Lee Ch. 3–4",
+              "description": "Read Lee Ch. 3–4 (tangent vectors, submersions/immersions/embeddings).",
+              "isBookSlot": true,
+              "estimatedMinutes": 120,
+              "tags": [],
+              "links": [],
+              "subtasks": [
+                { "id": "week-12-reading-1-sub-1", "label": "Read Lee Ch. 3" },
+                { "id": "week-12-reading-1-sub-2", "label": "Skim Lee Ch. 4 (immersions, submersions)" }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "week-13",
+          "weekNumber": 13,
+          "dateRange": "22–26 Jun",
+          "startDate": "2026-06-22",
+          "endDate": "2026-06-26",
+          "title": "Cotangent Spaces, Differential Forms, Pullback",
+          "isBuffer": false,
+          "slots": [
+            {
+              "id": "week-13-lecture-1",
+              "type": "lecture",
+              "slotNumber": 1,
+              "label": "Session 1 — Cotangent Space and 1-Forms",
+              "description": "The **cotangent space** T*ₚM is the dual of TₚM. A **covector** (1-form) at p eats a tangent vector and returns a number. In coordinates, the basis is {dxⁱ}. The **differential** df of a function is a 1-form: df(v) = v(f).\n\n**Connection:** The gradient of the loss function is naturally a covector (1-form), not a vector! To turn it into a vector (for gradient descent), you need a metric. Different metrics give different 'gradient vectors' — this is the heart of natural gradient.",
+              "isBookSlot": false,
+              "estimatedMinutes": 120,
+              "tags": ["critical", "connection"],
+              "links": [
+                { "text": "Schuller Lecture 7: Cotangent Spaces", "url": "https://www.youtube.com/watch?v=6G1bkVGQJU0&list=PLPH7f_7ZlzxTi6kS4vCmv4ZKm9u8g5yic&index=7" }
+              ],
+              "subtasks": [
+                { "id": "week-13-lecture-1-sub-1", "label": "Watch Schuller Lecture 7" },
+                { "id": "week-13-lecture-1-sub-2", "label": "Read Lee Ch. 6 (cotangent bundle)" },
+                { "id": "week-13-lecture-1-sub-3", "label": "Compute df in coordinates for several functions" },
+                { "id": "week-13-lecture-1-sub-4", "label": "Understand: gradient is a covector; the metric converts it to a vector" }
+              ]
+            },
+            {
+              "id": "week-13-lecture-2",
+              "type": "lecture",
+              "slotNumber": 2,
+              "label": "Session 2 — Differential k-Forms and Exterior Derivative",
+              "description": "Study **k-forms** as antisymmetric multilinear maps on tangent vectors. The **exterior derivative** d generalises the gradient, curl, and divergence. Key property: d² = 0.\n\nFocus on 1-forms and 2-forms — you don't need the full generality for loss landscape applications, but understanding the structure helps.",
+              "isBookSlot": false,
+              "estimatedMinutes": 120,
+              "tags": [],
+              "links": [
+                { "text": "Schuller Lecture 8", "url": "https://www.youtube.com/watch?v=2ptFnIj71SM&list=PLPH7f_7ZlzxTi6kS4vCmv4ZKm9u8g5yic&index=8" }
+              ],
+              "subtasks": [
+                { "id": "week-13-lecture-2-sub-1", "label": "Watch Schuller Lecture 8" },
+                { "id": "week-13-lecture-2-sub-2", "label": "Define k-forms and wedge product" },
+                { "id": "week-13-lecture-2-sub-3", "label": "Compute exterior derivatives of several 1-forms" }
+              ]
+            },
+            {
+              "id": "week-13-lecture-3",
+              "type": "lecture",
+              "slotNumber": 3,
+              "label": "Session 3 — Pullback of Forms",
+              "description": "If F: M → N, the **pullback** F* pulls differential forms back from N to M: (F*ω)(v₁,...,vₖ) = ω(dF(v₁),...,dF(vₖ)). Key property: pullback commutes with exterior derivative. This is the dual of the pushforward.",
+              "isBookSlot": false,
+              "estimatedMinutes": 120,
+              "tags": [],
+              "links": [],
+              "subtasks": [
+                { "id": "week-13-lecture-3-sub-1", "label": "Define pullback of differential forms" },
+                { "id": "week-13-lecture-3-sub-2", "label": "Compute pullbacks of 1-forms under several maps" },
+                { "id": "week-13-lecture-3-sub-3", "label": "Verify: F*(dω) = d(F*ω) for an example" }
+              ]
+            },
+            {
+              "id": "week-13-practice-1",
+              "type": "practice",
+              "slotNumber": 4,
+              "label": "Session 4 — Forms and Derivatives Exercises",
+              "description": "Lee Ch. 6 & 11 exercises. Practice with differential forms, exterior derivatives, and pullbacks.",
+              "isBookSlot": false,
+              "estimatedMinutes": 120,
+              "tags": ["key-exercise"],
+              "links": [],
+              "subtasks": [
+                { "id": "week-13-practice-1-sub-1", "label": "Lee Ch. 6 exercises: at least 4 problems" },
+                { "id": "week-13-practice-1-sub-2", "label": "Lee Ch. 11 exercises: at least 3 problems" },
+                { "id": "week-13-practice-1-sub-3", "label": "Verify Stokes' theorem for a simple case" }
+              ]
+            },
+            {
+              "id": "week-13-reading-1",
+              "type": "reading",
+              "slotNumber": 5,
+              "label": "Session 5 — Lee Ch. 5–6 + Needham Parallel",
+              "description": "Read Lee Ch. 5 (submanifolds) and Ch. 6 (cotangent bundle). Optionally read Needham's treatment of forms for visual intuition.",
+              "isBookSlot": true,
+              "estimatedMinutes": 120,
+              "tags": [],
+              "links": [],
+              "subtasks": [
+                { "id": "week-13-reading-1-sub-1", "label": "Read Lee Ch. 5 (submanifolds)" },
+                { "id": "week-13-reading-1-sub-2", "label": "Read Lee Ch. 6 (cotangent bundle, differential forms intro)" }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "week-14",
+          "weekNumber": 14,
+          "dateRange": "29 Jun – 3 Jul",
+          "startDate": "2026-06-29",
+          "endDate": "2026-07-03",
+          "title": "Buffer: Phase 3 Consolidation & Manifold Fluency",
+          "isBuffer": true,
+          "slots": [
+            {
+              "id": "week-14-lecture-1",
+              "type": "lecture",
+              "slotNumber": 1,
+              "label": "Session 1 — Manifold Fluency Drill",
+              "description": "From memory, define: smooth manifold, tangent space, pushforward, cotangent space, differential form, pullback. Then check against Lee. Identify gaps.",
+              "isBookSlot": false,
+              "estimatedMinutes": 120,
+              "tags": ["checkpoint", "from-scratch"],
+              "links": [],
+              "subtasks": [
+                { "id": "week-14-lecture-1-sub-1", "label": "Write all key definitions from memory" },
+                { "id": "week-14-lecture-1-sub-2", "label": "Check against Lee and note mistakes" },
+                { "id": "week-14-lecture-1-sub-3", "label": "Revisit weakest definitions/concepts" }
+              ]
+            },
+            {
+              "id": "week-14-practice-1",
+              "type": "practice",
+              "slotNumber": 2,
+              "label": "Session 2 — Catch-Up",
+              "description": "Revisit anything that's still unclear from weeks 11–13. Focus on the conceptual leaps (tangent vectors as derivations, forms as dual objects).",
+              "isBookSlot": false,
+              "estimatedMinutes": 120,
+              "tags": [],
+              "links": [],
+              "subtasks": [
+                { "id": "week-14-practice-1-sub-1", "label": "Revisit the 2 hardest topics from Phase 3" },
+                { "id": "week-14-practice-1-sub-2", "label": "Find and work through alternative explanations" }
+              ]
+            },
+            {
+              "id": "week-14-practice-2",
+              "type": "practice",
+              "slotNumber": 3,
+              "label": "Session 3 — Mixed Problem Set",
+              "description": "Comprehensive problems mixing Phase 2 and Phase 3 material. This ensures the abstract manifold concepts connect to the concrete surface geometry.",
+              "isBookSlot": false,
+              "estimatedMinutes": 120,
+              "tags": ["timed"],
+              "links": [],
+              "subtasks": [
+                { "id": "week-14-practice-2-sub-1", "label": "Compute tangent space and pushforward on a concrete surface" },
+                { "id": "week-14-practice-2-sub-2", "label": "Express the first fundamental form as a Riemannian metric in charts" },
+                { "id": "week-14-practice-2-sub-3", "label": "Compute a pullback for a concrete map between surfaces" }
+              ]
+            },
+            {
+              "id": "week-14-reading-1",
+              "type": "reading",
+              "slotNumber": 4,
+              "label": "Session 4 — Read Ahead: Riemannian Metrics",
+              "description": "Preview Lee Ch. 13 (Riemannian Metrics) to prepare for Phase 4. Just read the definitions and examples — don't worry about proofs yet.",
+              "isBookSlot": true,
+              "estimatedMinutes": 120,
+              "tags": [],
+              "links": [],
+              "subtasks": [
+                { "id": "week-14-reading-1-sub-1", "label": "Skim Lee Ch. 13 §13.1–13.2" },
+                { "id": "week-14-reading-1-sub-2", "label": "Note: how does the abstract Riemannian metric relate to the first fundamental form?" }
+              ]
+            },
+            {
+              "id": "week-14-reading-2",
+              "type": "reading",
+              "slotNumber": 5,
+              "label": "Session 5 — Phase 3 Reflection",
+              "description": "Write your Phase 3 reflection. The key insight: differential geometry on abstract manifolds is about defining geometric concepts (length, angle, curvature) using only smooth structure + metric, without reference to any ambient space.",
+              "isBookSlot": false,
+              "estimatedMinutes": 120,
+              "tags": [],
+              "links": [],
+              "subtasks": [
+                { "id": "week-14-reading-2-sub-1", "label": "Write 1-page Phase 3 reflection" },
+                { "id": "week-14-reading-2-sub-2", "label": "List all connections to loss landscapes discovered so far" }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "phase-4",
+      "number": 4,
+      "title": "Riemannian Geometry: Metrics, Connections, Curvature",
+      "course": "Frederic Schuller – Lectures (cont.) + DDG Lectures (cont.)",
+      "courseUrl": "https://www.youtube.com/playlist?list=PLPH7f_7ZlzxTi6kS4vCmv4ZKm9u8g5yic",
+      "description": "The core of the plan. Riemannian geometry equips a smooth manifold with a metric tensor, enabling measurement of distances, angles, and curvature. You'll learn the Levi-Civita connection, geodesics on abstract manifolds, Riemann curvature tensor, Ricci curvature, and sectional curvature. This is exactly the machinery needed to rigorously study loss landscape geometry.",
+      "bookChapters": "Lee – Introduction to Smooth Manifolds, Ch. 13 + Lee – Riemannian Manifolds (Ch. 1–7) or Do Carmo – Riemannian Geometry (Ch. 1–4)",
+      "bookDescription": "Lee's Riemannian Manifolds is concise and clear. Do Carmo's Riemannian Geometry is the classic. Either works well. For Absil's optimization perspective, start reading chapters 1–3 during this phase.",
+      "weekRange": [15, 20],
+      "completionNote": "You can define and compute Riemannian metrics, Christoffel symbols, covariant derivatives, geodesics, and curvature tensors on abstract manifolds. You understand the Levi-Civita connection as 'the' natural way to differentiate on a Riemannian manifold. You can explain the geometric content of the Fisher information metric and natural gradient descent.",
+      "weeks": [
+        {
+          "id": "week-15",
+          "weekNumber": 15,
+          "dateRange": "6–10 Jul",
+          "startDate": "2026-07-06",
+          "endDate": "2026-07-10",
+          "title": "Riemannian Metrics: The Inner Product on Tangent Spaces",
+          "isBuffer": false,
+          "slots": [
+            {
+              "id": "week-15-lecture-1",
+              "type": "lecture",
+              "slotNumber": 1,
+              "label": "Session 1 — Riemannian Metric Definition",
+              "description": "A **Riemannian metric** g is a smoothly varying inner product on each tangent space: gₚ: TₚM × TₚM → ℝ. In coordinates, g = gᵢⱼ dxⁱ ⊗ dxʲ. This generalises the first fundamental form to abstract manifolds.\n\n**Connection:** The Fisher information matrix F(θ) = E[∇log p(x|θ) ∇log p(x|θ)ᵀ] is a Riemannian metric on the parameter manifold. It measures how much the output distribution changes per unit parameter change.",
+              "isBookSlot": false,
+              "estimatedMinutes": 120,
+              "tags": ["critical", "connection"],
+              "links": [
+                { "text": "Schuller Lecture 10: Riemannian Geometry", "url": "https://www.youtube.com/watch?v=iFAxSEoj6Go&list=PLPH7f_7ZlzxTi6kS4vCmv4ZKm9u8g5yic&index=10" }
+              ],
+              "subtasks": [
+                { "id": "week-15-lecture-1-sub-1", "label": "Watch Schuller Lecture 10" },
+                { "id": "week-15-lecture-1-sub-2", "label": "Define Riemannian metric formally" },
+                { "id": "week-15-lecture-1-sub-3", "label": "Compute the Riemannian metric on S² in spherical coordinates" },
+                { "id": "week-15-lecture-1-sub-4", "label": "Write down the Fisher information metric for a Gaussian distribution" }
+              ]
+            },
+            {
+              "id": "week-15-lecture-2",
+              "type": "lecture",
+              "slotNumber": 2,
+              "label": "Session 2 — Riemannian Distance, Volume, Gradient",
+              "description": "With a metric, define **Riemannian distance** d(p,q) = inf of path lengths, **Riemannian volume form**, and the **Riemannian gradient**: (grad f)ⁱ = gⁱʲ ∂f/∂xʲ. The metric 'raises the index' of df to get a vector.\n\n**Connection:** The natural gradient is (F(θ))⁻¹ ∇L(θ) — this is exactly the Riemannian gradient with the Fisher metric! Standard gradient descent uses the Euclidean metric (gⁱʲ = δⁱʲ).",
+              "isBookSlot": false,
+              "estimatedMinutes": 120,
+              "tags": ["critical", "connection"],
+              "links": [],
+              "subtasks": [
+                { "id": "week-15-lecture-2-sub-1", "label": "Define Riemannian distance and show it's a metric space" },
+                { "id": "week-15-lecture-2-sub-2", "label": "Derive the Riemannian gradient formula: (grad f)ⁱ = gⁱʲ ∂ⱼf" },
+                { "id": "week-15-lecture-2-sub-3", "label": "Verify: natural gradient = Riemannian gradient with Fisher metric" },
+                { "id": "week-15-lecture-2-sub-4", "label": "Compute Riemannian gradient of a function on the sphere" }
+              ]
+            },
+            {
+              "id": "week-15-lecture-3",
+              "type": "lecture",
+              "slotNumber": 3,
+              "label": "Session 3 — Musical Isomorphisms and Index Gymnastics",
+              "description": "The metric lets you 'raise and lower indices': convert between vectors and covectors. The **flat** ♭ map sends v → g(v,·) and the **sharp** ♯ map is its inverse. Practice index notation and Einstein summation.",
+              "isBookSlot": false,
+              "estimatedMinutes": 120,
+              "tags": [],
+              "links": [],
+              "subtasks": [
+                { "id": "week-15-lecture-3-sub-1", "label": "Define musical isomorphisms ♭ and ♯" },
+                { "id": "week-15-lecture-3-sub-2", "label": "Practice raising and lowering indices on 5 examples" },
+                { "id": "week-15-lecture-3-sub-3", "label": "Rewrite the Riemannian gradient formula using musical isomorphisms" }
+              ]
+            },
+            {
+              "id": "week-15-practice-1",
+              "type": "practice",
+              "slotNumber": 4,
+              "label": "Session 4 — Natural Gradient Implementation",
+              "description": "Implement natural gradient descent for a simple model. Compare convergence of standard GD vs natural GD on a toy problem.\n\n- Implement for a 2-parameter Gaussian model\n- Compute Fisher information matrix analytically\n- Run both standard and natural gradient descent\n- Plot convergence comparison",
+              "isBookSlot": false,
+              "estimatedMinutes": 120,
+              "tags": ["key-exercise", "connection"],
+              "links": [
+                { "text": "Amari: Natural Gradient Works Efficiently in Learning (paper)", "url": "https://citeseerx.ist.psu.edu/document?doi=43dfbfa3bcc56f266b238c7c62e38bce1b28aba6" }
+              ],
+              "subtasks": [
+                { "id": "week-15-practice-1-sub-1", "label": "Compute Fisher information matrix for a 2-parameter Gaussian" },
+                { "id": "week-15-practice-1-sub-2", "label": "Implement standard gradient descent" },
+                { "id": "week-15-practice-1-sub-3", "label": "Implement natural gradient descent" },
+                { "id": "week-15-practice-1-sub-4", "label": "Plot and compare convergence trajectories" }
+              ]
+            },
+            {
+              "id": "week-15-reading-1",
+              "type": "reading",
+              "slotNumber": 5,
+              "label": "Session 5 — Lee Riemannian Ch. 1 + Absil Ch. 1",
+              "description": "Read the introduction chapters of both Lee's Riemannian Manifolds and Absil's Optimization Algorithms on Matrix Manifolds. Absil gives the optimization perspective you need for your PhD.",
+              "isBookSlot": true,
+              "estimatedMinutes": 120,
+              "tags": [],
+              "links": [
+                { "text": "Absil – Optimization on Matrix Manifolds", "url": "https://press.princeton.edu/absil" }
+              ],
+              "subtasks": [
+                { "id": "week-15-reading-1-sub-1", "label": "Read Lee Riemannian Manifolds Ch. 1" },
+                { "id": "week-15-reading-1-sub-2", "label": "Read Absil Ch. 1 (intro to optimization on manifolds)" }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "week-16",
+          "weekNumber": 16,
+          "dateRange": "13–17 Jul",
+          "startDate": "2026-07-13",
+          "endDate": "2026-07-17",
+          "title": "Connections and Covariant Differentiation",
+          "isBuffer": false,
+          "slots": [
+            {
+              "id": "week-16-lecture-1",
+              "type": "lecture",
+              "slotNumber": 1,
+              "label": "Session 1 — The Problem of Differentiating Vector Fields",
+              "description": "On a curved manifold, you can't just subtract tangent vectors at different points (they live in different vector spaces). You need a **connection**: a rule for 'transporting' vectors from one tangent space to another. The **covariant derivative** ∇_X Y generalises the directional derivative to vector fields on manifolds.",
+              "isBookSlot": false,
+              "estimatedMinutes": 120,
+              "tags": ["critical"],
+              "links": [
+                { "text": "Schuller Lecture 11: Connections", "url": "https://www.youtube.com/watch?v=nEaiZBbCVtI&list=PLPH7f_7ZlzxTi6kS4vCmv4ZKm9u8g5yic&index=11" }
+              ],
+              "subtasks": [
+                { "id": "week-16-lecture-1-sub-1", "label": "Watch Schuller Lecture 11" },
+                { "id": "week-16-lecture-1-sub-2", "label": "Understand: why can't you just use partial derivatives on a manifold?" },
+                { "id": "week-16-lecture-1-sub-3", "label": "Define an affine connection / covariant derivative axiomatically" }
+              ]
+            },
+            {
+              "id": "week-16-lecture-2",
+              "type": "lecture",
+              "slotNumber": 2,
+              "label": "Session 2 — Levi-Civita Connection and Christoffel Symbols",
+              "description": "The **Levi-Civita connection** is THE unique connection that is (1) torsion-free and (2) metric-compatible. The **Christoffel symbols** Γⁱⱼₖ = ½ gⁱˡ(∂ⱼgₖˡ + ∂ₖgⱼˡ − ∂ˡgⱼₖ) encode the connection in coordinates.",
+              "isBookSlot": false,
+              "estimatedMinutes": 120,
+              "tags": ["critical"],
+              "links": [
+                { "text": "Schuller Lecture 12", "url": "https://www.youtube.com/watch?v=2eVWUdcI2ho&list=PLPH7f_7ZlzxTi6kS4vCmv4ZKm9u8g5yic&index=12" }
+              ],
+              "subtasks": [
+                { "id": "week-16-lecture-2-sub-1", "label": "Watch Schuller Lecture 12" },
+                { "id": "week-16-lecture-2-sub-2", "label": "Derive the Christoffel symbol formula from metric compatibility + torsion-free" },
+                { "id": "week-16-lecture-2-sub-3", "label": "Compute Christoffel symbols for S² in spherical coordinates" }
+              ]
+            },
+            {
+              "id": "week-16-lecture-3",
+              "type": "lecture",
+              "slotNumber": 3,
+              "label": "Session 3 — Geodesics on Riemannian Manifolds",
+              "description": "Geodesics are curves with zero covariant acceleration: ∇_γ' γ' = 0. In coordinates: d²xⁱ/dt² + Γⁱⱼₖ (dxʲ/dt)(dxᵏ/dt) = 0. This generalises 'straight lines' to curved spaces. The **exponential map** exp_p: TₚM → M sends tangent vectors to geodesics.",
+              "isBookSlot": false,
+              "estimatedMinutes": 120,
+              "tags": ["critical", "connection"],
+              "links": [],
+              "subtasks": [
+                { "id": "week-16-lecture-3-sub-1", "label": "Derive the geodesic equation from ∇_γ' γ' = 0" },
+                { "id": "week-16-lecture-3-sub-2", "label": "Solve the geodesic equation for the sphere" },
+                { "id": "week-16-lecture-3-sub-3", "label": "Define the exponential map and compute it for a simple example" }
+              ]
+            },
+            {
+              "id": "week-16-practice-1",
+              "type": "practice",
+              "slotNumber": 4,
+              "label": "Session 4 — Christoffel Symbol Computations",
+              "description": "Compute Christoffel symbols and geodesic equations for several manifolds. This is unavoidably computational — embrace it.",
+              "isBookSlot": false,
+              "estimatedMinutes": 120,
+              "tags": ["key-exercise"],
+              "links": [],
+              "subtasks": [
+                { "id": "week-16-practice-1-sub-1", "label": "Compute Christoffel symbols for the Poincaré half-plane" },
+                { "id": "week-16-practice-1-sub-2", "label": "Compute geodesic equation for the torus" },
+                { "id": "week-16-practice-1-sub-3", "label": "Numerically solve geodesic equations and plot geodesics on surfaces" }
+              ]
+            },
+            {
+              "id": "week-16-reading-1",
+              "type": "reading",
+              "slotNumber": 5,
+              "label": "Session 5 — Lee Riemannian Ch. 2–4 + Absil Ch. 2",
+              "description": "Read about connections and geodesics in Lee's Riemannian Manifolds. Read Absil Ch. 2 on retractions — the computational approximation to the exponential map used in practical optimization.",
+              "isBookSlot": true,
+              "estimatedMinutes": 120,
+              "tags": [],
+              "links": [],
+              "subtasks": [
+                { "id": "week-16-reading-1-sub-1", "label": "Read Lee Riemannian Ch. 2–4 (connections, geodesics)" },
+                { "id": "week-16-reading-1-sub-2", "label": "Read Absil Ch. 2 (retractions)" }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "week-17",
+          "weekNumber": 17,
+          "dateRange": "20–24 Jul",
+          "startDate": "2026-07-20",
+          "endDate": "2026-07-24",
+          "title": "Curvature Tensors: Riemann, Ricci, Scalar",
+          "isBuffer": false,
+          "slots": [
+            {
+              "id": "week-17-lecture-1",
+              "type": "lecture",
+              "slotNumber": 1,
+              "label": "Session 1 — Riemann Curvature Tensor",
+              "description": "The **Riemann curvature tensor** R(X,Y)Z = ∇_X ∇_Y Z − ∇_Y ∇_X Z − ∇_[X,Y] Z measures the failure of covariant derivatives to commute. In components: Rⁱⱼₖₗ. This is the master curvature object — all other curvatures derive from it.\n\n**Connection:** The Riemann tensor captures the full curvature of parameter space. Its traces (Ricci and scalar curvature) provide summary statistics of the curvature. These are relevant for understanding the geometry of the loss landscape at different scales.",
+              "isBookSlot": false,
+              "estimatedMinutes": 120,
+              "tags": ["critical", "connection"],
+              "links": [
+                { "text": "Schuller Lecture 13: Curvature", "url": "https://www.youtube.com/watch?v=nEaiZBbCVtI&list=PLPH7f_7ZlzxTi6kS4vCmv4ZKm9u8g5yic&index=13" }
+              ],
+              "subtasks": [
+                { "id": "week-17-lecture-1-sub-1", "label": "Watch Schuller Lecture 13" },
+                { "id": "week-17-lecture-1-sub-2", "label": "Define the Riemann curvature tensor" },
+                { "id": "week-17-lecture-1-sub-3", "label": "Compute R for the sphere in spherical coordinates" },
+                { "id": "week-17-lecture-1-sub-4", "label": "Understand: R = 0 means 'flat' (parallel transport is path-independent)" }
+              ]
+            },
+            {
+              "id": "week-17-lecture-2",
+              "type": "lecture",
+              "slotNumber": 2,
+              "label": "Session 2 — Ricci Curvature and Scalar Curvature",
+              "description": "**Ricci curvature** Rᵢⱼ = Rᵏᵢₖⱼ is a trace of the Riemann tensor. **Scalar curvature** R = gⁱʲRᵢⱼ is the full trace. **Sectional curvature** K(σ) measures curvature in a 2-plane σ ⊂ TₚM. For surfaces, sectional curvature = Gaussian curvature.",
+              "isBookSlot": false,
+              "estimatedMinutes": 120,
+              "tags": ["critical"],
+              "links": [],
+              "subtasks": [
+                { "id": "week-17-lecture-2-sub-1", "label": "Define Ricci curvature and scalar curvature" },
+                { "id": "week-17-lecture-2-sub-2", "label": "Define sectional curvature" },
+                { "id": "week-17-lecture-2-sub-3", "label": "Verify: for 2D surfaces, sectional curvature = Gaussian curvature" },
+                { "id": "week-17-lecture-2-sub-4", "label": "Compute Ricci and scalar curvature for the sphere" }
+              ]
+            },
+            {
+              "id": "week-17-lecture-3",
+              "type": "lecture",
+              "slotNumber": 3,
+              "label": "Session 3 — Curvature and Geodesic Deviation",
+              "description": "Curvature controls how nearby geodesics diverge or converge: the **Jacobi equation**. Positive curvature → geodesics converge (like on a sphere). Negative curvature → geodesics diverge (like on a saddle).\n\n**Connection:** In optimization, this means: in positively curved regions of the loss landscape, gradient descent trajectories starting nearby will converge. In negatively curved regions, they'll diverge. This has implications for the stability and sensitivity of training.",
+              "isBookSlot": false,
+              "estimatedMinutes": 120,
+              "tags": ["connection"],
+              "links": [],
+              "subtasks": [
+                { "id": "week-17-lecture-3-sub-1", "label": "Study the Jacobi equation for geodesic deviation" },
+                { "id": "week-17-lecture-3-sub-2", "label": "Understand: positive curvature → focusing, negative → defocusing" },
+                { "id": "week-17-lecture-3-sub-3", "label": "Write a paragraph connecting geodesic deviation to optimizer trajectory stability" }
+              ]
+            },
+            {
+              "id": "week-17-practice-1",
+              "type": "practice",
+              "slotNumber": 4,
+              "label": "Session 4 — Curvature Computations",
+              "description": "Compute Riemann tensor, Ricci tensor, and scalar curvature for the Poincaré half-plane and the sphere. This is the hardest computational exercise in the plan — take your time.",
+              "isBookSlot": false,
+              "estimatedMinutes": 120,
+              "tags": ["key-exercise"],
+              "links": [],
+              "subtasks": [
+                { "id": "week-17-practice-1-sub-1", "label": "Compute full Riemann tensor for the Poincaré half-plane" },
+                { "id": "week-17-practice-1-sub-2", "label": "Compute Ricci and scalar curvature from it" },
+                { "id": "week-17-practice-1-sub-3", "label": "Verify results agree with known values (constant negative curvature)" }
+              ]
+            },
+            {
+              "id": "week-17-reading-1",
+              "type": "reading",
+              "slotNumber": 5,
+              "label": "Session 5 — Lee Riemannian Ch. 5–7",
+              "description": "Read Lee's chapters on curvature. Focus on the definitions and key theorems, especially the symmetries of the Riemann tensor.",
+              "isBookSlot": true,
+              "estimatedMinutes": 120,
+              "tags": [],
+              "links": [],
+              "subtasks": [
+                { "id": "week-17-reading-1-sub-1", "label": "Read Lee Riemannian Ch. 5–7 (curvature chapters)" },
+                { "id": "week-17-reading-1-sub-2", "label": "Note the symmetries of Rᵢⱼₖₗ" }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "week-18",
+          "weekNumber": 18,
+          "dateRange": "27–31 Jul",
+          "startDate": "2026-07-27",
+          "endDate": "2026-07-31",
+          "title": "Buffer: Phase 4 Consolidation",
+          "isBuffer": true,
+          "slots": [
+            {
+              "id": "week-18-lecture-1",
+              "type": "lecture",
+              "slotNumber": 1,
+              "label": "Session 1 — Full Riemannian Geometry Review",
+              "description": "Write from memory: Riemannian metric, Christoffel symbols, geodesic equation, Riemann tensor, Ricci tensor, scalar curvature. Draw the conceptual dependency diagram: metric → connection → curvature.",
+              "isBookSlot": false,
+              "estimatedMinutes": 120,
+              "tags": ["checkpoint", "from-scratch"],
+              "links": [],
+              "subtasks": [
+                { "id": "week-18-lecture-1-sub-1", "label": "Write all key formulas from memory" },
+                { "id": "week-18-lecture-1-sub-2", "label": "Draw the dependency chain: metric → connection → curvature" },
+                { "id": "week-18-lecture-1-sub-3", "label": "Check against references and correct" }
+              ]
+            },
+            {
+              "id": "week-18-practice-1",
+              "type": "practice",
+              "slotNumber": 2,
+              "label": "Session 2 — Comprehensive Riemannian Problem Set",
+              "description": "Full timed problem set: given a metric, compute Christoffel symbols, geodesics, Riemann tensor, Ricci tensor, scalar curvature.",
+              "isBookSlot": false,
+              "estimatedMinutes": 120,
+              "tags": ["timed", "checkpoint"],
+              "links": [],
+              "subtasks": [
+                { "id": "week-18-practice-1-sub-1", "label": "Given a 2D metric: full curvature computation pipeline" },
+                { "id": "week-18-practice-1-sub-2", "label": "Geodesic computation for a given metric" },
+                { "id": "week-18-practice-1-sub-3", "label": "Review and self-assess" }
+              ]
+            },
+            {
+              "id": "week-18-practice-2",
+              "type": "practice",
+              "slotNumber": 3,
+              "label": "Session 3 — Optimization on Manifolds Code",
+              "description": "Implement Riemannian gradient descent on a simple manifold (e.g., the sphere or Stiefel manifold) using Absil's retraction approach. Compare to unconstrained optimization.",
+              "isBookSlot": false,
+              "estimatedMinutes": 120,
+              "tags": ["key-exercise", "connection"],
+              "links": [
+                { "text": "Geoopt: Riemannian Optimization in PyTorch", "url": "https://github.com/geoopt/geoopt" }
+              ],
+              "subtasks": [
+                { "id": "week-18-practice-2-sub-1", "label": "Implement Riemannian gradient descent on the sphere" },
+                { "id": "week-18-practice-2-sub-2", "label": "Use geoopt library for a more complex example" },
+                { "id": "week-18-practice-2-sub-3", "label": "Compare Riemannian vs Euclidean optimization on a toy problem" }
+              ]
+            },
+            {
+              "id": "week-18-reading-1",
+              "type": "reading",
+              "slotNumber": 4,
+              "label": "Session 4 — Absil Ch. 3–4",
+              "description": "Read Absil Ch. 3–4 on line-search and trust-region methods on manifolds. These are the practical optimisation algorithms you might use.",
+              "isBookSlot": true,
+              "estimatedMinutes": 120,
+              "tags": [],
+              "links": [],
+              "subtasks": [
+                { "id": "week-18-reading-1-sub-1", "label": "Read Absil Ch. 3 (line-search on manifolds)" },
+                { "id": "week-18-reading-1-sub-2", "label": "Read Absil Ch. 4 (trust-region on manifolds)" }
+              ]
+            },
+            {
+              "id": "week-18-reading-2",
+              "type": "reading",
+              "slotNumber": 5,
+              "label": "Session 5 — Phase 4 Reflection + Paper Preview",
+              "description": "Write Phase 4 reflection. Then read the abstract and introduction of Li et al. 'Visualizing the Loss Landscape of Neural Nets' — you now have the mathematical vocabulary to understand the core ideas.",
+              "isBookSlot": false,
+              "estimatedMinutes": 120,
+              "tags": [],
+              "links": [
+                { "text": "Li et al. – Visualizing the Loss Landscape (2018)", "url": "https://arxiv.org/abs/1712.09913" }
+              ],
+              "subtasks": [
+                { "id": "week-18-reading-2-sub-1", "label": "Write 1-page Phase 4 reflection" },
+                { "id": "week-18-reading-2-sub-2", "label": "Read Li et al. abstract + introduction" }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "phase-5",
+      "number": 5,
+      "title": "Applications: Loss Landscapes, Information Geometry, and Neural Network Geometry",
+      "course": "Paper Reading + Applied Projects",
+      "courseUrl": "https://arxiv.org/abs/1712.09913",
+      "description": "Apply everything to your PhD research. This phase is paper-driven: you'll read and deeply understand the key papers on loss landscape geometry, information geometry, Hessian analysis, and the topology of loss surfaces. You'll implement the techniques from these papers and connect them to the differential geometry you've learned.",
+      "bookChapters": "Amari – Information Geometry and Its Applications, selected chapters",
+      "bookDescription": "Amari invented information geometry. His book is the definitive reference for the Fisher metric, natural gradient, and statistical manifolds. Read selected chapters relevant to neural networks.",
+      "weekRange": [19, 24],
+      "completionNote": "You can read and understand loss landscape papers that use differential geometry. You can compute and interpret curvature quantities on the parameter manifold. You can explain the geometric content of the Fisher information metric, natural gradient, Hessian spectrum analysis, and mode connectivity. You have a strong foundation for your PhD research in neural network interpretability through the lens of differential geometry.",
+      "weeks": [
+        {
+          "id": "week-19",
+          "weekNumber": 19,
+          "dateRange": "3–7 Aug",
+          "startDate": "2026-08-03",
+          "endDate": "2026-08-07",
+          "title": "Information Geometry: Fisher Metric and Statistical Manifolds",
+          "isBuffer": false,
+          "slots": [
+            {
+              "id": "week-19-lecture-1",
+              "type": "lecture",
+              "slotNumber": 1,
+              "label": "Session 1 — Statistical Manifolds",
+              "description": "A **statistical manifold** is a manifold of probability distributions parametrised by θ. The **Fisher information metric** gᵢⱼ(θ) = E[∂ᵢ log p(x|θ) ∂ⱼ log p(x|θ)] is the natural Riemannian metric. It measures the 'statistical distance' between nearby distributions.\n\nThis is the central bridge between differential geometry and neural networks.",
+              "isBookSlot": false,
+              "estimatedMinutes": 120,
+              "tags": ["critical", "connection"],
+              "links": [
+                { "text": "Amari – Information Geometry (book)", "url": "https://link.springer.com/book/10.1007/978-4-431-55978-8" }
+              ],
+              "subtasks": [
+                { "id": "week-19-lecture-1-sub-1", "label": "Define statistical manifold and Fisher information metric" },
+                { "id": "week-19-lecture-1-sub-2", "label": "Compute Fisher metric for: Bernoulli, Gaussian, multinomial" },
+                { "id": "week-19-lecture-1-sub-3", "label": "Read Amari Ch. 1–2 (selected sections)" }
+              ]
+            },
+            {
+              "id": "week-19-lecture-2",
+              "type": "lecture",
+              "slotNumber": 2,
+              "label": "Session 2 — Natural Gradient: The Full Picture",
+              "description": "Revisit **natural gradient descent** θ ← θ − η F⁻¹ ∇L with full geometric understanding. F⁻¹ ∇L is the Riemannian gradient with the Fisher metric. Study its properties: reparametrisation invariance, connection to second-order methods (Fisher ≈ Hessian for certain losses).",
+              "isBookSlot": false,
+              "estimatedMinutes": 120,
+              "tags": ["critical", "connection"],
+              "links": [],
+              "subtasks": [
+                { "id": "week-19-lecture-2-sub-1", "label": "Derive natural gradient as Riemannian gradient" },
+                { "id": "week-19-lecture-2-sub-2", "label": "Prove: natural gradient is reparametrisation-invariant" },
+                { "id": "week-19-lecture-2-sub-3", "label": "Understand: Fisher ≈ E[Hessian] for log-likelihood losses" }
+              ]
+            },
+            {
+              "id": "week-19-lecture-3",
+              "type": "lecture",
+              "slotNumber": 3,
+              "label": "Session 3 — α-Connections and Dually Flat Manifolds",
+              "description": "Amari's key contribution: statistical manifolds have a family of **α-connections**, not just the Levi-Civita connection. The 1-connection and −1-connection give a **dually flat structure**. This is advanced — focus on understanding the concept, not the full formalism.",
+              "isBookSlot": false,
+              "estimatedMinutes": 120,
+              "tags": [],
+              "links": [],
+              "subtasks": [
+                { "id": "week-19-lecture-3-sub-1", "label": "Read about α-connections (Amari Ch. 3)" },
+                { "id": "week-19-lecture-3-sub-2", "label": "Understand dually flat manifolds at a conceptual level" },
+                { "id": "week-19-lecture-3-sub-3", "label": "Note: how does duality relate to exponential families?" }
+              ]
+            },
+            {
+              "id": "week-19-practice-1",
+              "type": "practice",
+              "slotNumber": 4,
+              "label": "Session 4 — Fisher Metric Computations for Neural Networks",
+              "description": "Compute/approximate the Fisher information metric for a small neural network. Explore the empirical Fisher (using samples) vs the exact Fisher.\n\nUse PyTorch to compute the Fisher for a tiny MLP on MNIST.",
+              "isBookSlot": false,
+              "estimatedMinutes": 120,
+              "tags": ["key-exercise"],
+              "links": [],
+              "subtasks": [
+                { "id": "week-19-practice-1-sub-1", "label": "Implement empirical Fisher information matrix computation" },
+                { "id": "week-19-practice-1-sub-2", "label": "Compute Fisher for a tiny MLP" },
+                { "id": "week-19-practice-1-sub-3", "label": "Visualise Fisher matrix eigenvalue spectrum" },
+                { "id": "week-19-practice-1-sub-4", "label": "Compare Fisher eigenvalues to Hessian eigenvalues" }
+              ]
+            },
+            {
+              "id": "week-19-reading-1",
+              "type": "reading",
+              "slotNumber": 5,
+              "label": "Session 5 — Amari Chapters + Survey",
+              "description": "Read selected chapters of Amari's book. Also read a survey of information geometry applications in ML.",
+              "isBookSlot": true,
+              "estimatedMinutes": 120,
+              "tags": [],
+              "links": [],
+              "subtasks": [
+                { "id": "week-19-reading-1-sub-1", "label": "Read Amari selected chapters (Ch. 1–3, key sections)" },
+                { "id": "week-19-reading-1-sub-2", "label": "Find and read a recent survey on information geometry in deep learning" }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "week-20",
+          "weekNumber": 20,
+          "dateRange": "10–14 Aug",
+          "startDate": "2026-08-10",
+          "endDate": "2026-08-14",
+          "title": "Loss Landscape Geometry: Hessian Analysis and Visualisation",
+          "isBuffer": false,
+          "slots": [
+            {
+              "id": "week-20-lecture-1",
+              "type": "lecture",
+              "slotNumber": 1,
+              "label": "Session 1 — Paper: Li et al. 'Visualizing the Loss Landscape'",
+              "description": "Deep read of Li et al. (2018). Key ideas: filter-normalised random directions for 2D loss surface slices, 1D linear interpolation between minima, the effect of skip connections on loss landscape smoothness.\n\nNow you can understand WHY filter normalisation works: it accounts for the scale invariance of neural network parameters.",
+              "isBookSlot": false,
+              "estimatedMinutes": 120,
+              "tags": ["critical", "connection"],
+              "links": [
+                { "text": "Li et al. – Visualizing the Loss Landscape", "url": "https://arxiv.org/abs/1712.09913" }
+              ],
+              "subtasks": [
+                { "id": "week-20-lecture-1-sub-1", "label": "Read Li et al. in full" },
+                { "id": "week-20-lecture-1-sub-2", "label": "Understand filter normalisation and its geometric justification" },
+                { "id": "week-20-lecture-1-sub-3", "label": "Note: what are the limitations of 2D slices?" }
+              ]
+            },
+            {
+              "id": "week-20-lecture-2",
+              "type": "lecture",
+              "slotNumber": 2,
+              "label": "Session 2 — Paper: Sagun et al. 'Hessian of Over-Parametrized NNs'",
+              "description": "Read Sagun et al. (2017). Key findings: the Hessian spectrum of neural networks has a bulk of near-zero eigenvalues and a few large outliers. This means the loss landscape is nearly flat in most directions and curved in only a few.\n\nConnect to the Riemannian geometry: this means the effective dimensionality of the loss landscape is much lower than the number of parameters.",
+              "isBookSlot": false,
+              "estimatedMinutes": 120,
+              "tags": ["critical", "connection"],
+              "links": [
+                { "text": "Sagun et al. – Empirical Analysis of Hessian", "url": "https://arxiv.org/abs/1706.04454" }
+              ],
+              "subtasks": [
+                { "id": "week-20-lecture-2-sub-1", "label": "Read Sagun et al. in full" },
+                { "id": "week-20-lecture-2-sub-2", "label": "Connect Hessian spectrum to the geometry: flat directions, curved directions" },
+                { "id": "week-20-lecture-2-sub-3", "label": "Understand: implications for effective dimensionality" }
+              ]
+            },
+            {
+              "id": "week-20-lecture-3",
+              "type": "lecture",
+              "slotNumber": 3,
+              "label": "Session 3 — Paper: Dauphin et al. 'Saddle Point Problem'",
+              "description": "Read Dauphin et al. (2014). Key insight: in high-dimensional loss landscapes, local minima are rare; saddle points dominate. This is because at a critical point, each Hessian eigenvalue is independently positive or negative — in high dimensions, it's exponentially unlikely for ALL to be positive.",
+              "isBookSlot": false,
+              "estimatedMinutes": 120,
+              "tags": ["critical", "connection"],
+              "links": [
+                { "text": "Dauphin et al. – Identifying and Attacking the Saddle Point Problem", "url": "https://arxiv.org/abs/1406.2572" }
+              ],
+              "subtasks": [
+                { "id": "week-20-lecture-3-sub-1", "label": "Read Dauphin et al. in full" },
+                { "id": "week-20-lecture-3-sub-2", "label": "Understand the probabilistic argument for saddle point dominance" },
+                { "id": "week-20-lecture-3-sub-3", "label": "Connect to differential geometry: saddle points have indefinite Hessian (mixed curvature)" }
+              ]
+            },
+            {
+              "id": "week-20-practice-1",
+              "type": "practice",
+              "slotNumber": 4,
+              "label": "Session 4 — Reproduce Li et al. Visualisations",
+              "description": "Reproduce the key visualisations from Li et al.:\n- Train ResNet/VGG on CIFAR-10\n- Generate filter-normalised random directions\n- Plot 1D and 2D loss landscape slices\n- Compare architectures with and without skip connections",
+              "isBookSlot": false,
+              "estimatedMinutes": 120,
+              "tags": ["key-exercise"],
+              "links": [
+                { "text": "loss-landscape PyTorch library", "url": "https://github.com/tomgoldstein/loss-landscape" }
+              ],
+              "subtasks": [
+                { "id": "week-20-practice-1-sub-1", "label": "Set up Li et al. code or implement from scratch" },
+                { "id": "week-20-practice-1-sub-2", "label": "Generate 2D loss surface visualisation for a trained model" },
+                { "id": "week-20-practice-1-sub-3", "label": "Compare loss surfaces with/without skip connections" }
+              ]
+            },
+            {
+              "id": "week-20-reading-1",
+              "type": "reading",
+              "slotNumber": 5,
+              "label": "Session 5 — Pennington & Worah + Additional Papers",
+              "description": "Read Pennington & Worah (2017) on random matrix theory applied to loss landscapes. Skim Eigencurve paper on measuring curvature along training trajectories.",
+              "isBookSlot": true,
+              "estimatedMinutes": 120,
+              "tags": [],
+              "links": [
+                { "text": "Pennington & Worah – Random Matrix Theory for Loss Surfaces", "url": "https://arxiv.org/abs/1710.09163" },
+                { "text": "Eigencurve paper", "url": "https://arxiv.org/abs/2012.04299" }
+              ],
+              "subtasks": [
+                { "id": "week-20-reading-1-sub-1", "label": "Read Pennington & Worah (key sections)" },
+                { "id": "week-20-reading-1-sub-2", "label": "Skim Eigencurve paper" }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "week-21",
+          "weekNumber": 21,
+          "dateRange": "17–21 Aug",
+          "startDate": "2026-08-17",
+          "endDate": "2026-08-21",
+          "title": "Mode Connectivity, Topology, and Loss Landscape Structure",
+          "isBuffer": false,
+          "slots": [
+            {
+              "id": "week-21-lecture-1",
+              "type": "lecture",
+              "slotNumber": 1,
+              "label": "Session 1 — Mode Connectivity",
+              "description": "Study **mode connectivity**: are different minima of the loss landscape connected by paths of low loss? Draxler et al. and Garipov et al. showed that minima found by SGD are typically connected by simple curves (not straight lines, but low-dimensional curves) in parameter space.\n\nThis is a topological statement about the loss landscape: the set of 'good' parameters is connected.",
+              "isBookSlot": false,
+              "estimatedMinutes": 120,
+              "tags": ["critical", "connection"],
+              "links": [
+                { "text": "Garipov et al. – Loss Surfaces, Mode Connectivity (2018)", "url": "https://arxiv.org/abs/1802.10026" },
+                { "text": "Draxler et al. – Essentially No Barriers in Neural Network Energy Landscape (2018)", "url": "https://arxiv.org/abs/1803.00885" }
+              ],
+              "subtasks": [
+                { "id": "week-21-lecture-1-sub-1", "label": "Read Garipov et al. (2018)" },
+                { "id": "week-21-lecture-1-sub-2", "label": "Read Draxler et al. (2018)" },
+                { "id": "week-21-lecture-1-sub-3", "label": "Understand: mode connectivity as a statement about loss landscape topology" }
+              ]
+            },
+            {
+              "id": "week-21-lecture-2",
+              "type": "lecture",
+              "slotNumber": 2,
+              "label": "Session 2 — Topological Properties of Loss Landscapes",
+              "description": "Read papers on the topology of loss landscapes. The loss function defines a filtration of parameter space: {θ : L(θ) ≤ c} for varying c. The topology of these sublevel sets (Betti numbers, connected components) reveals the structure of the landscape.\n\n**Connection:** This connects Gauss–Bonnet and Morse theory (curvature → topology) to the loss landscape. Critical points of L with index k contribute to the k-th Betti number.",
+              "isBookSlot": false,
+              "estimatedMinutes": 120,
+              "tags": ["connection"],
+              "links": [
+                { "text": "Ballard et al. – Topological Properties", "url": "https://arxiv.org/abs/1511.06422" }
+              ],
+              "subtasks": [
+                { "id": "week-21-lecture-2-sub-1", "label": "Read Ballard et al. on topological properties" },
+                { "id": "week-21-lecture-2-sub-2", "label": "Study Morse theory at a conceptual level: critical points determine topology" },
+                { "id": "week-21-lecture-2-sub-3", "label": "Understand: Hessian index at critical points relates to Betti numbers" }
+              ]
+            },
+            {
+              "id": "week-21-lecture-3",
+              "type": "lecture",
+              "slotNumber": 3,
+              "label": "Session 3 — Sharp vs Flat Minima Debate",
+              "description": "The 'sharp vs flat minima' debate: Hochreiter & Schmidhuber, Keskar et al., and the Dinh et al. critique (reparametrisation can make any minimum arbitrarily sharp or flat). The resolution involves Riemannian geometry: you need a **reparametrisation-invariant** notion of sharpness.\n\nThis is where your differential geometry training pays off directly.",
+              "isBookSlot": false,
+              "estimatedMinutes": 120,
+              "tags": ["critical", "connection"],
+              "links": [
+                { "text": "Keskar et al. – On Large-Batch Training (2017)", "url": "https://arxiv.org/abs/1609.04836" },
+                { "text": "Dinh et al. – Sharp Minima Can Generalize (2017)", "url": "https://arxiv.org/abs/1703.04933" }
+              ],
+              "subtasks": [
+                { "id": "week-21-lecture-3-sub-1", "label": "Read Keskar et al. (sharp minima and large-batch training)" },
+                { "id": "week-21-lecture-3-sub-2", "label": "Read Dinh et al. critique (reparametrisation argument)" },
+                { "id": "week-21-lecture-3-sub-3", "label": "Understand: why reparametrisation-invariance requires Riemannian geometry" }
+              ]
+            },
+            {
+              "id": "week-21-practice-1",
+              "type": "practice",
+              "slotNumber": 4,
+              "label": "Session 4 — Mode Connectivity Experiments",
+              "description": "Implement mode connectivity experiments: train a network from two different initialisations, find a low-loss curve connecting the two solutions using the method of Garipov et al.",
+              "isBookSlot": false,
+              "estimatedMinutes": 120,
+              "tags": ["key-exercise"],
+              "links": [],
+              "subtasks": [
+                { "id": "week-21-practice-1-sub-1", "label": "Train 2 networks from different initialisations" },
+                { "id": "week-21-practice-1-sub-2", "label": "Implement Bezier curve or polychain fitting between solutions" },
+                { "id": "week-21-practice-1-sub-3", "label": "Plot the loss along the connecting curve" }
+              ]
+            },
+            {
+              "id": "week-21-reading-1",
+              "type": "reading",
+              "slotNumber": 5,
+              "label": "Session 5 — Physics Perspective + Additional Papers",
+              "description": "Read Frederick & Bhatt on the physics perspective of loss landscapes. Explore any additional papers relevant to your specific PhD research direction.",
+              "isBookSlot": true,
+              "estimatedMinutes": 120,
+              "tags": [],
+              "links": [
+                { "text": "Frederick & Bhatt – Physics Perspective on Loss Landscape", "url": "https://arxiv.org/abs/2301.00206" }
+              ],
+              "subtasks": [
+                { "id": "week-21-reading-1-sub-1", "label": "Read Frederick & Bhatt" },
+                { "id": "week-21-reading-1-sub-2", "label": "Identify 2–3 papers most relevant to your specific PhD direction" }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "week-22",
+          "weekNumber": 22,
+          "dateRange": "24–28 Aug",
+          "startDate": "2026-08-24",
+          "endDate": "2026-08-28",
+          "title": "Capstone Project: Geometric Analysis of a Loss Landscape",
+          "isBuffer": false,
+          "slots": [
+            {
+              "id": "week-22-lecture-1",
+              "type": "lecture",
+              "slotNumber": 1,
+              "label": "Session 1 — Project Planning",
+              "description": "Design your capstone project. Choose a model architecture and dataset. Plan which geometric analyses to run:\n- Hessian spectrum analysis\n- Loss landscape visualisation (Li et al. style)\n- Fisher information metric computation\n- Mode connectivity analysis\n- Curvature along training trajectory\n\nThe goal is a comprehensive geometric portrait of one model's loss landscape.",
+              "isBookSlot": false,
+              "estimatedMinutes": 120,
+              "tags": ["key-exercise"],
+              "links": [],
+              "subtasks": [
+                { "id": "week-22-lecture-1-sub-1", "label": "Choose model architecture and dataset" },
+                { "id": "week-22-lecture-1-sub-2", "label": "Write project plan: which analyses, what tools, expected insights" },
+                { "id": "week-22-lecture-1-sub-3", "label": "Set up code repository and experiment framework" }
+              ]
+            },
+            {
+              "id": "week-22-practice-1",
+              "type": "practice",
+              "slotNumber": 2,
+              "label": "Session 2 — Training + Hessian Analysis",
+              "description": "Train the model. Compute Hessian eigenvalue spectrum at multiple points during training. Track how the spectrum evolves.",
+              "isBookSlot": false,
+              "estimatedMinutes": 120,
+              "tags": ["key-exercise"],
+              "links": [],
+              "subtasks": [
+                { "id": "week-22-practice-1-sub-1", "label": "Train the model, saving checkpoints" },
+                { "id": "week-22-practice-1-sub-2", "label": "Compute Hessian top eigenvalues at each checkpoint" },
+                { "id": "week-22-practice-1-sub-3", "label": "Plot eigenvalue evolution during training" }
+              ]
+            },
+            {
+              "id": "week-22-practice-2",
+              "type": "practice",
+              "slotNumber": 3,
+              "label": "Session 3 — Loss Surface Visualisation",
+              "description": "Generate 2D loss landscape visualisations using filter-normalised random directions. Compare early vs late training checkpoints.",
+              "isBookSlot": false,
+              "estimatedMinutes": 120,
+              "tags": ["key-exercise"],
+              "links": [],
+              "subtasks": [
+                { "id": "week-22-practice-2-sub-1", "label": "Generate 2D loss slices at trained solution" },
+                { "id": "week-22-practice-2-sub-2", "label": "Compare landscape at early vs late training" },
+                { "id": "week-22-practice-2-sub-3", "label": "Generate high-resolution visualisations for the report" }
+              ]
+            },
+            {
+              "id": "week-22-practice-3",
+              "type": "practice",
+              "slotNumber": 4,
+              "label": "Session 4 — Fisher Metric + Mode Connectivity",
+              "description": "Compute the empirical Fisher information metric. Run mode connectivity experiments between solutions from different seeds.",
+              "isBookSlot": false,
+              "estimatedMinutes": 120,
+              "tags": ["key-exercise"],
+              "links": [],
+              "subtasks": [
+                { "id": "week-22-practice-3-sub-1", "label": "Compute empirical Fisher and its eigenvalue spectrum" },
+                { "id": "week-22-practice-3-sub-2", "label": "Compare Fisher spectrum to Hessian spectrum" },
+                { "id": "week-22-practice-3-sub-3", "label": "Run mode connectivity between 2 trained solutions" }
+              ]
+            },
+            {
+              "id": "week-22-practice-4",
+              "type": "practice",
+              "slotNumber": 5,
+              "label": "Session 5 — Analysis and Interpretation",
+              "description": "Bring together all results. Interpret them through the lens of differential geometry. What do the curvature quantities tell you about the loss landscape? How do they relate to generalisation?",
+              "isBookSlot": false,
+              "estimatedMinutes": 120,
+              "tags": [],
+              "links": [],
+              "subtasks": [
+                { "id": "week-22-practice-4-sub-1", "label": "Compile all visualisations and data" },
+                { "id": "week-22-practice-4-sub-2", "label": "Write geometric interpretation of each result" },
+                { "id": "week-22-practice-4-sub-3", "label": "Identify surprising or interesting findings" }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "week-23",
+          "weekNumber": 23,
+          "dateRange": "31 Aug – 4 Sep",
+          "startDate": "2026-08-31",
+          "endDate": "2026-09-04",
+          "title": "Capstone Write-Up + Research Directions",
+          "isBuffer": false,
+          "slots": [
+            {
+              "id": "week-23-lecture-1",
+              "type": "lecture",
+              "slotNumber": 1,
+              "label": "Session 1 — Write Capstone Report (Part 1)",
+              "description": "Begin writing a report (5–10 pages) summarising your capstone project. Structure: Introduction, Background (differential geometry summary), Methods, Results, Discussion, Future Directions.",
+              "isBookSlot": false,
+              "estimatedMinutes": 120,
+              "tags": [],
+              "links": [],
+              "subtasks": [
+                { "id": "week-23-lecture-1-sub-1", "label": "Write Introduction and Background sections" },
+                { "id": "week-23-lecture-1-sub-2", "label": "Write Methods section" }
+              ]
+            },
+            {
+              "id": "week-23-lecture-2",
+              "type": "lecture",
+              "slotNumber": 2,
+              "label": "Session 2 — Write Capstone Report (Part 2)",
+              "description": "Continue writing: Results and Discussion sections.",
+              "isBookSlot": false,
+              "estimatedMinutes": 120,
+              "tags": [],
+              "links": [],
+              "subtasks": [
+                { "id": "week-23-lecture-2-sub-1", "label": "Write Results section with figures" },
+                { "id": "week-23-lecture-2-sub-2", "label": "Write Discussion section" }
+              ]
+            },
+            {
+              "id": "week-23-lecture-3",
+              "type": "lecture",
+              "slotNumber": 3,
+              "label": "Session 3 — Future Research Directions",
+              "description": "Based on everything you've learned, identify 3–5 research directions where differential geometry could advance neural network interpretability. These could seed your PhD research proposals.",
+              "isBookSlot": false,
+              "estimatedMinutes": 120,
+              "tags": ["connection"],
+              "links": [],
+              "subtasks": [
+                { "id": "week-23-lecture-3-sub-1", "label": "Brainstorm 5–10 potential research directions" },
+                { "id": "week-23-lecture-3-sub-2", "label": "Narrow to top 3–5 and write a paragraph for each" },
+                { "id": "week-23-lecture-3-sub-3", "label": "Add Future Directions section to capstone report" }
+              ]
+            },
+            {
+              "id": "week-23-practice-1",
+              "type": "practice",
+              "slotNumber": 4,
+              "label": "Session 4 — Polish Report + Create Reference Sheet",
+              "description": "Finish and polish the capstone report. Create a 2-page reference sheet of key differential geometry formulas and their loss landscape interpretations — this will be invaluable for your PhD.",
+              "isBookSlot": false,
+              "estimatedMinutes": 120,
+              "tags": [],
+              "links": [],
+              "subtasks": [
+                { "id": "week-23-practice-1-sub-1", "label": "Polish and finalise capstone report" },
+                { "id": "week-23-practice-1-sub-2", "label": "Create 2-page reference sheet: formulas + interpretations" }
+              ]
+            },
+            {
+              "id": "week-23-reading-1",
+              "type": "reading",
+              "slotNumber": 5,
+              "label": "Session 5 — Build Reading List for Continued Study",
+              "description": "Curate a reading list for continuing beyond this plan. Include: advanced Riemannian geometry, geometric deep learning, information geometry, and cutting-edge loss landscape papers.",
+              "isBookSlot": false,
+              "estimatedMinutes": 120,
+              "tags": [],
+              "links": [],
+              "subtasks": [
+                { "id": "week-23-reading-1-sub-1", "label": "Curate 15–20 papers/books for continued study" },
+                { "id": "week-23-reading-1-sub-2", "label": "Organise by topic and priority" }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "week-24",
+          "weekNumber": 24,
+          "dateRange": "7–11 Sep",
+          "startDate": "2026-09-07",
+          "endDate": "2026-09-11",
+          "title": "Final Buffer: Complete Review & Plan Forward",
+          "isBuffer": true,
+          "slots": [
+            {
+              "id": "week-24-lecture-1",
+              "type": "lecture",
+              "slotNumber": 1,
+              "label": "Session 1 — Grand Review: Foundations → Applications",
+              "description": "Walk through the entire conceptual arc: linear algebra → multivariable calculus → curves & surfaces → abstract manifolds → Riemannian geometry → information geometry → loss landscapes. Write the dependency chain from memory.",
+              "isBookSlot": false,
+              "estimatedMinutes": 120,
+              "tags": ["checkpoint", "from-scratch"],
+              "links": [],
+              "subtasks": [
+                { "id": "week-24-lecture-1-sub-1", "label": "Write the full conceptual arc from memory" },
+                { "id": "week-24-lecture-1-sub-2", "label": "For each phase: state the 3 most important ideas" },
+                { "id": "week-24-lecture-1-sub-3", "label": "For each phase: state the key connection to loss landscapes" }
+              ]
+            },
+            {
+              "id": "week-24-practice-1",
+              "type": "practice",
+              "slotNumber": 2,
+              "label": "Session 2 — Final Assessment",
+              "description": "Timed final assessment covering the full plan. This is for your own benefit — identify any remaining gaps before starting PhD research.",
+              "isBookSlot": false,
+              "estimatedMinutes": 120,
+              "tags": ["timed", "checkpoint"],
+              "links": [],
+              "subtasks": [
+                { "id": "week-24-practice-1-sub-1", "label": "Phase 1–2 questions (30 min)" },
+                { "id": "week-24-practice-1-sub-2", "label": "Phase 3–4 questions (40 min)" },
+                { "id": "week-24-practice-1-sub-3", "label": "Phase 5 application questions (30 min)" },
+                { "id": "week-24-practice-1-sub-4", "label": "Review answers and identify gaps (20 min)" }
+              ]
+            },
+            {
+              "id": "week-24-practice-2",
+              "type": "practice",
+              "slotNumber": 3,
+              "label": "Session 3 — Address Final Gaps",
+              "description": "Address any gaps identified in the final assessment. This is your last chance to solidify foundations before moving to active research.",
+              "isBookSlot": false,
+              "estimatedMinutes": 120,
+              "tags": [],
+              "links": [],
+              "subtasks": [
+                { "id": "week-24-practice-2-sub-1", "label": "Revisit identified gaps" },
+                { "id": "week-24-practice-2-sub-2", "label": "Work through additional exercises for weak areas" }
+              ]
+            },
+            {
+              "id": "week-24-reading-1",
+              "type": "reading",
+              "slotNumber": 4,
+              "label": "Session 4 — Prepare PhD Research Toolkit",
+              "description": "Set up your ongoing research toolkit: code libraries (geoopt, PyHessian), reference sheets, paper collection, and a system for tracking geometric insights as you do research.",
+              "isBookSlot": false,
+              "estimatedMinutes": 120,
+              "tags": [],
+              "links": [],
+              "subtasks": [
+                { "id": "week-24-reading-1-sub-1", "label": "Set up a clean code repository with your geometric analysis tools" },
+                { "id": "week-24-reading-1-sub-2", "label": "Organise all reference sheets and notes" },
+                { "id": "week-24-reading-1-sub-3", "label": "Set up a paper tracking system (Zotero/Notion/etc.)" }
+              ]
+            },
+            {
+              "id": "week-24-reading-2",
+              "type": "reading",
+              "slotNumber": 5,
+              "label": "Session 5 — Celebration & Reflection",
+              "description": "Write your final reflection. You've gone from CS foundations to Riemannian geometry and its applications to loss landscapes in 24 weeks. Celebrate the achievement and look forward to your research.\n\nConsider sharing your capstone report with your PhD advisor.",
+              "isBookSlot": false,
+              "estimatedMinutes": 120,
+              "tags": [],
+              "links": [],
+              "subtasks": [
+                { "id": "week-24-reading-2-sub-1", "label": "Write final reflection (1–2 pages)" },
+                { "id": "week-24-reading-2-sub-2", "label": "Share capstone report with advisor" },
+                { "id": "week-24-reading-2-sub-3", "label": "Celebrate completing the plan!" }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

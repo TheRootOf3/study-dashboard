@@ -2,12 +2,13 @@ import { Router, type Request, type Response } from 'express';
 import crypto from 'crypto';
 import db from '../db.js';
 
-const router = Router();
+const router = Router({ mergeParams: true });
 
-// GET /api/confusion-log - all entries, with optional filters
+// GET /api/projects/:projectId/confusion-log - all entries for a project, with optional filters
 router.get('/', (req: Request, res: Response) => {
-  let sql = 'SELECT * FROM confusion_log WHERE 1=1';
-  const params: unknown[] = [];
+  const { projectId } = req.params;
+  let sql = 'SELECT * FROM confusion_log WHERE project_id = ?';
+  const params: unknown[] = [projectId];
 
   if (req.query.resolved !== undefined) {
     sql += ' AND resolved = ?';
@@ -25,26 +26,27 @@ router.get('/', (req: Request, res: Response) => {
   res.json(rows);
 });
 
-// POST /api/confusion-log - create a new entry
+// POST /api/projects/:projectId/confusion-log - create a new entry
 router.post('/', (req: Request, res: Response) => {
+  const { projectId } = req.params;
   const { topic, description, resolution, resolved, week_id } = req.body;
   const id = crypto.randomUUID();
   const created_at = new Date().toISOString();
 
   db.prepare(`
-    INSERT INTO confusion_log (id, created_at, topic, description, resolution, resolved, week_id)
-    VALUES (?, ?, ?, ?, ?, ?, ?)
-  `).run(id, created_at, topic, description, resolution ?? '', resolved ? 1 : 0, week_id);
+    INSERT INTO confusion_log (id, project_id, created_at, topic, description, resolution, resolved, week_id)
+    VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+  `).run(id, projectId, created_at, topic, description, resolution ?? '', resolved ? 1 : 0, week_id);
 
   const row = db.prepare('SELECT * FROM confusion_log WHERE id = ?').get(id);
   res.status(201).json(row);
 });
 
-// PUT /api/confusion-log/:id - update entry (partial fields)
+// PUT /api/projects/:projectId/confusion-log/:id - update entry (partial fields)
 router.put('/:id', (req: Request, res: Response) => {
-  const { id } = req.params;
+  const { projectId, id } = req.params;
 
-  const existing = db.prepare('SELECT * FROM confusion_log WHERE id = ?').get(id) as Record<string, unknown> | undefined;
+  const existing = db.prepare('SELECT * FROM confusion_log WHERE id = ? AND project_id = ?').get(id, projectId) as Record<string, unknown> | undefined;
   if (!existing) {
     res.status(404).json({ error: 'Entry not found' });
     return;
@@ -61,18 +63,18 @@ router.put('/:id', (req: Request, res: Response) => {
   }
 
   if (fields.length > 0) {
-    values.push(id);
-    db.prepare(`UPDATE confusion_log SET ${fields.join(', ')} WHERE id = ?`).run(...values);
+    values.push(id, projectId);
+    db.prepare(`UPDATE confusion_log SET ${fields.join(', ')} WHERE id = ? AND project_id = ?`).run(...values);
   }
 
-  const row = db.prepare('SELECT * FROM confusion_log WHERE id = ?').get(id);
+  const row = db.prepare('SELECT * FROM confusion_log WHERE id = ? AND project_id = ?').get(id, projectId);
   res.json(row);
 });
 
-// DELETE /api/confusion-log/:id - delete entry
+// DELETE /api/projects/:projectId/confusion-log/:id - delete entry
 router.delete('/:id', (req: Request, res: Response) => {
-  const { id } = req.params;
-  db.prepare('DELETE FROM confusion_log WHERE id = ?').run(id);
+  const { projectId, id } = req.params;
+  db.prepare('DELETE FROM confusion_log WHERE id = ? AND project_id = ?').run(id, projectId);
   res.json({ ok: true });
 });
 

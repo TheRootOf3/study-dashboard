@@ -50,7 +50,7 @@ export interface Slot {
   slotNumber: number;
   label: string;
   description: string;
-  isBookSlot: boolean;
+  isAdditionalContent: boolean;
   estimatedMinutes: number;
   tags: string[];
   links: SlotLink[];

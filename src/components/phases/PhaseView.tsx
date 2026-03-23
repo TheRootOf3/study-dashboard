@@ -6,7 +6,7 @@ import { getPhaseProgress, getWeekProgress, getPhaseColor } from '../../utils/pr
 import { ProgressBar } from '../shared/ProgressBar';
 
 export function PhaseView() {
-  const { state, studyPlan } = useProgress();
+  const { state, projectSlug, studyPlan } = useProgress();
   const [expandedPhase, setExpandedPhase] = useState<string | null>(null);
 
   return (
@@ -89,7 +89,7 @@ export function PhaseView() {
                         return (
                           <Link
                             key={week.id}
-                            to={`/week/${week.weekNumber}`}
+                            to={`/p/${projectSlug}/week/${week.weekNumber}`}
                             className="flex items-center gap-3 px-3 py-2 rounded-lg hover:opacity-80 transition-colors"
                             style={{ backgroundColor: 'var(--color-bg-primary)' }}
                           >

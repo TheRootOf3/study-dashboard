@@ -14,15 +14,15 @@ import { SlotCard } from './SlotCard';
 export function WeekView() {
   const { weekNumber: weekParam } = useParams<{ weekNumber: string }>();
   const weekNumber = Number(weekParam);
-  const { state, studyPlan, scheduleConfig } = useProgress();
+  const { state, projectId, projectSlug, actualStartDate, studyPlan, scheduleConfig } = useProgress();
   const week = getWeekByNumber(weekNumber, studyPlan.phases);
   const phase = getPhaseForWeek(weekNumber, studyPlan.phases);
   const [weekNotes, setWeekNotes] = useState('');
   const [notesSaving, setNotesSaving] = useState(false);
 
   useEffect(() => {
-    weekNotesApi.get(`week-${weekNumber}`).then(r => setWeekNotes(r.notes || '')).catch(() => {});
-  }, [weekNumber]);
+    weekNotesApi(projectId).get(`week-${weekNumber}`).then(r => setWeekNotes(r.notes || '')).catch(() => {});
+  }, [weekNumber, projectId]);
 
   if (!week || !phase) {
     return <div className="text-center py-12" style={{ color: 'var(--color-text-tertiary)' }}>Week not found</div>;
@@ -31,14 +31,14 @@ export function WeekView() {
   const progress = getWeekProgress(week, state.completions);
   const hours = getWeekHours(week, state.completions);
   const phaseColor = getPhaseColor(phase.number);
-  const currentWeek = getCurrentWeekNumber(state.settings.actual_start_date);
+  const currentWeek = getCurrentWeekNumber(actualStartDate);
 
   // Group slots by their session type
   const slotGroups = groupSlotsByType(week.slots, scheduleConfig);
 
   const saveNotes = async () => {
     setNotesSaving(true);
-    await weekNotesApi.upsert(`week-${weekNumber}`, weekNotes);
+    await weekNotesApi(projectId).upsert(`week-${weekNumber}`, weekNotes);
     setNotesSaving(false);
   };
 
@@ -49,15 +49,15 @@ export function WeekView() {
         <div className="flex-1">
           <div className="flex items-center gap-2 mb-1">
             {weekNumber > 1 && (
-              <Link to={`/week/${weekNumber - 1}`} className="p-1 rounded hover:opacity-80" style={{ color: 'var(--color-text-tertiary)' }}>
+              <Link to={`/p/${projectSlug}/week/${weekNumber - 1}`} className="p-1 rounded hover:opacity-80" style={{ color: 'var(--color-text-tertiary)' }}>
                 <ChevronLeft size={20} />
               </Link>
             )}
             <span className="text-sm" style={{ color: 'var(--color-text-tertiary)' }}>
-              Week {weekNumber} of 31
+              Week {weekNumber} of {studyPlan.totalWeeks}
             </span>
-            {weekNumber < 31 && (
-              <Link to={`/week/${weekNumber + 1}`} className="p-1 rounded hover:opacity-80" style={{ color: 'var(--color-text-tertiary)' }}>
+            {weekNumber < studyPlan.totalWeeks && (
+              <Link to={`/p/${projectSlug}/week/${weekNumber + 1}`} className="p-1 rounded hover:opacity-80" style={{ color: 'var(--color-text-tertiary)' }}>
                 <ChevronRight size={20} />
               </Link>
             )}
@@ -77,7 +77,7 @@ export function WeekView() {
           </h2>
           <div className="flex items-center gap-3 text-sm">
             <span style={{ color: phaseColor, fontWeight: 600 }}>Phase {phase.number}: {phase.title}</span>
-            <span style={{ color: 'var(--color-text-tertiary)' }}>{formatDateRange(weekNumber, state.settings.actual_start_date)}</span>
+            <span style={{ color: 'var(--color-text-tertiary)' }}>{formatDateRange(weekNumber, actualStartDate)}</span>
           </div>
         </div>
         <div className="flex items-center gap-4">
@@ -167,7 +167,7 @@ export function WeekView() {
         />
         {notesSaving && <span className="text-xs" style={{ color: 'var(--color-text-tertiary)' }}>Saving...</span>}
         <Link
-          to={`/confusion-log?week=week-${weekNumber}`}
+          to={`/p/${projectSlug}/confusion-log?week=week-${weekNumber}`}
           className="inline-flex items-center gap-1 text-sm mt-2 hover:underline"
           style={{ color: 'var(--color-accent-primary)' }}
         >
@@ -178,12 +178,12 @@ export function WeekView() {
       {/* Navigation */}
       <div className="flex justify-between items-center mt-8 pt-4 border-t" style={{ borderColor: 'var(--color-border)' }}>
         {weekNumber > 1 ? (
-          <Link to={`/week/${weekNumber - 1}`} className="flex items-center gap-1 text-sm hover:underline" style={{ color: 'var(--color-accent-primary)' }}>
+          <Link to={`/p/${projectSlug}/week/${weekNumber - 1}`} className="flex items-center gap-1 text-sm hover:underline" style={{ color: 'var(--color-accent-primary)' }}>
             <ChevronLeft size={16} /> Week {weekNumber - 1}
           </Link>
         ) : <div />}
         {weekNumber < studyPlan.totalWeeks ? (
-          <Link to={`/week/${weekNumber + 1}`} className="flex items-center gap-1 text-sm hover:underline" style={{ color: 'var(--color-accent-primary)' }}>
+          <Link to={`/p/${projectSlug}/week/${weekNumber + 1}`} className="flex items-center gap-1 text-sm hover:underline" style={{ color: 'var(--color-accent-primary)' }}>
             Week {weekNumber + 1} <ChevronRight size={16} />
           </Link>
         ) : <div />}

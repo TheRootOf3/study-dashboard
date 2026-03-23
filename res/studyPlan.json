@@ -228,7 +228,7 @@
               "slotNumber": 1,
               "label": "Train 1",
               "description": "Lecture 1: The geometry of linear equations. Lecture 2: Elimination with matrices",
-              "isBookSlot": false,
+              "isAdditionalContent": false,
               "estimatedMinutes": 120,
               "tags": [],
               "links": [
@@ -262,7 +262,7 @@
               "slotNumber": 2,
               "label": "Train 2",
               "description": "Lecture 3: Multiplication and inverse matrices. Lecture 4: Factorisation A = LU",
-              "isBookSlot": false,
+              "isAdditionalContent": false,
               "estimatedMinutes": 120,
               "tags": [],
               "links": [
@@ -296,7 +296,7 @@
               "slotNumber": 3,
               "label": "Train 3",
               "description": "Lecture 5: Transposes, permutations, vector spaces. Lecture 6: Column space and nullspace",
-              "isBookSlot": false,
+              "isAdditionalContent": false,
               "estimatedMinutes": 120,
               "tags": [],
               "links": [
@@ -330,7 +330,7 @@
               "slotNumber": 4,
               "label": "Train 4",
               "description": "**Book §1.1–1.2:** Shannon's insight, codelength = loss, cross entropy, perplexity",
-              "isBookSlot": true,
+              "isAdditionalContent": true,
               "estimatedMinutes": 120,
               "tags": [],
               "links": [],
@@ -347,7 +347,7 @@
               "slotNumber": 1,
               "label": "Evening 1",
               "description": "Problems for Lectures 1–4 (geometry, elimination, multiplication, LU factorisation)",
-              "isBookSlot": false,
+              "isAdditionalContent": false,
               "estimatedMinutes": 90,
               "tags": [],
               "links": [
@@ -389,7 +389,7 @@
               "slotNumber": 2,
               "label": "Evening 2",
               "description": "Problems for Lectures 5–6 (vector spaces, column space, nullspace)",
-              "isBookSlot": false,
+              "isAdditionalContent": false,
               "estimatedMinutes": 90,
               "tags": [],
               "links": [
@@ -423,7 +423,7 @@
               "slotNumber": 3,
               "label": "Evening 3",
               "description": "**Book exercises Ch 1** (information as compression). Connection: how does dimensionality of a vector space relate to \"capacity\" for encoding information?",
-              "isBookSlot": true,
+              "isAdditionalContent": true,
               "estimatedMinutes": 90,
               "tags": [
                 "connection"
@@ -461,7 +461,7 @@
               "slotNumber": 1,
               "label": "Train 1",
               "description": "Lecture 7: Solving Ax = 0 (pivot variables, special solutions). Lecture 8: Solving Ax = b (row reduced form)",
-              "isBookSlot": false,
+              "isAdditionalContent": false,
               "estimatedMinutes": 120,
               "tags": [],
               "links": [
@@ -495,7 +495,7 @@
               "slotNumber": 2,
               "label": "Train 2",
               "description": "Lecture 9: Independence, basis, dimension. Lecture 10: The four fundamental subspaces",
-              "isBookSlot": false,
+              "isAdditionalContent": false,
               "estimatedMinutes": 120,
               "tags": [],
               "links": [
@@ -529,7 +529,7 @@
               "slotNumber": 3,
               "label": "Train 3",
               "description": "Lecture 11: Matrix spaces, rank 1 matrices. Lecture 12: Graphs, networks, incidence matrices",
-              "isBookSlot": false,
+              "isAdditionalContent": false,
               "estimatedMinutes": 120,
               "tags": [],
               "links": [
@@ -563,7 +563,7 @@
               "slotNumber": 4,
               "label": "Train 4",
               "description": "**Book §1.3–1.6:** Rate-distortion theory, generative models as compression, when cross entropy is not enough",
-              "isBookSlot": true,
+              "isAdditionalContent": true,
               "estimatedMinutes": 120,
               "tags": [],
               "links": [],
@@ -580,7 +580,7 @@
               "slotNumber": 1,
               "label": "Evening 1",
               "description": "Problems for Lectures 7–8 (solving Ax = 0, solving Ax = b)",
-              "isBookSlot": false,
+              "isAdditionalContent": false,
               "estimatedMinutes": 90,
               "tags": [],
               "links": [
@@ -614,7 +614,7 @@
               "slotNumber": 2,
               "label": "Evening 2",
               "description": "Problems for Lectures 9–10 (independence/basis/dimension, four fundamental subspaces)",
-              "isBookSlot": false,
+              "isAdditionalContent": false,
               "estimatedMinutes": 90,
               "tags": [],
               "links": [
@@ -648,7 +648,7 @@
               "slotNumber": 3,
               "label": "Evening 3",
               "description": "**Book exercises Ch 1 continued.** Connection: the four fundamental subspaces will reappear when you think about what a linear layer's weight matrix can and cannot represent",
-              "isBookSlot": true,
+              "isAdditionalContent": true,
               "estimatedMinutes": 90,
               "tags": [
                 "connection"
@@ -686,7 +686,7 @@
               "slotNumber": 1,
               "label": "Train 1",
               "description": "Lecture 14: Orthogonal vectors and subspaces. Lecture 15: Projections onto subspaces",
-              "isBookSlot": false,
+              "isAdditionalContent": false,
               "estimatedMinutes": 120,
               "tags": [],
               "links": [
@@ -720,7 +720,7 @@
               "slotNumber": 2,
               "label": "Train 2",
               "description": "Lecture 16: Projection matrices and least squares. Lecture 17: Orthogonal matrices and Gram-Schmidt",
-              "isBookSlot": false,
+              "isAdditionalContent": false,
               "estimatedMinutes": 120,
               "tags": [],
               "links": [
@@ -754,7 +754,7 @@
               "slotNumber": 3,
               "label": "Train 3",
               "description": "Recitation videos for lectures 14–17. Work through the projection derivation again on paper",
-              "isBookSlot": false,
+              "isAdditionalContent": false,
               "estimatedMinutes": 120,
               "tags": [],
               "links": [
@@ -796,7 +796,7 @@
               "slotNumber": 4,
               "label": "Train 4",
               "description": "**Book §2.1–2.2:** Posterior and posterior predictive, de Finetti and exchangeability",
-              "isBookSlot": true,
+              "isAdditionalContent": true,
               "estimatedMinutes": 120,
               "tags": [],
               "links": [],
@@ -813,7 +813,7 @@
               "slotNumber": 1,
               "label": "Evening 1",
               "description": "Problems for Lectures 15–16 (projections and least squares — critical for interpretability)",
-              "isBookSlot": false,
+              "isAdditionalContent": false,
               "estimatedMinutes": 90,
               "tags": [
                 "critical"
@@ -849,7 +849,7 @@
               "slotNumber": 2,
               "label": "Evening 2",
               "description": "Problems continued. **Key exercise:** derive the projection matrix P = A(AᵀA)⁻¹Aᵀ from scratch and explain geometrically why P² = P",
-              "isBookSlot": false,
+              "isAdditionalContent": false,
               "estimatedMinutes": 90,
               "tags": [
                 "key-exercise",
@@ -882,7 +882,7 @@
               "slotNumber": 3,
               "label": "Evening 3",
               "description": "**Book exercises Ch 2.** Connection: linear probes in interpretability are exactly least-squares projections — you're projecting activations onto a subspace to test if a concept is linearly represented",
-              "isBookSlot": true,
+              "isAdditionalContent": true,
               "estimatedMinutes": 90,
               "tags": [
                 "connection"
@@ -920,7 +920,7 @@
               "slotNumber": 1,
               "label": "Train 1",
               "description": "Lecture 18: Properties of determinants. Lecture 19: Determinant formulas and cofactors",
-              "isBookSlot": false,
+              "isAdditionalContent": false,
               "estimatedMinutes": 120,
               "tags": [],
               "links": [
@@ -954,7 +954,7 @@
               "slotNumber": 2,
               "label": "Train 2",
               "description": "Lecture 20: Cramer's rule, inverse, volume. Lecture 21: Eigenvalues and eigenvectors",
-              "isBookSlot": false,
+              "isAdditionalContent": false,
               "estimatedMinutes": 120,
               "tags": [],
               "links": [
@@ -988,7 +988,7 @@
               "slotNumber": 3,
               "label": "Train 3",
               "description": "Lecture 22: Diagonalisation. Lecture 23: Differential equations and exp(At)",
-              "isBookSlot": false,
+              "isAdditionalContent": false,
               "estimatedMinutes": 120,
               "tags": [],
               "links": [
@@ -1022,7 +1022,7 @@
               "slotNumber": 4,
               "label": "Train 4",
               "description": "**Book §2.3–2.5:** Empirical Bayes in deep nets, selective prediction, when Bayesian inference breaks",
-              "isBookSlot": true,
+              "isAdditionalContent": true,
               "estimatedMinutes": 120,
               "tags": [],
               "links": [],
@@ -1039,7 +1039,7 @@
               "slotNumber": 1,
               "label": "Evening 1",
               "description": "Problems for Lectures 18–20 (determinants)",
-              "isBookSlot": false,
+              "isAdditionalContent": false,
               "estimatedMinutes": 90,
               "tags": [],
               "links": [
@@ -1077,7 +1077,7 @@
               "slotNumber": 2,
               "label": "Evening 2",
               "description": "Problems for Lectures 21–22 (eigenvalues, eigenvectors, diagonalisation — **this is critical**)",
-              "isBookSlot": false,
+              "isAdditionalContent": false,
               "estimatedMinutes": 90,
               "tags": [
                 "critical"
@@ -1113,7 +1113,7 @@
               "slotNumber": 3,
               "label": "Evening 3",
               "description": "**Book exercises Ch 2 continued.** Connection: eigenvalues of attention head matrices (W_OV, W_QK) tell you about the head's behaviour — a key idea from Anthropic's transformer circuits paper",
-              "isBookSlot": true,
+              "isAdditionalContent": true,
               "estimatedMinutes": 90,
               "tags": [
                 "connection"
@@ -1151,7 +1151,7 @@
               "slotNumber": 1,
               "label": "Train 1",
               "description": "Lecture 24: Markov matrices, Fourier series. Lecture 25: Symmetric matrices and positive definiteness",
-              "isBookSlot": false,
+              "isAdditionalContent": false,
               "estimatedMinutes": 120,
               "tags": [],
               "links": [
@@ -1185,7 +1185,7 @@
               "slotNumber": 2,
               "label": "Train 2",
               "description": "Lecture 26: Complex matrices, fast Fourier transform. Lecture 27: Positive definite matrices and minima",
-              "isBookSlot": false,
+              "isAdditionalContent": false,
               "estimatedMinutes": 120,
               "tags": [],
               "links": [
@@ -1219,7 +1219,7 @@
               "slotNumber": 3,
               "label": "Train 3",
               "description": "Lecture 28: Similar matrices and Jordan form. Lecture 29: Singular value decomposition",
-              "isBookSlot": false,
+              "isAdditionalContent": false,
               "estimatedMinutes": 120,
               "tags": [],
               "links": [
@@ -1253,7 +1253,7 @@
               "slotNumber": 4,
               "label": "Train 4",
               "description": "**Book §3.1–3.2:** KL divergence (forward vs reverse), Jensen-Shannon, f-divergences",
-              "isBookSlot": true,
+              "isAdditionalContent": true,
               "estimatedMinutes": 120,
               "tags": [],
               "links": [],
@@ -1270,7 +1270,7 @@
               "slotNumber": 1,
               "label": "Evening 1",
               "description": "Problems for Lectures 25 and 27 (symmetric matrices and positive definiteness)",
-              "isBookSlot": false,
+              "isAdditionalContent": false,
               "estimatedMinutes": 90,
               "tags": [],
               "links": [
@@ -1300,7 +1300,7 @@
               "slotNumber": 2,
               "label": "Evening 2",
               "description": "Problems for Lecture 29 (**SVD — absolutely critical for interpretability**). Derive the SVD and explain what U, Σ, Vᵀ each represent geometrically",
-              "isBookSlot": false,
+              "isAdditionalContent": false,
               "estimatedMinutes": 90,
               "tags": [
                 "critical"
@@ -1336,7 +1336,7 @@
               "slotNumber": 3,
               "label": "Evening 3",
               "description": "**Book exercises Ch 3 (divergences section).** Connection: SVD is used everywhere in interpretability — for low-rank approximations of weight matrices, for understanding what information a layer preserves, and for PCA of activations",
-              "isBookSlot": true,
+              "isAdditionalContent": true,
               "estimatedMinutes": 90,
               "tags": [
                 "connection"
@@ -1374,7 +1374,7 @@
               "slotNumber": 1,
               "label": "Train 1",
               "description": "Lecture 30: Linear transformations. Lecture 31: Change of basis, image compression",
-              "isBookSlot": false,
+              "isAdditionalContent": false,
               "estimatedMinutes": 120,
               "tags": [],
               "links": [
@@ -1408,7 +1408,7 @@
               "slotNumber": 2,
               "label": "Train 2",
               "description": "Lecture 33: Left and right inverses, pseudoinverse. Final Course Review lecture",
-              "isBookSlot": false,
+              "isAdditionalContent": false,
               "estimatedMinutes": 120,
               "tags": [],
               "links": [
@@ -1438,7 +1438,7 @@
               "slotNumber": 3,
               "label": "Train 3",
               "description": "**3Blue1Brown: Essence of Linear Algebra** playlist (chapters on eigenvalues, change of basis, and abstract vector spaces) — consolidation through visual intuition",
-              "isBookSlot": false,
+              "isAdditionalContent": false,
               "estimatedMinutes": 120,
               "tags": [
                 "3b1b"
@@ -1462,7 +1462,7 @@
               "slotNumber": 4,
               "label": "Train 4",
               "description": "**Book §3.3–3.4:** Fisher information and the Riemannian metric, I-projection vs M-projection",
-              "isBookSlot": true,
+              "isAdditionalContent": true,
               "estimatedMinutes": 120,
               "tags": [],
               "links": [],
@@ -1479,7 +1479,7 @@
               "slotNumber": 1,
               "label": "Evening 1",
               "description": "Problems for Lectures 30–31 and 33 (linear transformations, change of basis, pseudoinverse)",
-              "isBookSlot": false,
+              "isAdditionalContent": false,
               "estimatedMinutes": 90,
               "tags": [],
               "links": [
@@ -1513,7 +1513,7 @@
               "slotNumber": 2,
               "label": "Evening 2",
               "description": "Work **Exam 1, Exam 2, and Exam 3** under timed conditions",
-              "isBookSlot": false,
+              "isAdditionalContent": false,
               "estimatedMinutes": 90,
               "tags": [
                 "timed"
@@ -1557,7 +1557,7 @@
               "slotNumber": 3,
               "label": "Evening 3",
               "description": "**Book exercises Ch 3 (Fisher information section).** Connection: Fisher information tells you about the local geometry of a statistical model — how much information a small perturbation in parameters gives you about the data",
-              "isBookSlot": true,
+              "isAdditionalContent": true,
               "estimatedMinutes": 90,
               "tags": [
                 "connection"
@@ -1595,7 +1595,7 @@
               "slotNumber": 1,
               "label": "Train 1",
               "description": "Re-watch any flagged lectures (especially SVD and eigenvalue lectures)",
-              "isBookSlot": false,
+              "isAdditionalContent": false,
               "estimatedMinutes": 120,
               "tags": [],
               "links": [
@@ -1617,7 +1617,7 @@
               "slotNumber": 2,
               "label": "Train 2",
               "description": "Watch Neel Nanda's walkthrough of *A Mathematical Framework for Transformer Circuits* (YouTube)",
-              "isBookSlot": false,
+              "isAdditionalContent": false,
               "estimatedMinutes": 120,
               "tags": [],
               "links": [
@@ -1639,7 +1639,7 @@
               "slotNumber": 3,
               "label": "Train 3",
               "description": "Continue Nanda walkthrough / read the actual paper (transformer-circuits.pub)",
-              "isBookSlot": false,
+              "isAdditionalContent": false,
               "estimatedMinutes": 120,
               "tags": [],
               "links": [
@@ -1661,7 +1661,7 @@
               "slotNumber": 4,
               "label": "Train 4",
               "description": "**Book §3.5–3.6:** Maximum entropy, exponential families, natural gradient descent",
-              "isBookSlot": true,
+              "isAdditionalContent": true,
               "estimatedMinutes": 120,
               "tags": [],
               "links": [],
@@ -1678,7 +1678,7 @@
               "slotNumber": 1,
               "label": "Evening 1",
               "description": "Re-attempt all exam problems you got wrong",
-              "isBookSlot": false,
+              "isAdditionalContent": false,
               "estimatedMinutes": 90,
               "tags": [],
               "links": [
@@ -1700,7 +1700,7 @@
               "slotNumber": 2,
               "label": "Evening 2",
               "description": "**Interpretability exercise:** Read §2 of Anthropic's transformer circuits paper. Identify every place linear algebra appears (projections, low-rank decompositions, eigenvalues). Write a one-page summary of the linear algebra you now understand",
-              "isBookSlot": false,
+              "isAdditionalContent": false,
               "estimatedMinutes": 90,
               "tags": [
                 "interpretability"
@@ -1732,7 +1732,7 @@
               "slotNumber": 3,
               "label": "Evening 3",
               "description": "**Checkpoint.** From memory, write out: the SVD and what each component means, the projection matrix formula, the eigendecomposition, and what it means for a matrix to be positive definite. If you can't, revisit those lectures",
-              "isBookSlot": true,
+              "isAdditionalContent": true,
               "estimatedMinutes": 90,
               "tags": [
                 "checkpoint",
@@ -1792,7 +1792,7 @@
               "slotNumber": 1,
               "label": "Train 1",
               "description": "Unit 1 (Vectors and Matrices): skim Parts A–C as review — you covered this thoroughly in 18.06",
-              "isBookSlot": false,
+              "isAdditionalContent": false,
               "estimatedMinutes": 120,
               "tags": [],
               "links": [
@@ -1818,7 +1818,7 @@
               "slotNumber": 2,
               "label": "Train 2",
               "description": "Unit 2, Part A: Functions of two variables, tangent approximation, max-min problems",
-              "isBookSlot": false,
+              "isAdditionalContent": false,
               "estimatedMinutes": 120,
               "tags": [],
               "links": [
@@ -1844,7 +1844,7 @@
               "slotNumber": 3,
               "label": "Train 3",
               "description": "Unit 2, Part A continued: Second derivative test, least squares, boundaries and infinity",
-              "isBookSlot": false,
+              "isAdditionalContent": false,
               "estimatedMinutes": 120,
               "tags": [],
               "links": [
@@ -1870,7 +1870,7 @@
               "slotNumber": 4,
               "label": "Train 4",
               "description": "**Re-read Book §3.6:** Natural gradient descent, mirror descent. Now that you know partial derivatives, this section will click differently",
-              "isBookSlot": true,
+              "isAdditionalContent": true,
               "estimatedMinutes": 120,
               "tags": [],
               "links": [],
@@ -1887,7 +1887,7 @@
               "slotNumber": 1,
               "label": "Evening 1",
               "description": "Unit 1 Exam 1 (take it cold as a diagnostic — it should feel easy after 18.06)",
-              "isBookSlot": false,
+              "isAdditionalContent": false,
               "estimatedMinutes": 90,
               "tags": [],
               "links": [
@@ -1921,7 +1921,7 @@
               "slotNumber": 2,
               "label": "Evening 2",
               "description": "Unit 2 Part A problems (partial derivatives, tangent planes, max-min)",
-              "isBookSlot": false,
+              "isAdditionalContent": false,
               "estimatedMinutes": 90,
               "tags": [],
               "links": [
@@ -1955,7 +1955,7 @@
               "slotNumber": 3,
               "label": "Evening 3",
               "description": "**Book connection:** Work through the natural gradient derivation in §3.6 with pen and paper. Show why the Fisher information matrix rescales the gradient. Connect to the Hessian from the second derivative test",
-              "isBookSlot": true,
+              "isAdditionalContent": true,
               "estimatedMinutes": 90,
               "tags": [
                 "connection"
@@ -1993,7 +1993,7 @@
               "slotNumber": 1,
               "label": "Train 1",
               "description": "Unit 2, Part B: Chain rule, gradient, directional derivatives",
-              "isBookSlot": false,
+              "isAdditionalContent": false,
               "estimatedMinutes": 120,
               "tags": [],
               "links": [
@@ -2019,7 +2019,7 @@
               "slotNumber": 2,
               "label": "Train 2",
               "description": "Unit 2, Part C: Lagrange multipliers and constrained differentials",
-              "isBookSlot": false,
+              "isAdditionalContent": false,
               "estimatedMinutes": 120,
               "tags": [],
               "links": [
@@ -2045,7 +2045,7 @@
               "slotNumber": 3,
               "label": "Train 3",
               "description": "Recitation videos for Unit 2 Parts B–C. Re-derive the multivariable chain rule on paper",
-              "isBookSlot": false,
+              "isAdditionalContent": false,
               "estimatedMinutes": 120,
               "tags": [],
               "links": [
@@ -2075,7 +2075,7 @@
               "slotNumber": 4,
               "label": "Train 4",
               "description": "**Book §4.1:** Concentration of measure — curse of dimensionality, volume near the surface, random vectors nearly orthogonal",
-              "isBookSlot": true,
+              "isAdditionalContent": true,
               "estimatedMinutes": 120,
               "tags": [],
               "links": [],
@@ -2092,7 +2092,7 @@
               "slotNumber": 1,
               "label": "Evening 1",
               "description": "Unit 2 Part B problems (gradient, chain rule, directional derivatives)",
-              "isBookSlot": false,
+              "isAdditionalContent": false,
               "estimatedMinutes": 90,
               "tags": [],
               "links": [
@@ -2126,7 +2126,7 @@
               "slotNumber": 2,
               "label": "Evening 2",
               "description": "Unit 2 Part C problems (Lagrange multipliers)",
-              "isBookSlot": false,
+              "isAdditionalContent": false,
               "estimatedMinutes": 90,
               "tags": [],
               "links": [
@@ -2160,7 +2160,7 @@
               "slotNumber": 3,
               "label": "Evening 3",
               "description": "**Book connection:** Concentration of measure explains why high-dimensional embeddings work — random vectors in high dimensions are nearly orthogonal, so you can pack many nearly-independent features. This is the geometric foundation of superposition",
-              "isBookSlot": true,
+              "isAdditionalContent": true,
               "estimatedMinutes": 90,
               "tags": [
                 "connection"
@@ -2194,7 +2194,7 @@
               "slotNumber": 1,
               "label": "Train 1",
               "description": "Unit 3, Part A: Double integrals, iterated integrals, polar coordinates",
-              "isBookSlot": false,
+              "isAdditionalContent": false,
               "estimatedMinutes": 120,
               "tags": [],
               "links": [
@@ -2220,7 +2220,7 @@
               "slotNumber": 2,
               "label": "Train 2",
               "description": "Unit 3, Part A continued: Change of variables (Jacobian), applications of double integrals",
-              "isBookSlot": false,
+              "isAdditionalContent": false,
               "estimatedMinutes": 120,
               "tags": [],
               "links": [
@@ -2246,7 +2246,7 @@
               "slotNumber": 3,
               "label": "Train 3",
               "description": "Recitation videos for Unit 3 Part A. **Key focus:** derive *why* the Jacobian determinant appears in a change of variables",
-              "isBookSlot": false,
+              "isAdditionalContent": false,
               "estimatedMinutes": 120,
               "tags": [],
               "links": [
@@ -2272,7 +2272,7 @@
               "slotNumber": 4,
               "label": "Train 4",
               "description": "**Book §4.2–4.3:** Johnson-Lindenstrauss lemma, tokenisation and embedding geometry, anisotropy",
-              "isBookSlot": true,
+              "isAdditionalContent": true,
               "estimatedMinutes": 120,
               "tags": [],
               "links": [],
@@ -2289,7 +2289,7 @@
               "slotNumber": 1,
               "label": "Evening 1",
               "description": "Unit 3 Part A problems (double integrals, switching order of integration)",
-              "isBookSlot": false,
+              "isAdditionalContent": false,
               "estimatedMinutes": 90,
               "tags": [],
               "links": [
@@ -2323,7 +2323,7 @@
               "slotNumber": 2,
               "label": "Evening 2",
               "description": "Unit 3 Part A problems continued — focus on change of variables",
-              "isBookSlot": false,
+              "isAdditionalContent": false,
               "estimatedMinutes": 90,
               "tags": [],
               "links": [
@@ -2357,7 +2357,7 @@
               "slotNumber": 3,
               "label": "Evening 3",
               "description": "**Book exercises Ch 4.** Connection: the Jacobian appears when you transform probability distributions — essential for normalising flows and for understanding how representations change between layers",
-              "isBookSlot": true,
+              "isAdditionalContent": true,
               "estimatedMinutes": 90,
               "tags": [
                 "connection"
@@ -2395,7 +2395,7 @@
               "slotNumber": 1,
               "label": "Train 1",
               "description": "Unit 3, Part B: Vector fields and line integrals, work, conservative fields, path independence",
-              "isBookSlot": false,
+              "isAdditionalContent": false,
               "estimatedMinutes": 120,
               "tags": [],
               "links": [
@@ -2421,7 +2421,7 @@
               "slotNumber": 2,
               "label": "Train 2",
               "description": "Unit 3, Part B continued: Gradient fields, exact differentials",
-              "isBookSlot": false,
+              "isAdditionalContent": false,
               "estimatedMinutes": 120,
               "tags": [],
               "links": [
@@ -2447,7 +2447,7 @@
               "slotNumber": 3,
               "label": "Train 3",
               "description": "Unit 3, Part C: Green's theorem and its applications",
-              "isBookSlot": false,
+              "isAdditionalContent": false,
               "estimatedMinutes": 120,
               "tags": [],
               "links": [
@@ -2473,7 +2473,7 @@
               "slotNumber": 4,
               "label": "Train 4",
               "description": "**Book §4.4–4.5:** Similarity search, angular distances, approximate nearest neighbours",
-              "isBookSlot": true,
+              "isAdditionalContent": true,
               "estimatedMinutes": 120,
               "tags": [],
               "links": [],
@@ -2490,7 +2490,7 @@
               "slotNumber": 1,
               "label": "Evening 1",
               "description": "Unit 3 Part B problems (line integrals, conservative fields)",
-              "isBookSlot": false,
+              "isAdditionalContent": false,
               "estimatedMinutes": 90,
               "tags": [],
               "links": [
@@ -2524,7 +2524,7 @@
               "slotNumber": 2,
               "label": "Evening 2",
               "description": "Unit 3 Part C problems (Green's theorem)",
-              "isBookSlot": false,
+              "isAdditionalContent": false,
               "estimatedMinutes": 90,
               "tags": [],
               "links": [
@@ -2558,7 +2558,7 @@
               "slotNumber": 3,
               "label": "Evening 3",
               "description": "**Book connection + Exam 3 practice:** Work through Unit 3 Exam 3 under timed conditions. Connection: line integrals and conservative fields relate to path-independence in optimisation — gradient descent on a convex loss follows a path where the integral depends only on start and end points",
-              "isBookSlot": true,
+              "isAdditionalContent": true,
               "estimatedMinutes": 90,
               "tags": [
                 "connection",
@@ -2597,7 +2597,7 @@
               "slotNumber": 1,
               "label": "Train 1",
               "description": "Unit 4, Part A: Triple integrals in rectangular coordinates",
-              "isBookSlot": false,
+              "isAdditionalContent": false,
               "estimatedMinutes": 120,
               "tags": [],
               "links": [
@@ -2623,7 +2623,7 @@
               "slotNumber": 2,
               "label": "Train 2",
               "description": "Unit 4, Part A continued: Cylindrical and spherical coordinates, change of variables in 3D",
-              "isBookSlot": false,
+              "isAdditionalContent": false,
               "estimatedMinutes": 120,
               "tags": [],
               "links": [
@@ -2649,7 +2649,7 @@
               "slotNumber": 3,
               "label": "Train 3",
               "description": "Recitation videos for Unit 4 Part A. Practice setting up triple integrals in all three coordinate systems",
-              "isBookSlot": false,
+              "isAdditionalContent": false,
               "estimatedMinutes": 120,
               "tags": [],
               "links": [
@@ -2675,7 +2675,7 @@
               "slotNumber": 4,
               "label": "Train 4",
               "description": "**Book §3.3 revisited:** Fisher information and the Riemannian metric — with your growing calculus fluency, the local geometry of statistical manifolds will make more sense now",
-              "isBookSlot": true,
+              "isAdditionalContent": true,
               "estimatedMinutes": 120,
               "tags": [],
               "links": [],
@@ -2692,7 +2692,7 @@
               "slotNumber": 1,
               "label": "Evening 1",
               "description": "Unit 4 Part A problems (triple integrals, coordinate transformations)",
-              "isBookSlot": false,
+              "isAdditionalContent": false,
               "estimatedMinutes": 90,
               "tags": [],
               "links": [
@@ -2726,7 +2726,7 @@
               "slotNumber": 2,
               "label": "Evening 2",
               "description": "Unit 4 Part A problems continued",
-              "isBookSlot": false,
+              "isAdditionalContent": false,
               "estimatedMinutes": 90,
               "tags": [],
               "links": [
@@ -2760,7 +2760,7 @@
               "slotNumber": 3,
               "label": "Evening 3",
               "description": "**Book connection:** The change-of-variables formula in 3D generalises directly to n dimensions. In probability, this is how you compute the distribution of a transformed random vector — the Jacobian scales the density",
-              "isBookSlot": true,
+              "isAdditionalContent": true,
               "estimatedMinutes": 90,
               "tags": [
                 "connection"
@@ -2794,7 +2794,7 @@
               "slotNumber": 1,
               "label": "Train 1",
               "description": "Unit 4, Part B: Flux, surface integrals, divergence theorem",
-              "isBookSlot": false,
+              "isAdditionalContent": false,
               "estimatedMinutes": 120,
               "tags": [],
               "links": [
@@ -2820,7 +2820,7 @@
               "slotNumber": 2,
               "label": "Train 2",
               "description": "Unit 4, Part B continued: Applications of the divergence theorem",
-              "isBookSlot": false,
+              "isAdditionalContent": false,
               "estimatedMinutes": 120,
               "tags": [],
               "links": [
@@ -2846,7 +2846,7 @@
               "slotNumber": 3,
               "label": "Train 3",
               "description": "Unit 4, Part C: Line integrals in 3D, Stokes' theorem",
-              "isBookSlot": false,
+              "isAdditionalContent": false,
               "estimatedMinutes": 120,
               "tags": [],
               "links": [
@@ -2872,7 +2872,7 @@
               "slotNumber": 4,
               "label": "Train 4",
               "description": "**Book §3.4–3.5:** I-projection vs M-projection, maximum entropy, exponential families",
-              "isBookSlot": true,
+              "isAdditionalContent": true,
               "estimatedMinutes": 120,
               "tags": [],
               "links": [],
@@ -2889,7 +2889,7 @@
               "slotNumber": 1,
               "label": "Evening 1",
               "description": "Unit 4 Part B problems (flux, divergence theorem)",
-              "isBookSlot": false,
+              "isAdditionalContent": false,
               "estimatedMinutes": 90,
               "tags": [],
               "links": [
@@ -2923,7 +2923,7 @@
               "slotNumber": 2,
               "label": "Evening 2",
               "description": "Unit 4 Part C problems (Stokes' theorem)",
-              "isBookSlot": false,
+              "isAdditionalContent": false,
               "estimatedMinutes": 90,
               "tags": [],
               "links": [
@@ -2957,7 +2957,7 @@
               "slotNumber": 3,
               "label": "Evening 3",
               "description": "**Book exercises on projections.** Connection: the divergence theorem relates a volume integral to a surface integral — this is a higher-dimensional generalisation of the fundamental theorem of calculus. The same \"boundary ↔ interior\" duality appears in information geometry when relating local properties (Fisher metric) to global properties (KL divergence)",
-              "isBookSlot": true,
+              "isAdditionalContent": true,
               "estimatedMinutes": 90,
               "tags": [
                 "connection"
@@ -2995,7 +2995,7 @@
               "slotNumber": 1,
               "label": "Train 1",
               "description": "Re-watch any flagged calculus lectures",
-              "isBookSlot": false,
+              "isAdditionalContent": false,
               "estimatedMinutes": 120,
               "tags": [],
               "links": [
@@ -3017,7 +3017,7 @@
               "slotNumber": 2,
               "label": "Train 2",
               "description": "**3Blue1Brown:** gradient and directional derivative videos, plus the \"What is backpropagation really doing?\" video",
-              "isBookSlot": false,
+              "isAdditionalContent": false,
               "estimatedMinutes": 120,
               "tags": [
                 "3b1b"
@@ -3041,7 +3041,7 @@
               "slotNumber": 3,
               "label": "Train 3",
               "description": "Read MML book §5.1–5.4 (vector calculus chapter — backpropagation connection)",
-              "isBookSlot": false,
+              "isAdditionalContent": false,
               "estimatedMinutes": 120,
               "tags": [],
               "links": [
@@ -3063,7 +3063,7 @@
               "slotNumber": 4,
               "label": "Train 4",
               "description": "Work through Unit 4 Exam 4 under timed conditions",
-              "isBookSlot": true,
+              "isAdditionalContent": true,
               "estimatedMinutes": 120,
               "tags": [
                 "timed"
@@ -3087,7 +3087,7 @@
               "slotNumber": 1,
               "label": "Evening 1",
               "description": "Re-attempt any problems you got wrong across Units 2–4",
-              "isBookSlot": false,
+              "isAdditionalContent": false,
               "estimatedMinutes": 90,
               "tags": [],
               "links": [
@@ -3109,7 +3109,7 @@
               "slotNumber": 2,
               "label": "Evening 2",
               "description": "**Derivation exercise:** Write out the full gradient computation for a 2-layer neural network from scratch using the multivariable chain rule. Then explain what each term means",
-              "isBookSlot": false,
+              "isAdditionalContent": false,
               "estimatedMinutes": 90,
               "tags": [
                 "derivation",
@@ -3138,7 +3138,7 @@
               "slotNumber": 3,
               "label": "Evening 3",
               "description": "**Checkpoint.** From memory: the multivariable chain rule, the change-of-variables formula with Jacobian, the statement of Green's theorem, the divergence theorem, and Stokes' theorem. Also: the gradient as the direction of steepest ascent, and why the Fisher information matrix transforms the gradient",
-              "isBookSlot": true,
+              "isAdditionalContent": true,
               "estimatedMinutes": 90,
               "tags": [
                 "checkpoint",
@@ -3210,7 +3210,7 @@
               "slotNumber": 1,
               "label": "Train 1",
               "description": "Lectures 1–2: Probability, counting, story proofs",
-              "isBookSlot": false,
+              "isAdditionalContent": false,
               "estimatedMinutes": 120,
               "tags": [],
               "links": [
@@ -3240,7 +3240,7 @@
               "slotNumber": 2,
               "label": "Train 2",
               "description": "Lectures 3–4: Birthday problem, properties of probability",
-              "isBookSlot": false,
+              "isAdditionalContent": false,
               "estimatedMinutes": 120,
               "tags": [],
               "links": [
@@ -3270,7 +3270,7 @@
               "slotNumber": 3,
               "label": "Train 3",
               "description": "Lectures 5–6: Conditioning, Bayes' rule",
-              "isBookSlot": false,
+              "isAdditionalContent": false,
               "estimatedMinutes": 120,
               "tags": [],
               "links": [
@@ -3300,7 +3300,7 @@
               "slotNumber": 4,
               "label": "Train 4",
               "description": "**Re-read Book §3.1** (KL divergence) with fresh eyes — now that you've started probability, the forward vs reverse KL distinction should click",
-              "isBookSlot": true,
+              "isAdditionalContent": true,
               "estimatedMinutes": 120,
               "tags": [],
               "links": [],
@@ -3317,7 +3317,7 @@
               "slotNumber": 1,
               "label": "Evening 1",
               "description": "Strategic Practice 1 (counting)",
-              "isBookSlot": false,
+              "isAdditionalContent": false,
               "estimatedMinutes": 90,
               "tags": [],
               "links": [
@@ -3351,7 +3351,7 @@
               "slotNumber": 2,
               "label": "Evening 2",
               "description": "Homework 1 + Strategic Practice 2 (conditioning)",
-              "isBookSlot": false,
+              "isAdditionalContent": false,
               "estimatedMinutes": 90,
               "tags": [],
               "links": [
@@ -3393,7 +3393,7 @@
               "slotNumber": 3,
               "label": "Evening 3",
               "description": "**Book connection:** Work through the KL divergence examples in §3.1. Compute KL(p‖q) and KL(q‖p) for two simple distributions by hand. See the asymmetry",
-              "isBookSlot": true,
+              "isAdditionalContent": true,
               "estimatedMinutes": 90,
               "tags": [
                 "connection"
@@ -3431,7 +3431,7 @@
               "slotNumber": 1,
               "label": "Train 1",
               "description": "Lectures 7–8: Gambler's ruin, random variables",
-              "isBookSlot": false,
+              "isAdditionalContent": false,
               "estimatedMinutes": 120,
               "tags": [],
               "links": [
@@ -3461,7 +3461,7 @@
               "slotNumber": 2,
               "label": "Train 2",
               "description": "Lectures 9–10: Independence, expected value, indicator r.v.s, linearity",
-              "isBookSlot": false,
+              "isAdditionalContent": false,
               "estimatedMinutes": 120,
               "tags": [],
               "links": [
@@ -3491,7 +3491,7 @@
               "slotNumber": 3,
               "label": "Train 3",
               "description": "Lectures 11–12: Poisson distribution, discrete vs continuous",
-              "isBookSlot": false,
+              "isAdditionalContent": false,
               "estimatedMinutes": 120,
               "tags": [],
               "links": [
@@ -3521,7 +3521,7 @@
               "slotNumber": 4,
               "label": "Train 4",
               "description": "**Book §3.2:** Bregman divergences, f-divergences — these generalise the divergences you've seen",
-              "isBookSlot": true,
+              "isAdditionalContent": true,
               "estimatedMinutes": 120,
               "tags": [],
               "links": [],
@@ -3538,7 +3538,7 @@
               "slotNumber": 1,
               "label": "Evening 1",
               "description": "Strategic Practice 3 (random variables)",
-              "isBookSlot": false,
+              "isAdditionalContent": false,
               "estimatedMinutes": 90,
               "tags": [],
               "links": [
@@ -3572,7 +3572,7 @@
               "slotNumber": 2,
               "label": "Evening 2",
               "description": "Homework 3 — indicator r.v.s and linearity of expectation problems (these are gold)",
-              "isBookSlot": false,
+              "isAdditionalContent": false,
               "estimatedMinutes": 90,
               "tags": [],
               "links": [
@@ -3606,7 +3606,7 @@
               "slotNumber": 3,
               "label": "Evening 3",
               "description": "**Book exercises on divergences.** Connection: f-divergences unify KL, JS, chi-squared, and total variation distance. GAN training objectives are f-divergences",
-              "isBookSlot": true,
+              "isAdditionalContent": true,
               "estimatedMinutes": 90,
               "tags": [
                 "connection"
@@ -3644,7 +3644,7 @@
               "slotNumber": 1,
               "label": "Train 1",
               "description": "Lectures 13–14: Normal distribution, standardisation",
-              "isBookSlot": false,
+              "isAdditionalContent": false,
               "estimatedMinutes": 120,
               "tags": [],
               "links": [
@@ -3674,7 +3674,7 @@
               "slotNumber": 2,
               "label": "Train 2",
               "description": "Lectures 15–16: Midterm review, exponential distribution",
-              "isBookSlot": false,
+              "isAdditionalContent": false,
               "estimatedMinutes": 120,
               "tags": [],
               "links": [
@@ -3704,7 +3704,7 @@
               "slotNumber": 3,
               "label": "Train 3",
               "description": "Lectures 17–18: MGFs, Bayes' rule (hybrid), sums of Poissons",
-              "isBookSlot": false,
+              "isAdditionalContent": false,
               "estimatedMinutes": 120,
               "tags": [],
               "links": [
@@ -3734,7 +3734,7 @@
               "slotNumber": 4,
               "label": "Train 4",
               "description": "**Book §3.3 revisited:** Fisher information and the Riemannian metric — now that you understand distributions, this section will be much richer",
-              "isBookSlot": true,
+              "isAdditionalContent": true,
               "estimatedMinutes": 120,
               "tags": [],
               "links": [],
@@ -3751,7 +3751,7 @@
               "slotNumber": 1,
               "label": "Evening 1",
               "description": "Strategic Practice 4 (continuous distributions)",
-              "isBookSlot": false,
+              "isAdditionalContent": false,
               "estimatedMinutes": 90,
               "tags": [],
               "links": [
@@ -3785,7 +3785,7 @@
               "slotNumber": 2,
               "label": "Evening 2",
               "description": "Homework 4",
-              "isBookSlot": false,
+              "isAdditionalContent": false,
               "estimatedMinutes": 90,
               "tags": [],
               "links": [
@@ -3819,7 +3819,7 @@
               "slotNumber": 3,
               "label": "Evening 3",
               "description": "**Key exercise:** Compute the Fisher information for a Gaussian (with respect to the mean, and with respect to the variance). Show that it defines a metric on the space of Gaussians. This connects linear algebra (the metric is a matrix) to probability",
-              "isBookSlot": true,
+              "isAdditionalContent": true,
               "estimatedMinutes": 90,
               "tags": [
                 "key-exercise",
@@ -3854,7 +3854,7 @@
               "slotNumber": 1,
               "label": "Train 1",
               "description": "Lectures 19–20: Joint distributions, 2D LOTUS, Multinomial",
-              "isBookSlot": false,
+              "isAdditionalContent": false,
               "estimatedMinutes": 120,
               "tags": [],
               "links": [
@@ -3884,7 +3884,7 @@
               "slotNumber": 2,
               "label": "Train 2",
               "description": "Lectures 21–22: Covariance, correlation, transformations",
-              "isBookSlot": false,
+              "isAdditionalContent": false,
               "estimatedMinutes": 120,
               "tags": [],
               "links": [
@@ -3914,7 +3914,7 @@
               "slotNumber": 3,
               "label": "Train 3",
               "description": "Lectures 23–24: Beta distribution, Bayes' billiards, Gamma",
-              "isBookSlot": false,
+              "isAdditionalContent": false,
               "estimatedMinutes": 120,
               "tags": [],
               "links": [
@@ -3944,7 +3944,7 @@
               "slotNumber": 4,
               "label": "Train 4",
               "description": "**Book §3.4–3.5:** I-projection vs M-projection, maximum entropy, exponential families",
-              "isBookSlot": true,
+              "isAdditionalContent": true,
               "estimatedMinutes": 120,
               "tags": [],
               "links": [],
@@ -3961,7 +3961,7 @@
               "slotNumber": 1,
               "label": "Evening 1",
               "description": "Strategic Practice 5 (joint distributions)",
-              "isBookSlot": false,
+              "isAdditionalContent": false,
               "estimatedMinutes": 90,
               "tags": [],
               "links": [
@@ -3995,7 +3995,7 @@
               "slotNumber": 2,
               "label": "Evening 2",
               "description": "Homework 5 + **Key exercise:** Derive the PDF of Y = g(X) using the CDF method. Do it for Y = X² where X ~ N(0,1)",
-              "isBookSlot": false,
+              "isAdditionalContent": false,
               "estimatedMinutes": 90,
               "tags": [
                 "key-exercise"
@@ -4035,7 +4035,7 @@
               "slotNumber": 3,
               "label": "Evening 3",
               "description": "**Book exercises on projections.** Connection: variational inference is I-projection (minimise KL(q‖p)); moment matching is M-projection (minimise KL(p‖q)). This is why VAEs and GANs produce different kinds of errors",
-              "isBookSlot": true,
+              "isAdditionalContent": true,
               "estimatedMinutes": 90,
               "tags": [
                 "connection"
@@ -4073,7 +4073,7 @@
               "slotNumber": 1,
               "label": "Train 1",
               "description": "Lectures 25–26: Order statistics, conditional expectation",
-              "isBookSlot": false,
+              "isAdditionalContent": false,
               "estimatedMinutes": 120,
               "tags": [],
               "links": [
@@ -4103,7 +4103,7 @@
               "slotNumber": 2,
               "label": "Train 2",
               "description": "Lectures 27–28: Adam's law, Eve's law, inequalities (Markov, Chebyshev, Jensen)",
-              "isBookSlot": false,
+              "isAdditionalContent": false,
               "estimatedMinutes": 120,
               "tags": [],
               "links": [
@@ -4133,7 +4133,7 @@
               "slotNumber": 3,
               "label": "Train 3",
               "description": "Re-watch lectures 25–27 — conditional expectation is worth seeing twice",
-              "isBookSlot": false,
+              "isAdditionalContent": false,
               "estimatedMinutes": 120,
               "tags": [],
               "links": [
@@ -4167,7 +4167,7 @@
               "slotNumber": 4,
               "label": "Train 4",
               "description": "**Book §6.4:** Superposition, polysemanticity, and capacity constraints — preview this; you now have the probability background to understand the geometry of superposition",
-              "isBookSlot": true,
+              "isAdditionalContent": true,
               "estimatedMinutes": 120,
               "tags": [],
               "links": [],
@@ -4184,7 +4184,7 @@
               "slotNumber": 1,
               "label": "Evening 1",
               "description": "Strategic Practice 6 (conditional expectation)",
-              "isBookSlot": false,
+              "isAdditionalContent": false,
               "estimatedMinutes": 90,
               "tags": [],
               "links": [
@@ -4218,7 +4218,7 @@
               "slotNumber": 2,
               "label": "Evening 2",
               "description": "Homework 7 — Adam's law and Eve's law problems",
-              "isBookSlot": false,
+              "isAdditionalContent": false,
               "estimatedMinutes": 90,
               "tags": [],
               "links": [
@@ -4252,7 +4252,7 @@
               "slotNumber": 3,
               "label": "Evening 3",
               "description": "**Book connection:** Adam's law E[E[X|Y]] = E[X] is the mathematical backbone of the EM algorithm. Also: Jensen's inequality explains why the ELBO is a lower bound on the log evidence. Write both connections out",
-              "isBookSlot": true,
+              "isAdditionalContent": true,
               "estimatedMinutes": 90,
               "tags": [
                 "connection"
@@ -4290,7 +4290,7 @@
               "slotNumber": 1,
               "label": "Train 1",
               "description": "Lectures 29–30: LLN, CLT, Chi-Square, Student-t",
-              "isBookSlot": false,
+              "isAdditionalContent": false,
               "estimatedMinutes": 120,
               "tags": [],
               "links": [
@@ -4320,7 +4320,7 @@
               "slotNumber": 2,
               "label": "Train 2",
               "description": "Lectures 31–32: Markov chains, transition matrices, stationary distributions",
-              "isBookSlot": false,
+              "isAdditionalContent": false,
               "estimatedMinutes": 120,
               "tags": [],
               "links": [
@@ -4350,7 +4350,7 @@
               "slotNumber": 3,
               "label": "Train 3",
               "description": "Lectures 33–34: Markov chains continued, course wrap-up",
-              "isBookSlot": false,
+              "isAdditionalContent": false,
               "estimatedMinutes": 120,
               "tags": [],
               "links": [
@@ -4380,7 +4380,7 @@
               "slotNumber": 4,
               "label": "Train 4",
               "description": "**Book §6.1–6.3:** The bottleneck principle, layer-by-layer information flow, attention heads as specialised feature detectors — the core interpretability chapter",
-              "isBookSlot": true,
+              "isAdditionalContent": true,
               "estimatedMinutes": 120,
               "tags": [],
               "links": [],
@@ -4397,7 +4397,7 @@
               "slotNumber": 1,
               "label": "Evening 1",
               "description": "Strategic Practice 7 (limit theorems)",
-              "isBookSlot": false,
+              "isAdditionalContent": false,
               "estimatedMinutes": 90,
               "tags": [],
               "links": [
@@ -4431,7 +4431,7 @@
               "slotNumber": 2,
               "label": "Evening 2",
               "description": "Homework 9 — Markov chain problems",
-              "isBookSlot": false,
+              "isAdditionalContent": false,
               "estimatedMinutes": 90,
               "tags": [],
               "links": [
@@ -4465,7 +4465,7 @@
               "slotNumber": 3,
               "label": "Evening 3",
               "description": "**Book exercises Ch 6 (first half).** Connection: Markov chains connect to the residual stream as an iterative process — each layer reads from and writes to the stream. Stationary distributions relate to how representations stabilise in deeper layers",
-              "isBookSlot": true,
+              "isAdditionalContent": true,
               "estimatedMinutes": 90,
               "tags": [
                 "connection"
@@ -4503,7 +4503,7 @@
               "slotNumber": 1,
               "label": "Train 1",
               "description": "Re-watch flagged Stat 110 lectures",
-              "isBookSlot": false,
+              "isAdditionalContent": false,
               "estimatedMinutes": 120,
               "tags": [],
               "links": [
@@ -4525,7 +4525,7 @@
               "slotNumber": 2,
               "label": "Train 2",
               "description": "Preview MIT 18.650 Lectures 1–2",
-              "isBookSlot": false,
+              "isAdditionalContent": false,
               "estimatedMinutes": 120,
               "tags": [],
               "links": [
@@ -4555,7 +4555,7 @@
               "slotNumber": 3,
               "label": "Train 3",
               "description": "**Book §6.5–6.8:** Probing, measuring representations, implications for transfer and fine-tuning",
-              "isBookSlot": false,
+              "isAdditionalContent": false,
               "estimatedMinutes": 120,
               "tags": [],
               "links": [
@@ -4577,7 +4577,7 @@
               "slotNumber": 4,
               "label": "Train 4",
               "description": "**Book exercises Ch 6 (second half)**",
-              "isBookSlot": true,
+              "isAdditionalContent": true,
               "estimatedMinutes": 120,
               "tags": [],
               "links": [],
@@ -4594,7 +4594,7 @@
               "slotNumber": 1,
               "label": "Evening 1",
               "description": "Work Stat 110 **practice final exam** under timed conditions",
-              "isBookSlot": false,
+              "isAdditionalContent": false,
               "estimatedMinutes": 90,
               "tags": [
                 "timed"
@@ -4618,7 +4618,7 @@
               "slotNumber": 2,
               "label": "Evening 2",
               "description": "Re-do all exam problems you got wrong. Pick 5 hard textbook problems from weakest chapters",
-              "isBookSlot": false,
+              "isAdditionalContent": false,
               "estimatedMinutes": 90,
               "tags": [],
               "links": [
@@ -4644,7 +4644,7 @@
               "slotNumber": 3,
               "label": "Evening 3",
               "description": "**Checkpoint.** From memory: Bayes' theorem with continuous priors, the law of total expectation, the CLT statement, KL divergence definition and its asymmetry, and what superposition means geometrically",
-              "isBookSlot": true,
+              "isAdditionalContent": true,
               "estimatedMinutes": 90,
               "tags": [
                 "checkpoint",
@@ -4708,7 +4708,7 @@
               "slotNumber": 1,
               "label": "Train 1",
               "description": "Lecture 1: Introduction to statistics",
-              "isBookSlot": false,
+              "isAdditionalContent": false,
               "estimatedMinutes": 120,
               "tags": [],
               "links": [
@@ -4734,7 +4734,7 @@
               "slotNumber": 2,
               "label": "Train 2",
               "description": "Lecture 2: Statistical models",
-              "isBookSlot": false,
+              "isAdditionalContent": false,
               "estimatedMinutes": 120,
               "tags": [],
               "links": [
@@ -4760,7 +4760,7 @@
               "slotNumber": 3,
               "label": "Train 3",
               "description": "Lecture 3: Parametric inference",
-              "isBookSlot": false,
+              "isAdditionalContent": false,
               "estimatedMinutes": 120,
               "tags": [],
               "links": [
@@ -4786,7 +4786,7 @@
               "slotNumber": 4,
               "label": "Train 4",
               "description": "**Book §9.1–9.2:** Why generalisation matters, PAC learning basics",
-              "isBookSlot": true,
+              "isAdditionalContent": true,
               "estimatedMinutes": 120,
               "tags": [],
               "links": [],
@@ -4803,7 +4803,7 @@
               "slotNumber": 1,
               "label": "Evening 1",
               "description": "Problem Set 1",
-              "isBookSlot": false,
+              "isAdditionalContent": false,
               "estimatedMinutes": 90,
               "tags": [],
               "links": [
@@ -4837,7 +4837,7 @@
               "slotNumber": 2,
               "label": "Evening 2",
               "description": "PS1 continued — derive MLE for Gaussian, Bernoulli, Poisson from scratch",
-              "isBookSlot": false,
+              "isAdditionalContent": false,
               "estimatedMinutes": 90,
               "tags": [
                 "from-scratch"
@@ -4873,7 +4873,7 @@
               "slotNumber": 3,
               "label": "Evening 3",
               "description": "**Book connection:** MLE minimises empirical cross entropy. The book's Chapter 1 showed that cross entropy = codelength. So MLE finds the model that compresses the training data best. Write this connection out formally",
-              "isBookSlot": true,
+              "isAdditionalContent": true,
               "estimatedMinutes": 90,
               "tags": [
                 "connection"
@@ -4915,7 +4915,7 @@
               "slotNumber": 1,
               "label": "Train 1",
               "description": "Lecture 4: Maximum likelihood estimation",
-              "isBookSlot": false,
+              "isAdditionalContent": false,
               "estimatedMinutes": 120,
               "tags": [],
               "links": [
@@ -4941,7 +4941,7 @@
               "slotNumber": 2,
               "label": "Train 2",
               "description": "Lecture 5: Consistency of MLE",
-              "isBookSlot": false,
+              "isAdditionalContent": false,
               "estimatedMinutes": 120,
               "tags": [],
               "links": [
@@ -4967,7 +4967,7 @@
               "slotNumber": 3,
               "label": "Train 3",
               "description": "Lecture 6: MLE continued, method of moments",
-              "isBookSlot": false,
+              "isAdditionalContent": false,
               "estimatedMinutes": 120,
               "tags": [],
               "links": [
@@ -4993,7 +4993,7 @@
               "slotNumber": 4,
               "label": "Train 4",
               "description": "**Book §9.3–9.4:** Two-part codes, Occam's razor, PAC-Bayes bounds",
-              "isBookSlot": true,
+              "isAdditionalContent": true,
               "estimatedMinutes": 120,
               "tags": [],
               "links": [],
@@ -5010,7 +5010,7 @@
               "slotNumber": 1,
               "label": "Evening 1",
               "description": "Problem Set 2 + Problem Set 3 (MLE derivations)",
-              "isBookSlot": false,
+              "isAdditionalContent": false,
               "estimatedMinutes": 90,
               "tags": [],
               "links": [
@@ -5052,7 +5052,7 @@
               "slotNumber": 2,
               "label": "Evening 2",
               "description": "PS3 continued — **Key exercise:** Derive the MLE for several distributions from scratch, then verify consistency",
-              "isBookSlot": false,
+              "isAdditionalContent": false,
               "estimatedMinutes": 90,
               "tags": [
                 "key-exercise",
@@ -5093,7 +5093,7 @@
               "slotNumber": 3,
               "label": "Evening 3",
               "description": "**Book exercises Ch 9.** Connection: PAC-Bayes bounds tell you that generalisation depends on the \"complexity\" of the learned hypothesis, measured in bits. This is the MDL principle made rigorous",
-              "isBookSlot": true,
+              "isAdditionalContent": true,
               "estimatedMinutes": 90,
               "tags": [
                 "connection"
@@ -5131,7 +5131,7 @@
               "slotNumber": 1,
               "label": "Train 1",
               "description": "Lecture 7: Parametric hypothesis testing",
-              "isBookSlot": false,
+              "isAdditionalContent": false,
               "estimatedMinutes": 120,
               "tags": [],
               "links": [
@@ -5157,7 +5157,7 @@
               "slotNumber": 2,
               "label": "Train 2",
               "description": "Lecture 8: Testing continued",
-              "isBookSlot": false,
+              "isAdditionalContent": false,
               "estimatedMinutes": 120,
               "tags": [],
               "links": [
@@ -5183,7 +5183,7 @@
               "slotNumber": 3,
               "label": "Train 3",
               "description": "Lecture 9: Testing and confidence intervals",
-              "isBookSlot": false,
+              "isAdditionalContent": false,
               "estimatedMinutes": 120,
               "tags": [],
               "links": [
@@ -5209,7 +5209,7 @@
               "slotNumber": 4,
               "label": "Train 4",
               "description": "**Book §10 (Evaluation Fundamentals):** skim the sections on evaluation methodology — this connects to making rigorous claims about interpretability findings",
-              "isBookSlot": true,
+              "isAdditionalContent": true,
               "estimatedMinutes": 120,
               "tags": [],
               "links": [],
@@ -5226,7 +5226,7 @@
               "slotNumber": 1,
               "label": "Evening 1",
               "description": "Problem Set 4 + Problem Set 5 (Fisher information, confidence intervals, testing)",
-              "isBookSlot": false,
+              "isAdditionalContent": false,
               "estimatedMinutes": 90,
               "tags": [],
               "links": [
@@ -5268,7 +5268,7 @@
               "slotNumber": 2,
               "label": "Evening 2",
               "description": "Problem Set 6 (hypothesis testing, chi-squared)",
-              "isBookSlot": false,
+              "isAdditionalContent": false,
               "estimatedMinutes": 90,
               "tags": [],
               "links": [
@@ -5302,7 +5302,7 @@
               "slotNumber": 3,
               "label": "Evening 3",
               "description": "**Book connection:** When you claim \"this attention head implements induction,\" you're implicitly making a statistical claim. What's your null hypothesis? What's the test? How do you control for multiple comparisons across hundreds of heads?",
-              "isBookSlot": true,
+              "isAdditionalContent": true,
               "estimatedMinutes": 90,
               "tags": [
                 "connection"
@@ -5336,7 +5336,7 @@
               "slotNumber": 1,
               "label": "Train 1",
               "description": "Lecture 10 (slides) + Lecture 11: Goodness of fit",
-              "isBookSlot": false,
+              "isAdditionalContent": false,
               "estimatedMinutes": 120,
               "tags": [],
               "links": [
@@ -5366,7 +5366,7 @@
               "slotNumber": 2,
               "label": "Train 2",
               "description": "Lecture 12: Testing continued. Lecture 13: Bayesian statistics",
-              "isBookSlot": false,
+              "isAdditionalContent": false,
               "estimatedMinutes": 120,
               "tags": [],
               "links": [
@@ -5400,7 +5400,7 @@
               "slotNumber": 3,
               "label": "Train 3",
               "description": "Lecture 14: Bayesian statistics continued",
-              "isBookSlot": false,
+              "isAdditionalContent": false,
               "estimatedMinutes": 120,
               "tags": [],
               "links": [
@@ -5426,7 +5426,7 @@
               "slotNumber": 4,
               "label": "Train 4",
               "description": "**Book §11 (selected sections):** Designing information-sound systems — skim for high-level principles",
-              "isBookSlot": true,
+              "isAdditionalContent": true,
               "estimatedMinutes": 120,
               "tags": [],
               "links": [],
@@ -5443,7 +5443,7 @@
               "slotNumber": 1,
               "label": "Evening 1",
               "description": "Problem Set 7 + Problem Set 8 (Bayesian inference, regression)",
-              "isBookSlot": false,
+              "isAdditionalContent": false,
               "estimatedMinutes": 90,
               "tags": [],
               "links": [
@@ -5485,7 +5485,7 @@
               "slotNumber": 2,
               "label": "Evening 2",
               "description": "**Key exercise:** Derive the posterior for Gaussian prior + Gaussian likelihood. Show the posterior mean is a weighted average of prior mean and MLE. Connect to the book's discussion of empirical Bayes in deep nets (§2.3)",
-              "isBookSlot": false,
+              "isAdditionalContent": false,
               "estimatedMinutes": 90,
               "tags": [
                 "key-exercise"
@@ -5521,7 +5521,7 @@
               "slotNumber": 3,
               "label": "Evening 3",
               "description": "**Book connection:** Bayesian linear regression is the foundation of linear probing with uncertainty. If you train a probe on activations, the posterior gives you not just a point estimate but confidence about whether a feature is represented",
-              "isBookSlot": true,
+              "isAdditionalContent": true,
               "estimatedMinutes": 90,
               "tags": [
                 "connection"
@@ -5555,7 +5555,7 @@
               "slotNumber": 1,
               "label": "Train 1",
               "description": "Lecture 15: Regression. Lecture 16 (slides): Regression continued",
-              "isBookSlot": false,
+              "isAdditionalContent": false,
               "estimatedMinutes": 120,
               "tags": [],
               "links": [
@@ -5585,7 +5585,7 @@
               "slotNumber": 2,
               "label": "Train 2",
               "description": "Lectures 17–19: Linear regression continued, generalised linear models",
-              "isBookSlot": false,
+              "isAdditionalContent": false,
               "estimatedMinutes": 120,
               "tags": [],
               "links": [
@@ -5619,7 +5619,7 @@
               "slotNumber": 3,
               "label": "Train 3",
               "description": "Lectures 20–22: GLMs continued, PCA",
-              "isBookSlot": false,
+              "isAdditionalContent": false,
               "estimatedMinutes": 120,
               "tags": [],
               "links": [
@@ -5653,7 +5653,7 @@
               "slotNumber": 4,
               "label": "Train 4",
               "description": "**Book §12 (Scaling Laws):** skim for the information-theoretic perspective on why scaling works",
-              "isBookSlot": true,
+              "isAdditionalContent": true,
               "estimatedMinutes": 120,
               "tags": [],
               "links": [],
@@ -5670,7 +5670,7 @@
               "slotNumber": 1,
               "label": "Evening 1",
               "description": "Problem Set 9 + Problem Set 10 + Problem Set 11 (regression, GLMs, PCA)",
-              "isBookSlot": false,
+              "isAdditionalContent": false,
               "estimatedMinutes": 90,
               "tags": [],
               "links": [
@@ -5720,7 +5720,7 @@
               "slotNumber": 2,
               "label": "Evening 2",
               "description": "Work the **final exam** under timed conditions",
-              "isBookSlot": false,
+              "isAdditionalContent": false,
               "estimatedMinutes": 90,
               "tags": [
                 "timed"
@@ -5744,7 +5744,7 @@
               "slotNumber": 3,
               "label": "Evening 3",
               "description": "Review all problem sets — re-do any problems marked wrong",
-              "isBookSlot": true,
+              "isAdditionalContent": true,
               "estimatedMinutes": 90,
               "tags": [],
               "links": [],
@@ -5772,7 +5772,7 @@
               "slotNumber": 1,
               "label": "Train 1",
               "description": "Lectures 23–24: PCA continued, course wrap-up",
-              "isBookSlot": false,
+              "isAdditionalContent": false,
               "estimatedMinutes": 120,
               "tags": [],
               "links": [
@@ -5802,7 +5802,7 @@
               "slotNumber": 2,
               "label": "Train 2",
               "description": "Re-watch any flagged 18.650 lectures",
-              "isBookSlot": false,
+              "isAdditionalContent": false,
               "estimatedMinutes": 120,
               "tags": [],
               "links": [
@@ -5824,7 +5824,7 @@
               "slotNumber": 3,
               "label": "Train 3",
               "description": "Read the Anthropic *Toy Models of Superposition* paper introduction and §1–2",
-              "isBookSlot": false,
+              "isAdditionalContent": false,
               "estimatedMinutes": 120,
               "tags": [],
               "links": [
@@ -5846,7 +5846,7 @@
               "slotNumber": 4,
               "label": "Train 4",
               "description": "**Book §13 (Production Systems and Synthesis):** the capstone chapter tying everything together",
-              "isBookSlot": true,
+              "isAdditionalContent": true,
               "estimatedMinutes": 120,
               "tags": [],
               "links": [],
@@ -5863,7 +5863,7 @@
               "slotNumber": 1,
               "label": "Evening 1",
               "description": "Re-do the hardest problem from each 18.650 problem set",
-              "isBookSlot": false,
+              "isAdditionalContent": false,
               "estimatedMinutes": 90,
               "tags": [],
               "links": [
@@ -5885,7 +5885,7 @@
               "slotNumber": 2,
               "label": "Evening 2",
               "description": "**Checkpoint.** From memory: derive MLE for a Gaussian, state the asymptotic distribution of the MLE, explain the Delta method, write the posterior for conjugate Bayesian inference, and state a PAC-Bayes bound",
-              "isBookSlot": false,
+              "isAdditionalContent": false,
               "estimatedMinutes": 90,
               "tags": [
                 "checkpoint",
@@ -5926,7 +5926,7 @@
               "slotNumber": 3,
               "label": "Evening 3",
               "description": "Write a one-page document: \"The mathematical tools I now have for interpretability research.\" List every concept and note where it appears in the field",
-              "isBookSlot": true,
+              "isAdditionalContent": true,
               "estimatedMinutes": 90,
               "tags": [],
               "links": [],
@@ -5971,7 +5971,7 @@
               "slotNumber": 1,
               "label": "Train 1",
               "description": "MML Ch 5: Vector calculus — skim familiar parts, focus on §5.6 (backpropagation connection)",
-              "isBookSlot": false,
+              "isAdditionalContent": false,
               "estimatedMinutes": 120,
               "tags": [],
               "links": [
@@ -5993,7 +5993,7 @@
               "slotNumber": 2,
               "label": "Train 2",
               "description": "MML Ch 7: Continuous optimisation — gradient descent, convexity",
-              "isBookSlot": false,
+              "isAdditionalContent": false,
               "estimatedMinutes": 120,
               "tags": [],
               "links": [
@@ -6015,7 +6015,7 @@
               "slotNumber": 3,
               "label": "Train 3",
               "description": "ARENA Ch 1.1: Transformer from scratch — reading and setup",
-              "isBookSlot": false,
+              "isAdditionalContent": false,
               "estimatedMinutes": 120,
               "tags": [],
               "links": [
@@ -6037,7 +6037,7 @@
               "slotNumber": 4,
               "label": "Train 4",
               "description": "MML Ch 5 & 7 exercises",
-              "isBookSlot": true,
+              "isAdditionalContent": true,
               "estimatedMinutes": 120,
               "tags": [],
               "links": [
@@ -6059,7 +6059,7 @@
               "slotNumber": 1,
               "label": "Evening 1",
               "description": "MML Ch 7 exercises — especially convexity proofs",
-              "isBookSlot": false,
+              "isAdditionalContent": false,
               "estimatedMinutes": 90,
               "tags": [],
               "links": [
@@ -6089,7 +6089,7 @@
               "slotNumber": 2,
               "label": "Evening 2",
               "description": "**Derivation:** Full gradient computation for a 2-layer neural network using the chain rule",
-              "isBookSlot": false,
+              "isAdditionalContent": false,
               "estimatedMinutes": 90,
               "tags": [
                 "derivation"
@@ -6121,7 +6121,7 @@
               "slotNumber": 3,
               "label": "Evening 3",
               "description": "Start ARENA exercises: implement a transformer from scratch in PyTorch",
-              "isBookSlot": true,
+              "isAdditionalContent": true,
               "estimatedMinutes": 90,
               "tags": [
                 "from-scratch"
@@ -6156,7 +6156,7 @@
               "slotNumber": 1,
               "label": "Train 1",
               "description": "MML Ch 6: Probability and distributions — mostly review, focus on §6.6 (conjugate priors) and §6.7 (change of variables)",
-              "isBookSlot": false,
+              "isAdditionalContent": false,
               "estimatedMinutes": 120,
               "tags": [],
               "links": [
@@ -6178,7 +6178,7 @@
               "slotNumber": 2,
               "label": "Train 2",
               "description": "MML Ch 8: When models meet data — Bayesian linear regression",
-              "isBookSlot": false,
+              "isAdditionalContent": false,
               "estimatedMinutes": 120,
               "tags": [],
               "links": [
@@ -6200,7 +6200,7 @@
               "slotNumber": 3,
               "label": "Train 3",
               "description": "MML Ch 9: PCA from maximum variance and minimum reconstruction error",
-              "isBookSlot": false,
+              "isAdditionalContent": false,
               "estimatedMinutes": 120,
               "tags": [],
               "links": [
@@ -6222,7 +6222,7 @@
               "slotNumber": 4,
               "label": "Train 4",
               "description": "ARENA Ch 1.2: TransformerLens and mechanistic interpretability basics",
-              "isBookSlot": true,
+              "isAdditionalContent": true,
               "estimatedMinutes": 120,
               "tags": [],
               "links": [
@@ -6244,7 +6244,7 @@
               "slotNumber": 1,
               "label": "Evening 1",
               "description": "**Derivation:** KL divergence between two Gaussians from scratch. Show MLE for linear regression = OLS",
-              "isBookSlot": false,
+              "isAdditionalContent": false,
               "estimatedMinutes": 90,
               "tags": [
                 "derivation",
@@ -6277,7 +6277,7 @@
               "slotNumber": 2,
               "label": "Evening 2",
               "description": "MML Ch 8–9 exercises — derive the predictive distribution and both PCA derivation paths",
-              "isBookSlot": false,
+              "isAdditionalContent": false,
               "estimatedMinutes": 90,
               "tags": [],
               "links": [
@@ -6307,7 +6307,7 @@
               "slotNumber": 3,
               "label": "Evening 3",
               "description": "ARENA exercises: use TransformerLens to inspect attention patterns in a small model",
-              "isBookSlot": true,
+              "isAdditionalContent": true,
               "estimatedMinutes": 90,
               "tags": [],
               "links": [
@@ -6340,7 +6340,7 @@
               "slotNumber": 1,
               "label": "Train 1",
               "description": "MML Ch 10: Gaussian mixture models, EM algorithm",
-              "isBookSlot": false,
+              "isAdditionalContent": false,
               "estimatedMinutes": 120,
               "tags": [],
               "links": [
@@ -6362,7 +6362,7 @@
               "slotNumber": 2,
               "label": "Train 2",
               "description": "MML Ch 11: SVMs — primal, dual, kernel trick",
-              "isBookSlot": false,
+              "isAdditionalContent": false,
               "estimatedMinutes": 120,
               "tags": [],
               "links": [
@@ -6384,7 +6384,7 @@
               "slotNumber": 3,
               "label": "Train 3",
               "description": "ARENA Ch 1.3–1.4: Induction heads, probing and representations",
-              "isBookSlot": false,
+              "isAdditionalContent": false,
               "estimatedMinutes": 120,
               "tags": [],
               "links": [
@@ -6406,7 +6406,7 @@
               "slotNumber": 4,
               "label": "Train 4",
               "description": "Read: Anthropic's *A Mathematical Framework for Transformer Circuits* (full paper)",
-              "isBookSlot": true,
+              "isAdditionalContent": true,
               "estimatedMinutes": 120,
               "tags": [],
               "links": [
@@ -6428,7 +6428,7 @@
               "slotNumber": 1,
               "label": "Evening 1",
               "description": "**Capstone derivation:** Derive the full EM algorithm for a 2-component GMM from scratch. Every E-step expectation, every M-step update. This uses probability, calculus, and linear algebra simultaneously",
-              "isBookSlot": false,
+              "isAdditionalContent": false,
               "estimatedMinutes": 90,
               "tags": [
                 "derivation",
@@ -6461,7 +6461,7 @@
               "slotNumber": 2,
               "label": "Evening 2",
               "description": "ARENA exercises: reverse-engineer induction heads in a 2-layer model",
-              "isBookSlot": false,
+              "isAdditionalContent": false,
               "estimatedMinutes": 90,
               "tags": [],
               "links": [
@@ -6491,7 +6491,7 @@
               "slotNumber": 3,
               "label": "Evening 3",
               "description": "ARENA exercises: train a linear probe on model activations",
-              "isBookSlot": true,
+              "isAdditionalContent": true,
               "estimatedMinutes": 90,
               "tags": [],
               "links": [
@@ -6524,7 +6524,7 @@
               "slotNumber": 1,
               "label": "Train 1",
               "description": "Read: Anthropic's *Toy Models of Superposition* paper",
-              "isBookSlot": false,
+              "isAdditionalContent": false,
               "estimatedMinutes": 120,
               "tags": [],
               "links": [
@@ -6546,7 +6546,7 @@
               "slotNumber": 2,
               "label": "Train 2",
               "description": "Read: Anthropic's *Towards Monosemanticity* (SAE paper)",
-              "isBookSlot": false,
+              "isAdditionalContent": false,
               "estimatedMinutes": 120,
               "tags": [],
               "links": [
@@ -6568,7 +6568,7 @@
               "slotNumber": 3,
               "label": "Train 3",
               "description": "ARENA Ch 1.5+: Superposition, toy models, SAE exercises",
-              "isBookSlot": false,
+              "isAdditionalContent": false,
               "estimatedMinutes": 120,
               "tags": [],
               "links": [
@@ -6590,7 +6590,7 @@
               "slotNumber": 4,
               "label": "Train 4",
               "description": "**Book §6.4 re-read:** Superposition, polysemanticity, capacity constraints — now with full mathematical and empirical context",
-              "isBookSlot": true,
+              "isAdditionalContent": true,
               "estimatedMinutes": 120,
               "tags": [],
               "links": [],
@@ -6607,7 +6607,7 @@
               "slotNumber": 1,
               "label": "Evening 1",
               "description": "ARENA exercises: implement a toy model of superposition",
-              "isBookSlot": false,
+              "isAdditionalContent": false,
               "estimatedMinutes": 90,
               "tags": [],
               "links": [
@@ -6637,7 +6637,7 @@
               "slotNumber": 2,
               "label": "Evening 2",
               "description": "ARENA exercises: train a sparse autoencoder on model activations",
-              "isBookSlot": false,
+              "isAdditionalContent": false,
               "estimatedMinutes": 90,
               "tags": [],
               "links": [
@@ -6667,7 +6667,7 @@
               "slotNumber": 3,
               "label": "Evening 3",
               "description": "**Final checkpoint.** Write a 2-page document connecting everything: how linear algebra (SVD, projections, change of basis), probability (Bayes, conditional expectation, KL divergence), statistics (MLE, hypothesis testing, probing), and information geometry (Fisher metric, compression, superposition) all come together in mechanistic interpretability",
-              "isBookSlot": true,
+              "isAdditionalContent": true,
               "estimatedMinutes": 90,
               "tags": [
                 "checkpoint"

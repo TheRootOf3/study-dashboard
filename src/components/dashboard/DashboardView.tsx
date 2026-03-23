@@ -11,10 +11,10 @@ import { SlotCard } from '../weekly/SlotCard';
 const DAY_NAMES = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
 
 export function DashboardView() {
-  const { state, studyPlan, dayMapping } = useProgress();
+  const { state, projectSlug, actualStartDate, studyPlan, dayMapping } = useProgress();
   const { weekNumber, week, phase } = useCurrentWeek();
   const overall = getOverallProgress(studyPlan.phases, state.completions);
-  const timeProgress = getTimeProgress(state.settings.actual_start_date);
+  const timeProgress = getTimeProgress(actualStartDate);
   const streak = getStreakDays(state.completions, studyPlan.phases);
   const isBehind = timeProgress > overall.percent + 5;
 
@@ -90,7 +90,7 @@ export function DashboardView() {
                 <h3 className="text-sm font-semibold uppercase tracking-wider flex items-center gap-2" style={{ color: 'var(--color-accent-warning)' }}>
                   <AlertCircle size={14} /> Unresolved ({state.confusionLog.filter(e => !e.resolved).length})
                 </h3>
-                <Link to="/confusion-log" className="text-xs hover:underline" style={{ color: 'var(--color-accent-primary)' }}>
+                <Link to={`/p/${projectSlug}/confusion-log`} className="text-xs hover:underline" style={{ color: 'var(--color-accent-primary)' }}>
                   View all <ArrowRight size={12} className="inline" />
                 </Link>
               </div>
@@ -141,7 +141,7 @@ export function DashboardView() {
                 <div className="text-sm font-semibold" style={{ color: 'var(--color-text-primary)' }}>
                   This Week
                 </div>
-                <Link to={`/week/${weekNumber}`} className="text-xs hover:underline" style={{ color: 'var(--color-accent-primary)' }}>
+                <Link to={`/p/${projectSlug}/week/${weekNumber}`} className="text-xs hover:underline" style={{ color: 'var(--color-accent-primary)' }}>
                   View <ArrowRight size={12} className="inline" />
                 </Link>
               </div>

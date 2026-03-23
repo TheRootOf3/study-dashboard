@@ -1,97 +1,25 @@
 import { useState } from 'react';
-import { Download, Upload, RotateCcw, Plus, Trash2, GripVertical } from 'lucide-react';
-import { useProgress } from '../../context/ProgressContext';
-import { backupApi } from '../../api/client';
-import { DEFAULT_SCHEDULE_CONFIG, SCHEDULE_PRESETS, nextCustomSlotKey, type ScheduleConfig, type SessionType, type SlotDefinition } from '../../utils/scheduleConfig';
-import { AVAILABLE_ICONS, getIcon } from '../../utils/iconMap';
-
-const DAYS = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'];
+import { Download, Upload, Sun, Moon, Trash2, Plus, Pencil, Check, X, Copy, ChevronDown, ChevronUp } from 'lucide-react';
+import { useProjects } from '../../context/ProjectsContext';
+import { backupApi, studyPlanApi, projectsApi } from '../../api/client';
+import { ColorPicker } from '../shared/ColorPicker';
+import { StudyPlanUploader } from '../shared/StudyPlanUploader';
+import { LLM_PROMPT } from '../../utils/llmPrompt';
 
 export function SettingsView() {
-  const { state, scheduleConfig, updateSettings, refreshData } = useProgress();
-  const [startDate, setStartDate] = useState(state.settings.actual_start_date || '2026-03-24');
-  const [cfg, setCfg] = useState<ScheduleConfig>(structuredClone(scheduleConfig));
-  const [showReset, setShowReset] = useState(false);
+  const { projects, globalTheme, setGlobalTheme, createProject, updateProject, deleteProject, refreshProjects } = useProjects();
   const [message, setMessage] = useState('');
+  const [newProjectName, setNewProjectName] = useState('');
+  const [editingId, setEditingId] = useState<string | null>(null);
+  const [editName, setEditName] = useState('');
+  const [colorPickerId, setColorPickerId] = useState<string | null>(null);
+  const [uploadingForProjectId, setUploadingForProjectId] = useState<string | null>(null);
+  const [promptExpanded, setPromptExpanded] = useState(false);
+  const [copied, setCopied] = useState(false);
 
   const flash = (msg: string) => { setMessage(msg); setTimeout(() => setMessage(''), 2000); };
 
-  // --- Persistence ---
-  const saveSchedule = async () => {
-    await updateSettings({ schedule_config: JSON.stringify(cfg) });
-    flash('Schedule saved');
-  };
-  const saveStartDate = async () => {
-    await updateSettings({ actual_start_date: startDate });
-    flash('Start date saved');
-  };
-
-  // --- Session type CRUD ---
-  const addType = () => {
-    setCfg(prev => ({
-      ...prev,
-      sessionTypes: [...prev.sessionTypes, { id: `type-${Date.now()}`, label: 'New Type', icon: 'circle' }],
-    }));
-  };
-  const removeType = (id: string) => {
-    setCfg(prev => {
-      const next = structuredClone(prev);
-      next.sessionTypes = next.sessionTypes.filter(t => t.id !== id);
-      const fallback = next.sessionTypes[0]?.id || '';
-      for (const s of next.slots) { if (s.typeId === id) s.typeId = fallback; }
-      return next;
-    });
-  };
-  const editType = (id: string, field: keyof SessionType, value: string) => {
-    setCfg(prev => {
-      const next = structuredClone(prev);
-      const t = next.sessionTypes.find(t => t.id === id);
-      if (t) t[field] = value;
-      return next;
-    });
-  };
-
-  // --- Slot CRUD ---
-  const addSlot = () => {
-    setCfg(prev => {
-      const next = structuredClone(prev);
-      const key = nextCustomSlotKey(next);
-      const typeId = next.sessionTypes[0]?.id || '';
-      next.slots.push({ key, typeId, label: `Custom ${next.slots.length + 1}`, isCustom: true });
-      return next;
-    });
-  };
-  const removeSlot = (key: string) => {
-    setCfg(prev => {
-      const next = structuredClone(prev);
-      next.slots = next.slots.filter(s => s.key !== key);
-      for (const day of DAYS) {
-        next.dayMapping[day] = (next.dayMapping[day] || []).filter(k => k !== key);
-      }
-      return next;
-    });
-  };
-  const editSlot = (key: string, field: keyof SlotDefinition, value: string) => {
-    setCfg(prev => {
-      const next = structuredClone(prev);
-      const s = next.slots.find(s => s.key === key);
-      if (s) {
-        if (field === 'typeId') s.typeId = value;
-        else if (field === 'label') s.label = value;
-      }
-      return next;
-    });
-  };
-
-  // --- Day mapping ---
-  const toggleDaySlot = (day: string, key: string) => {
-    setCfg(prev => {
-      const next = structuredClone(prev);
-      const arr = next.dayMapping[day] || [];
-      next.dayMapping[day] = arr.includes(key) ? arr.filter(k => k !== key) : [...arr, key];
-      return next;
-    });
-  };
+  const isDark = globalTheme === 'dark';
 
   // --- Data ---
   const handleExport = async () => {
@@ -108,13 +36,42 @@ export function SettingsView() {
     input.onchange = async (e) => {
       const file = (e.target as HTMLInputElement).files?.[0]; if (!file) return;
       await backupApi.importData(JSON.parse(await file.text()));
-      await refreshData(); flash('Progress imported');
+      await refreshProjects();
+      flash('Progress imported');
     };
     input.click();
   };
-  const handleReset = async () => {
-    await backupApi.importData({ completions: [], confusion_log: [], week_notes: [], settings: [], subtask_completions: [] });
-    await refreshData(); setShowReset(false); flash('All progress reset');
+  const handleCreateProject = async () => {
+    const name = newProjectName.trim();
+    if (!name) return;
+    const project = await createProject(name);
+    setNewProjectName('');
+    setUploadingForProjectId(project.id);
+    flash('Project created — upload a study plan or skip');
+  };
+
+  const handleStudyPlanUpload = async (projectId: string, data: Record<string, unknown>) => {
+    await studyPlanApi(projectId).update(data);
+    if (data.startDate && typeof data.startDate === 'string') {
+      await projectsApi.update(projectId, { actual_start_date: data.startDate });
+      await refreshProjects();
+    }
+    setUploadingForProjectId(null);
+    flash('Study plan uploaded');
+  };
+
+  const handleDeleteProject = async (id: string) => {
+    if (!confirm('Delete this project and all its data?')) return;
+    await deleteProject(id);
+    flash('Project deleted');
+  };
+
+  const handleRenameProject = async (id: string) => {
+    const name = editName.trim();
+    if (!name) return;
+    await updateProject(id, { name });
+    setEditingId(null);
+    flash('Project renamed');
   };
 
   return (
@@ -128,134 +85,141 @@ export function SettingsView() {
       )}
 
       <div className="space-y-6">
-        {/* Start date */}
-        <Section title="Start Date" subtitle="When did you start? This shifts all week calculations.">
-          <div className="flex gap-2">
-            <input type="date" value={startDate} onChange={e => setStartDate(e.target.value)}
-              className="px-3 py-2 rounded-md border text-sm"
-              style={{ borderColor: 'var(--color-border)', backgroundColor: 'var(--color-bg-primary)', color: 'var(--color-text-primary)' }} />
-            <button onClick={saveStartDate} className="px-3 py-2 rounded-md text-sm cursor-pointer"
-              style={{ backgroundColor: 'var(--color-accent-primary)', color: 'white' }}>Save</button>
-          </div>
+        {/* Theme */}
+        <Section title="Theme">
+          <button
+            onClick={() => setGlobalTheme(isDark ? 'light' : 'dark')}
+            className="flex items-center gap-2 px-4 py-2 rounded-lg text-sm cursor-pointer"
+            style={{ backgroundColor: 'var(--color-bg-tertiary)', color: 'var(--color-text-primary)' }}
+          >
+            {isDark ? <Sun size={16} /> : <Moon size={16} />}
+            {isDark ? 'Switch to light mode' : 'Switch to dark mode'}
+          </button>
         </Section>
 
-        {/* Schedule config */}
-        <Section title="Learning Schedule" subtitle="Define session types, content slots, and your weekly rhythm.">
-
-          {/* Presets */}
-          <div className="mb-5">
-            <Label>Quick presets</Label>
-            <div className="flex flex-wrap gap-2">
-              {Object.entries(SCHEDULE_PRESETS).map(([id, p]) => (
-                <button key={id} onClick={() => setCfg(structuredClone(p.config))} title={p.description}
-                  className="text-xs px-3 py-1.5 rounded-lg cursor-pointer"
-                  style={{ backgroundColor: 'var(--color-bg-tertiary)', color: 'var(--color-text-secondary)' }}>
-                  {p.name}
-                </button>
-              ))}
-            </div>
-          </div>
-
-          {/* Session types */}
-          <div className="mb-5">
-            <Label>Session types</Label>
-            <div className="space-y-2">
-              {cfg.sessionTypes.map(st => {
-                const Ic = getIcon(st.icon);
-                return (
-                  <div key={st.id} className="flex items-center gap-2 p-2 rounded-lg" style={{ backgroundColor: 'var(--color-bg-primary)' }}>
-                    <select value={st.icon} onChange={e => editType(st.id, 'icon', e.target.value)}
-                      className="px-2 py-1 rounded border text-xs cursor-pointer"
-                      style={{ borderColor: 'var(--color-border)', backgroundColor: 'var(--color-bg-secondary)', color: 'var(--color-text-primary)' }}>
-                      {AVAILABLE_ICONS.map(i => <option key={i} value={i}>{i}</option>)}
-                    </select>
-                    <Ic size={18} style={{ color: 'var(--color-text-secondary)' }} />
-                    <input value={st.label} onChange={e => editType(st.id, 'label', e.target.value)}
-                      className="flex-1 px-2 py-1 rounded border text-sm"
-                      style={{ borderColor: 'var(--color-border)', backgroundColor: 'var(--color-bg-secondary)', color: 'var(--color-text-primary)' }} />
-                    {cfg.sessionTypes.length > 1 && (
-                      <button onClick={() => removeType(st.id)} className="p-1 rounded cursor-pointer hover:opacity-70"
-                        style={{ color: 'var(--color-text-tertiary)' }}><Trash2 size={14} /></button>
-                    )}
-                  </div>
-                );
-              })}
-              <button onClick={addType} className="flex items-center gap-1 text-xs px-3 py-1.5 rounded-lg cursor-pointer"
-                style={{ backgroundColor: 'var(--color-bg-tertiary)', color: 'var(--color-text-secondary)' }}>
-                <Plus size={14} /> Add type
-              </button>
-            </div>
-          </div>
-
-          {/* Weekly slots */}
-          <div className="mb-5">
-            <Label>Weekly content slots</Label>
-            <p className="text-xs mb-2" style={{ color: 'var(--color-text-tertiary)' }}>
-              Each slot maps to one session of study content per week. Study plan slots have fixed content; custom slots are free-form.
-            </p>
-            <div className="space-y-1.5">
-              {cfg.slots.map((s, i) => (
-                <div key={s.key} className="flex items-center gap-2">
-                  <GripVertical size={14} style={{ color: 'var(--color-text-tertiary)', opacity: 0.4 }} />
-                  <span className="text-xs w-4 text-center font-mono" style={{ color: 'var(--color-text-tertiary)' }}>{i + 1}</span>
-                  <select value={s.typeId} onChange={e => editSlot(s.key, 'typeId', e.target.value)}
-                    className="px-2 py-1 rounded border text-xs cursor-pointer w-28"
-                    style={{ borderColor: 'var(--color-border)', backgroundColor: 'var(--color-bg-primary)', color: 'var(--color-text-primary)' }}>
-                    {cfg.sessionTypes.map(t => <option key={t.id} value={t.id}>{t.label}</option>)}
-                  </select>
-                  <input value={s.label} onChange={e => editSlot(s.key, 'label', e.target.value)}
-                    className="flex-1 px-2 py-1 rounded border text-sm"
-                    style={{ borderColor: 'var(--color-border)', backgroundColor: 'var(--color-bg-primary)', color: 'var(--color-text-primary)' }} />
-                  {s.isCustom ? (
-                    <button onClick={() => removeSlot(s.key)} className="p-1 rounded cursor-pointer hover:opacity-70"
-                      style={{ color: 'var(--color-text-tertiary)' }}><Trash2 size={14} /></button>
+        {/* Projects */}
+        <Section title="Projects" subtitle="Manage your study projects.">
+          <div className="space-y-2 mb-3">
+            {projects.map(p => (
+              <div key={p.id} className="px-3 py-2 rounded-lg" style={{ backgroundColor: 'var(--color-bg-primary)' }}>
+                <div className="flex items-center gap-2">
+                  <button
+                    type="button"
+                    className="w-3 h-3 rounded-full shrink-0 cursor-pointer transition-transform hover:scale-125"
+                    style={{ backgroundColor: p.color || 'var(--color-accent-primary)' }}
+                    onClick={() => setColorPickerId(colorPickerId === p.id ? null : p.id)}
+                    title="Change project color"
+                  />
+                  {editingId === p.id ? (
+                    <>
+                      <input
+                        value={editName}
+                        onChange={e => setEditName(e.target.value)}
+                        className="flex-1 px-2 py-1 rounded border text-sm"
+                        style={{ borderColor: 'var(--color-border)', backgroundColor: 'var(--color-bg-secondary)', color: 'var(--color-text-primary)' }}
+                        onKeyDown={e => { if (e.key === 'Enter') handleRenameProject(p.id); if (e.key === 'Escape') setEditingId(null); }}
+                        autoFocus
+                      />
+                      <button onClick={() => handleRenameProject(p.id)} className="p-1 rounded cursor-pointer" style={{ color: 'var(--color-accent-secondary)' }}><Check size={14} /></button>
+                      <button onClick={() => setEditingId(null)} className="p-1 rounded cursor-pointer" style={{ color: 'var(--color-text-tertiary)' }}><X size={14} /></button>
+                    </>
                   ) : (
-                    <span className="text-xs px-1.5 py-0.5 rounded" style={{ backgroundColor: 'var(--color-bg-tertiary)', color: 'var(--color-text-tertiary)' }}>plan</span>
+                    <>
+                      <span className="flex-1 text-sm" style={{ color: 'var(--color-text-primary)' }}>{p.name}</span>
+                      <span className="text-xs" style={{ color: 'var(--color-text-tertiary)' }}>{p.slug}</span>
+                      <button onClick={() => { setEditingId(p.id); setEditName(p.name); }} className="p-1 rounded cursor-pointer hover:opacity-70" style={{ color: 'var(--color-text-tertiary)' }}><Pencil size={14} /></button>
+                      <button onClick={() => handleDeleteProject(p.id)} className="p-1 rounded cursor-pointer hover:opacity-70" style={{ color: 'var(--color-text-tertiary)' }}><Trash2 size={14} /></button>
+                    </>
                   )}
                 </div>
-              ))}
-            </div>
-            <button onClick={addSlot} className="flex items-center gap-1 text-xs px-3 py-1.5 rounded-lg cursor-pointer mt-2"
-              style={{ backgroundColor: 'var(--color-bg-tertiary)', color: 'var(--color-text-secondary)' }}>
-              <Plus size={14} /> Add slot
-            </button>
-          </div>
-
-          {/* Day mapping */}
-          <div className="mb-4">
-            <Label>Weekly schedule</Label>
-            <div className="space-y-2">
-              {DAYS.map(day => (
-                <div key={day} className="flex items-center gap-3">
-                  <span className="text-sm font-semibold capitalize w-12" style={{ color: 'var(--color-text-primary)' }}>
-                    {day.slice(0, 3)}
-                  </span>
-                  <div className="flex flex-wrap gap-1">
-                    {cfg.slots.map(s => {
-                      const active = cfg.dayMapping[day]?.includes(s.key);
-                      return (
-                        <button key={s.key} onClick={() => toggleDaySlot(day, s.key)}
-                          className="text-xs px-2 py-1 rounded cursor-pointer transition-colors"
-                          style={{
-                            backgroundColor: active ? 'var(--color-accent-primary)' : 'var(--color-bg-tertiary)',
-                            color: active ? 'white' : 'var(--color-text-tertiary)',
-                          }}>
-                          {s.label}
-                        </button>
-                      );
-                    })}
+                {colorPickerId === p.id && (
+                  <div className="mt-2 ml-5">
+                    <ColorPicker
+                      value={p.color || '#6366f1'}
+                      onChange={async (color) => {
+                        await updateProject(p.id, { color });
+                        setColorPickerId(null);
+                        flash('Project color updated');
+                      }}
+                    />
                   </div>
-                </div>
-              ))}
-            </div>
-          </div>
+                )}
+                {uploadingForProjectId === p.id && (
+                  <div className="mt-3 pt-3" style={{ borderTop: '1px solid var(--color-border)' }}>
+                    <p className="text-xs font-medium mb-2" style={{ color: 'var(--color-text-secondary)' }}>
+                      Upload a study plan for <strong>{p.name}</strong>
+                    </p>
+                    <p className="text-xs mb-2" style={{ color: 'var(--color-text-tertiary)' }}>
+                      Use an LLM to generate a plan, then upload the JSON.
+                    </p>
 
+                    {/* LLM Prompt */}
+                    <div className="mb-3">
+                      <div className="flex items-center gap-2 mb-1">
+                        <button
+                          onClick={() => setPromptExpanded(!promptExpanded)}
+                          className="flex items-center gap-1 text-xs cursor-pointer hover:opacity-80"
+                          style={{ color: 'var(--color-accent-primary)' }}
+                        >
+                          {promptExpanded ? <ChevronUp size={12} /> : <ChevronDown size={12} />}
+                          {promptExpanded ? 'Hide prompt' : 'Show LLM prompt'}
+                        </button>
+                        <button
+                          onClick={async () => {
+                            try { await navigator.clipboard.writeText(LLM_PROMPT); } catch { /* fallback */ }
+                            setCopied(true);
+                            setTimeout(() => setCopied(false), 2000);
+                          }}
+                          className="flex items-center gap-1 text-xs cursor-pointer hover:opacity-80"
+                          style={{ color: copied ? 'var(--color-accent-secondary)' : 'var(--color-text-tertiary)' }}
+                        >
+                          {copied ? <Check size={12} /> : <Copy size={12} />}
+                          {copied ? 'Copied!' : 'Copy prompt'}
+                        </button>
+                      </div>
+                      {promptExpanded && (
+                        <pre
+                          className="text-xs leading-relaxed p-3 rounded-lg overflow-x-auto max-h-48 overflow-y-auto"
+                          style={{
+                            fontFamily: 'var(--font-mono)',
+                            backgroundColor: 'var(--color-bg-primary)',
+                            color: 'var(--color-text-tertiary)',
+                            whiteSpace: 'pre-wrap',
+                            wordBreak: 'break-word',
+                            border: '1px solid var(--color-border)',
+                          }}
+                        >
+                          {LLM_PROMPT}
+                        </pre>
+                      )}
+                    </div>
+
+                    <StudyPlanUploader
+                      onUpload={(data) => handleStudyPlanUpload(p.id, data)}
+                      onCancel={() => setUploadingForProjectId(null)}
+                      cancelLabel="Skip"
+                    />
+                  </div>
+                )}
+              </div>
+            ))}
+          </div>
           <div className="flex gap-2">
-            <button onClick={saveSchedule} className="text-sm px-3 py-1.5 rounded cursor-pointer"
-              style={{ backgroundColor: 'var(--color-accent-primary)', color: 'white' }}>Save Schedule</button>
-            <button onClick={() => setCfg(structuredClone(DEFAULT_SCHEDULE_CONFIG))}
-              className="text-sm px-3 py-1.5 rounded cursor-pointer" style={{ color: 'var(--color-text-tertiary)' }}>
-              Reset to Default
+            <input
+              value={newProjectName}
+              onChange={e => setNewProjectName(e.target.value)}
+              placeholder="New project name..."
+              className="flex-1 px-3 py-2 rounded-md border text-sm"
+              style={{ borderColor: 'var(--color-border)', backgroundColor: 'var(--color-bg-primary)', color: 'var(--color-text-primary)' }}
+              onKeyDown={e => { if (e.key === 'Enter') handleCreateProject(); }}
+            />
+            <button
+              onClick={handleCreateProject}
+              disabled={!newProjectName.trim()}
+              className="flex items-center gap-1 px-3 py-2 rounded-md text-sm cursor-pointer disabled:opacity-40"
+              style={{ backgroundColor: 'var(--color-accent-primary)', color: 'white' }}
+            >
+              <Plus size={14} /> Add
             </button>
           </div>
         </Section>
@@ -274,25 +238,6 @@ export function SettingsView() {
           </div>
         </Section>
 
-        {/* Reset */}
-        <div className="rounded-lg border p-4" style={{ borderColor: 'var(--color-accent-primary)', backgroundColor: 'var(--color-bg-secondary)' }}>
-          <h3 className="text-sm font-semibold mb-3" style={{ color: 'var(--color-accent-primary)' }}>Danger Zone</h3>
-          {!showReset ? (
-            <button onClick={() => setShowReset(true)}
-              className="flex items-center gap-1.5 px-3 py-2 rounded-lg text-sm cursor-pointer"
-              style={{ backgroundColor: 'color-mix(in srgb, var(--color-accent-primary) 10%, transparent)', color: 'var(--color-accent-primary)' }}>
-              <RotateCcw size={16} /> Reset All Progress
-            </button>
-          ) : (
-            <div>
-              <p className="text-sm mb-3" style={{ color: 'var(--color-accent-primary)' }}>This will permanently delete all data.</p>
-              <div className="flex gap-2">
-                <button onClick={handleReset} className="px-3 py-2 rounded-lg text-sm cursor-pointer" style={{ backgroundColor: 'var(--color-accent-primary)', color: 'white' }}>Yes, Reset</button>
-                <button onClick={() => setShowReset(false)} className="px-3 py-2 rounded-lg text-sm cursor-pointer" style={{ color: 'var(--color-text-tertiary)' }}>Cancel</button>
-              </div>
-            </div>
-          )}
-        </div>
       </div>
     </div>
   );
@@ -306,8 +251,4 @@ function Section({ title, subtitle, children }: { title: string; subtitle?: stri
       {children}
     </div>
   );
-}
-
-function Label({ children }: { children: React.ReactNode }) {
-  return <div className="text-xs font-semibold mb-2" style={{ color: 'var(--color-text-tertiary)' }}>{children}</div>;
 }

@@ -1,18 +1,31 @@
 import { Flame, Sun, Moon } from 'lucide-react';
-import { useProgress } from '../../context/ProgressContext';
-import { useCurrentWeek } from '../../hooks/useCurrentWeek';
-import { getStreakDays, getPhaseColor } from '../../utils/progressCalc';
+import { useProjects } from '../../context/ProjectsContext';
+import { useProgressOptional } from '../../context/ProgressContext';
+import { getCurrentWeekNumber } from '../../utils/dateUtils';
+import { getStreakDays, getPhaseForWeek, getPhaseColor } from '../../utils/progressCalc';
 import { SidebarToggle } from './Sidebar';
 
 export function Header({ onMenuClick }: { onMenuClick: () => void }) {
-  const { state, studyPlan, updateSettings } = useProgress();
-  const { weekNumber, phase } = useCurrentWeek();
-  const streak = getStreakDays(state.completions, studyPlan.phases);
-  const isDark = state.settings.theme === 'dark';
+  const { globalTheme, setGlobalTheme } = useProjects();
+  const progress = useProgressOptional();
+  const isDark = globalTheme === 'dark';
 
   const toggleTheme = () => {
-    updateSettings({ theme: isDark ? 'light' : 'dark' });
+    setGlobalTheme(isDark ? 'light' : 'dark');
   };
+
+  // Derive week/phase/streak when inside a ProgressProvider
+  let weekNumber: number | null = null;
+  let totalWeeks: number | null = null;
+  let phase: ReturnType<typeof getPhaseForWeek> = undefined;
+  let streak = 0;
+
+  if (progress) {
+    weekNumber = getCurrentWeekNumber(progress.actualStartDate);
+    totalWeeks = progress.studyPlan.totalWeeks;
+    phase = getPhaseForWeek(weekNumber, progress.studyPlan.phases);
+    streak = getStreakDays(progress.state.completions, progress.studyPlan.phases);
+  }
 
   return (
     <header
@@ -24,16 +37,24 @@ export function Header({ onMenuClick }: { onMenuClick: () => void }) {
     >
       <div className="flex items-center gap-3">
         <SidebarToggle onClick={onMenuClick} />
-        <div>
-          <div className="text-sm" style={{ color: 'var(--color-text-tertiary)' }}>
-            Week {weekNumber} of 31
-          </div>
-          {phase && (
-            <div className="text-sm font-semibold" style={{ color: getPhaseColor(phase.number) }}>
-              Phase {phase.number}: {phase.title}
+        {progress ? (
+          <div>
+            <div className="text-sm" style={{ color: 'var(--color-text-tertiary)' }}>
+              Week {weekNumber} of {totalWeeks}
             </div>
-          )}
-        </div>
+            {phase && (
+              <div className="text-sm font-semibold" style={{ color: getPhaseColor(phase.number) }}>
+                Phase {phase.number}: {phase.title}
+              </div>
+            )}
+          </div>
+        ) : (
+          <div>
+            <div className="text-sm font-semibold" style={{ color: 'var(--color-text-primary)' }}>
+              Study Dashboard
+            </div>
+          </div>
+        )}
       </div>
       <div className="flex items-center gap-2">
         {streak > 0 && (

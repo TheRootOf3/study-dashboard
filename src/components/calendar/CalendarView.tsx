@@ -1,26 +1,29 @@
 import { useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { format, isSameMonth } from 'date-fns';
+import { format, isSameMonth, parseISO } from 'date-fns';
 import { useProgress } from '../../context/ProgressContext';
 import { getMonthDays, getWeekNumberForDate, getDaySlotTypes, isToday } from '../../utils/dateUtils';
 import { getWeekByNumber, getPhaseForWeek, getPhaseColor } from '../../utils/progressCalc';
 
 export function CalendarView() {
-  const { state, studyPlan, dayMapping } = useProgress();
+  const { state, projectSlug, actualStartDate, studyPlan, dayMapping } = useProgress();
   const navigate = useNavigate();
 
-  // Generate months from March 2026 to October 2026
+  // Generate months spanning the study plan date range
   const months = useMemo(() => {
-    const startYear = 2026;
+    const startDate = parseISO(studyPlan.startDate || '2026-03-24');
+    const endDate = parseISO(studyPlan.endDate || '2026-10-26');
+    let cursor = new Date(startDate.getFullYear(), startDate.getMonth(), 1);
     const result = [];
-    for (let m = 2; m <= 9; m++) { // March=2 to October=9
-      result.push({ year: startYear, month: m, days: getMonthDays(startYear, m) });
+    while (cursor <= endDate) {
+      result.push({ year: cursor.getFullYear(), month: cursor.getMonth(), days: getMonthDays(cursor.getFullYear(), cursor.getMonth()) });
+      cursor = new Date(cursor.getFullYear(), cursor.getMonth() + 1, 1);
     }
     return result;
-  }, []);
+  }, [studyPlan.startDate, studyPlan.endDate]);
 
   const getDayStatus = (date: Date): 'done' | 'partial' | 'scheduled' | 'none' | 'future' => {
-    const weekNum = getWeekNumberForDate(date, state.settings.actual_start_date);
+    const weekNum = getWeekNumberForDate(date, actualStartDate);
     if (!weekNum) return 'none';
 
     const week = getWeekByNumber(weekNum, studyPlan.phases);
@@ -39,8 +42,8 @@ export function CalendarView() {
   };
 
   const handleDayClick = (date: Date) => {
-    const weekNum = getWeekNumberForDate(date, state.settings.actual_start_date);
-    if (weekNum) navigate(`/week/${weekNum}`);
+    const weekNum = getWeekNumberForDate(date, actualStartDate);
+    if (weekNum) navigate(`/p/${projectSlug}/week/${weekNum}`);
   };
 
   return (
@@ -73,7 +76,7 @@ export function CalendarView() {
                   const inMonth = isSameMonth(date, monthDate);
                   const today = isToday(date);
                   const status = inMonth ? getDayStatus(date) : 'none';
-                  const weekNum = inMonth ? getWeekNumberForDate(date, state.settings.actual_start_date) : null;
+                  const weekNum = inMonth ? getWeekNumberForDate(date, actualStartDate) : null;
                   const phase = weekNum ? getPhaseForWeek(weekNum, studyPlan.phases) : null;
                   const week = weekNum ? getWeekByNumber(weekNum, studyPlan.phases) : null;
 

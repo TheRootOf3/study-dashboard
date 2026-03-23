@@ -21,9 +21,9 @@ const STATUS_CONFIG = {
 } as const;
 
 export function TargetView() {
-  const { state, studyPlan } = useProgress();
+  const { state, actualStartDate, studyPlan } = useProgress();
   const { weekNumber } = useCurrentWeek();
-  const currentDay = getCurrentDayInPlan(state.settings.actual_start_date);
+  const currentDay = getCurrentDayInPlan(actualStartDate);
 
   const chartData = getTargetChartData(currentDay, studyPlan.phases, state.completions);
   const target = getTargetStatus(weekNumber, studyPlan.phases, state.completions);
