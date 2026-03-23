@@ -1,11 +1,12 @@
 import { useParams, Link } from 'react-router-dom';
 import { ChevronLeft, ChevronRight, AlertCircle } from 'lucide-react';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import { useProgress } from '../../context/ProgressContext';
-import { getWeekByNumber, getPhaseForWeek, getWeekProgress, getWeekHours, getPhaseColor } from '../../utils/progressCalc';
-import { formatDateRange, getCurrentWeekNumber } from '../../utils/dateUtils';
-import { groupSlotsByType, getSlotDisplay } from '../../utils/scheduleConfig';
+import { getWeekByNumber, getPhaseForWeek, getWeekProgress, getWeekHours, getPhaseColor, type Slot } from '../../utils/progressCalc';
+import { formatDateRange, getCurrentWeekNumber, getWeekStartDate } from '../../utils/dateUtils';
+import { getSlotDisplay } from '../../utils/scheduleConfig';
 import { getIcon } from '../../utils/iconMap';
+import { format, addDays } from 'date-fns';
 import { weekNotesApi } from '../../api/client';
 import { ProgressRing } from '../shared/ProgressRing';
 import { Checkbox } from '../shared/Checkbox';
@@ -24,6 +25,65 @@ export function WeekView() {
     weekNotesApi(projectId).get(`week-${weekNumber}`).then(r => setWeekNotes(r.notes || '')).catch(() => {});
   }, [weekNumber, projectId]);
 
+  // Build a slot lookup by key for this week
+  const slotByKey = useMemo(() => {
+    if (!week) return new Map<string, Slot>();
+    const map = new Map<string, Slot>();
+    for (const s of week.slots) map.set(`${s.type}-${s.slotNumber}`, s);
+    return map;
+  }, [week]);
+
+  // Group slots by day of week using the schedule config's dayMapping
+  const DAY_ORDER = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'];
+  const DAY_LABELS: Record<string, string> = { monday: 'Monday', tuesday: 'Tuesday', wednesday: 'Wednesday', thursday: 'Thursday', friday: 'Friday', saturday: 'Saturday', sunday: 'Sunday' };
+
+  const dayGroups = useMemo(() => {
+    if (!week) return [];
+    const assigned = new Set<string>();
+    const groups: { day: string; label: string; date: string; slots: Slot[]; customSlotKeys: string[] }[] = [];
+    const weekStart = getWeekStartDate(weekNumber, actualStartDate);
+
+    for (let i = 0; i < DAY_ORDER.length; i++) {
+      const day = DAY_ORDER[i];
+      const dayDate = addDays(weekStart, i);
+      const daySlotKeys = scheduleConfig.dayMapping[day] || [];
+      const daySlots: Slot[] = [];
+      const customKeys: string[] = [];
+
+      for (const key of daySlotKeys) {
+        const slot = slotByKey.get(key);
+        if (slot) {
+          daySlots.push(slot);
+          assigned.add(key);
+        } else {
+          // Check if it's a custom slot
+          const customDef = scheduleConfig.slots.find(s => s.key === key && s.isCustom);
+          if (customDef) customKeys.push(key);
+        }
+      }
+
+      if (daySlots.length > 0 || customKeys.length > 0) {
+        groups.push({ day, label: DAY_LABELS[day], date: format(dayDate, 'EEE d MMM'), slots: daySlots, customSlotKeys: customKeys });
+      }
+    }
+
+    // Unscheduled slots (in the plan but not mapped to any day)
+    const unscheduled: Slot[] = [];
+    for (const s of week.slots) {
+      const key = `${s.type}-${s.slotNumber}`;
+      if (!assigned.has(key)) unscheduled.push(s);
+    }
+    if (unscheduled.length > 0) {
+      groups.push({ day: 'unscheduled', label: 'Unscheduled', date: '', slots: unscheduled, customSlotKeys: [] });
+    }
+
+    return groups;
+  }, [week, scheduleConfig, weekNumber, actualStartDate, slotByKey]);
+
+  if (state.loading) {
+    return <div className="text-center py-12 animate-pulse" style={{ color: 'var(--color-text-tertiary)' }}>Loading...</div>;
+  }
+
   if (!week || !phase) {
     return <div className="text-center py-12" style={{ color: 'var(--color-text-tertiary)' }}>Week not found</div>;
   }
@@ -32,9 +92,6 @@ export function WeekView() {
   const hours = getWeekHours(week, state.completions);
   const phaseColor = getPhaseColor(phase.number);
   const currentWeek = getCurrentWeekNumber(actualStartDate);
-
-  // Group slots by their session type
-  const slotGroups = groupSlotsByType(week.slots, scheduleConfig);
 
   const saveNotes = async () => {
     setNotesSaving(true);
@@ -105,47 +162,30 @@ export function WeekView() {
         </div>
       )}
 
-      {/* Slots grouped by session type */}
-      {(() => {
-        // Gather custom slots grouped by type as well
-        const customSlots = scheduleConfig.slots.filter(s => s.isCustom);
-        const customByType = new Map<string, typeof customSlots>();
-        for (const cs of customSlots) {
-          if (!customByType.has(cs.typeId)) customByType.set(cs.typeId, []);
-          customByType.get(cs.typeId)!.push(cs);
-        }
-
-        // Merge all type IDs (study plan + custom)
-        const allTypeIds = new Set<string>();
-        for (const [typeId] of slotGroups) allTypeIds.add(typeId);
-        for (const [typeId] of customByType) allTypeIds.add(typeId);
-
-        return (
-          <div className={`grid gap-6 ${allTypeIds.size > 1 ? 'grid-cols-1 lg:grid-cols-2' : 'grid-cols-1'}`}>
-            {Array.from(allTypeIds).map(typeId => {
-              const sessionType = scheduleConfig.sessionTypes.find(t => t.id === typeId);
-              const studySlots = slotGroups.get(typeId) || [];
-              const customs = customByType.get(typeId) || [];
-
-              return (
-                <div key={typeId}>
-                  <h3 className="text-sm font-semibold uppercase tracking-wider mb-3" style={{ color: 'var(--color-text-tertiary)' }}>
-                    {sessionType?.label || typeId}
-                  </h3>
-                  <div className="space-y-3">
-                    {studySlots.map(slot => (
-                      <SlotCard key={slot.id} slot={slot} weekNumber={weekNumber} siblingSlotIds={studySlots.map(s => s.id)} />
-                    ))}
-                    {customs.map(cs => (
-                      <CustomSlotCard key={cs.key} slotKey={cs.key} weekNumber={weekNumber} config={scheduleConfig} />
-                    ))}
-                  </div>
-                </div>
-              );
-            })}
+      {/* Slots grouped by day of week */}
+      <div className="space-y-6">
+        {dayGroups.map(({ day, label, date, slots: daySlots, customSlotKeys }) => (
+          <div key={day}>
+            <div className="flex items-center gap-3 mb-3">
+              <h3 className="text-sm font-semibold uppercase tracking-wider" style={{ color: 'var(--color-text-primary)' }}>
+                {label}
+              </h3>
+              {date && (
+                <span className="text-xs" style={{ color: 'var(--color-text-tertiary)' }}>{date}</span>
+              )}
+              <div className="flex-1 border-b" style={{ borderColor: 'var(--color-border)' }} />
+            </div>
+            <div className="space-y-3">
+              {daySlots.map(slot => (
+                <SlotCard key={slot.id} slot={slot} weekNumber={weekNumber} siblingSlotIds={daySlots.map(s => s.id)} />
+              ))}
+              {customSlotKeys.map(key => (
+                <CustomSlotCard key={key} slotKey={key} weekNumber={weekNumber} config={scheduleConfig} />
+              ))}
+            </div>
           </div>
-        );
-      })()}
+        ))}
+      </div>
 
       {/* Week Notes */}
       <div className="mt-8 rounded-lg border p-4" style={{ borderColor: 'var(--color-border)', backgroundColor: 'var(--color-bg-secondary)' }}>

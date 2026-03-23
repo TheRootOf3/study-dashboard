@@ -6,7 +6,7 @@ import { studyPlanApi, completionsApi, type Project, type Completion } from '../
 import type { StudyPlan, Slot } from '../../utils/progressCalc';
 import { getCurrentWeekNumber, getTodaySlotTypes } from '../../utils/dateUtils';
 import { getWeekByNumber, getOverallProgress } from '../../utils/progressCalc';
-import { DEFAULT_SCHEDULE_CONFIG, getSlotDisplay, type ScheduleConfig } from '../../utils/scheduleConfig';
+import { DEFAULT_SCHEDULE_CONFIG, deriveScheduleConfigFromPlan, getSlotDisplay, type ScheduleConfig } from '../../utils/scheduleConfig';
 import { getIcon } from '../../utils/iconMap';
 import { ProgressBar } from '../shared/ProgressBar';
 import { Checkbox } from '../shared/Checkbox';
@@ -39,7 +39,9 @@ export function CombinedDashboardView() {
           for (const c of comps) compMap.set(c.slot_id, c);
           const scheduleConfig: ScheduleConfig = project.schedule_config
             ? JSON.parse(project.schedule_config)
-            : DEFAULT_SCHEDULE_CONFIG;
+            : plan
+              ? deriveScheduleConfigFromPlan((plan as unknown as StudyPlan).phases)
+              : DEFAULT_SCHEDULE_CONFIG;
           results.push({ project, plan: plan as unknown as StudyPlan | null, completions: compMap, scheduleConfig });
         } catch {
           results.push({ project, plan: null, completions: new Map(), scheduleConfig: DEFAULT_SCHEDULE_CONFIG });
@@ -93,7 +95,7 @@ export function CombinedDashboardView() {
             );
           }
 
-          const weekNumber = getCurrentWeekNumber(project.actual_start_date);
+          const weekNumber = getCurrentWeekNumber(project.actual_start_date, plan.totalWeeks as number);
           const week = getWeekByNumber(weekNumber, plan.phases);
           const overall = getOverallProgress(plan.phases, completions);
           const todaySlotTypes = getTodaySlotTypes(scheduleConfig.dayMapping);

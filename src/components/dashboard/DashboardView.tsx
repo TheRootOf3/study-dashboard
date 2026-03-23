@@ -13,6 +13,10 @@ const DAY_NAMES = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Frid
 export function DashboardView() {
   const { state, projectSlug, actualStartDate, studyPlan, dayMapping } = useProgress();
   const { weekNumber, week, phase } = useCurrentWeek();
+
+  if (state.loading) {
+    return <div className="text-center py-12 animate-pulse" style={{ color: "var(--color-text-tertiary)" }}>Loading...</div>;
+  }
   const overall = getOverallProgress(studyPlan.phases, state.completions);
   const timeProgress = getTimeProgress(actualStartDate);
   const streak = getStreakDays(state.completions, studyPlan.phases);

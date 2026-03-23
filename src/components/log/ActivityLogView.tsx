@@ -99,6 +99,10 @@ export function ActivityLogView() {
     return groups;
   }, [filtered]);
 
+  if (state.loading) {
+    return <div className="text-center py-12 animate-pulse" style={{ color: "var(--color-text-tertiary)" }}>Loading...</div>;
+  }
+
   const difficultyLabels: Record<number, { label: string; color: string }> = {
     1: { label: 'Easy', color: 'var(--color-accent-secondary)' },
     2: { label: 'Medium', color: 'var(--color-accent-warning)' },

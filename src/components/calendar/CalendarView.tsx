@@ -22,6 +22,10 @@ export function CalendarView() {
     return result;
   }, [studyPlan.startDate, studyPlan.endDate]);
 
+  if (state.loading) {
+    return <div className="text-center py-12 animate-pulse" style={{ color: "var(--color-text-tertiary)" }}>Loading...</div>;
+  }
+
   const getDayStatus = (date: Date): 'done' | 'partial' | 'scheduled' | 'none' | 'future' => {
     const weekNum = getWeekNumberForDate(date, actualStartDate);
     if (!weekNum) return 'none';

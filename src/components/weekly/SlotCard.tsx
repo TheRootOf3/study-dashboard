@@ -1,8 +1,9 @@
 import { useState, useRef, useEffect } from 'react';
-import { Flame, ChevronDown, ChevronUp, ExternalLink, Clock, Check, Pencil, ArrowUpDown } from 'lucide-react';
+import { Flame, ChevronDown, ChevronUp, ExternalLink, Clock, Check, Pencil, ArrowUpDown, CalendarDays } from 'lucide-react';
 import { Checkbox } from '../shared/Checkbox';
 import { MarkdownBlock } from '../shared/MarkdownBlock';
 import { useProgress } from '../../context/ProgressContext';
+import { useProjects } from '../../context/ProjectsContext';
 import { formatRelativeTime } from '../../utils/dateUtils';
 import { getSlotDisplay } from '../../utils/scheduleConfig';
 import { getIcon } from '../../utils/iconMap';
@@ -19,7 +20,8 @@ interface SlotCardProps {
 }
 
 export function SlotCard({ slot, compact = false, weekNumber, siblingSlotIds }: SlotCardProps) {
-  const { state, studyPlan, scheduleConfig, toggleCompletion, toggleSubtask, updateSlotNotes, updateSlotDifficulty, updateStudyPlan } = useProgress();
+  const { state, projectId, studyPlan, scheduleConfig, toggleCompletion, toggleSubtask, updateSlotNotes, updateSlotDifficulty, updateStudyPlan } = useProgress();
+  const { updateProject } = useProjects();
   const completion = state.completions.get(slot.id);
   const isCompleted = !!completion?.completed;
   const [expanded, setExpanded] = useState(!compact);
@@ -30,8 +32,10 @@ export function SlotCard({ slot, compact = false, weekNumber, siblingSlotIds }: 
   const [editingDescription, setEditingDescription] = useState(false);
   const [descriptionValue, setDescriptionValue] = useState(slot.description);
   const [moveMenuOpen, setMoveMenuOpen] = useState(false);
+  const [dayMenuOpen, setDayMenuOpen] = useState(false);
   const [saving, setSaving] = useState(false);
   const moveMenuRef = useRef<HTMLDivElement>(null);
+  const dayMenuRef = useRef<HTMLDivElement>(null);
   const descTextareaRef = useRef<HTMLTextAreaElement>(null);
 
   const canEdit = weekNumber !== undefined;
@@ -47,6 +51,18 @@ export function SlotCard({ slot, compact = false, weekNumber, siblingSlotIds }: 
     document.addEventListener('mousedown', handler);
     return () => document.removeEventListener('mousedown', handler);
   }, [moveMenuOpen]);
+
+  // Close day menu on outside click
+  useEffect(() => {
+    if (!dayMenuOpen) return;
+    const handler = (e: MouseEvent) => {
+      if (dayMenuRef.current && !dayMenuRef.current.contains(e.target as Node)) {
+        setDayMenuOpen(false);
+      }
+    };
+    document.addEventListener('mousedown', handler);
+    return () => document.removeEventListener('mousedown', handler);
+  }, [dayMenuOpen]);
 
   // Focus textarea when editing starts
   useEffect(() => {
@@ -138,6 +154,28 @@ export function SlotCard({ slot, compact = false, weekNumber, siblingSlotIds }: 
   const canMoveDown = siblingSlotIds ? siblingSlotIds.indexOf(slot.id) < siblingSlotIds.length - 1 : false;
 
   const allWeeks = canEdit ? getAllWeeks(studyPlan) : [];
+
+  // --- Move to different day ---
+  const ALL_DAYS = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'] as const;
+  const DAY_SHORT: Record<string, string> = { monday: 'Mon', tuesday: 'Tue', wednesday: 'Wed', thursday: 'Thu', friday: 'Fri', saturday: 'Sat', sunday: 'Sun' };
+  const currentDay = ALL_DAYS.find(d => scheduleConfig.dayMapping[d]?.includes(slotKey)) || null;
+
+  const handleMoveToDay = async (targetDay: string) => {
+    if (!canEdit) return;
+    setSaving(true);
+    setDayMenuOpen(false);
+    const newConfig = structuredClone(scheduleConfig);
+    // Remove from all days
+    for (const d of ALL_DAYS) {
+      newConfig.dayMapping[d] = (newConfig.dayMapping[d] || []).filter((k: string) => k !== slotKey);
+    }
+    // Add to target day (or leave unscheduled if targetDay is empty)
+    if (targetDay) {
+      newConfig.dayMapping[targetDay] = [...(newConfig.dayMapping[targetDay] || []), slotKey];
+    }
+    await updateProject(projectId, { schedule_config: JSON.stringify(newConfig) });
+    setSaving(false);
+  };
 
   const difficultyColors = ['', 'var(--color-accent-secondary)', 'var(--color-accent-warning)', 'var(--color-accent-primary)'];
   const difficultyLabels = ['', 'Easy', 'Medium', 'Hard'];
@@ -354,6 +392,51 @@ export function SlotCard({ slot, compact = false, weekNumber, siblingSlotIds }: 
                             Week {w.weekNumber}: {w.title}
                           </button>
                         ))}
+                      </div>
+                    )}
+                  </div>
+
+                  {/* Move to day */}
+                  <div className="relative" ref={dayMenuRef}>
+                    <button
+                      onClick={() => setDayMenuOpen(!dayMenuOpen)}
+                      className="inline-flex items-center gap-1 text-xs px-2 py-1 rounded hover:opacity-80 cursor-pointer transition-opacity"
+                      style={{ color: 'var(--color-text-tertiary)' }}
+                      title="Move to different day"
+                    >
+                      <CalendarDays size={12} /> {currentDay ? DAY_SHORT[currentDay] : 'No day'}
+                    </button>
+                    {dayMenuOpen && (
+                      <div
+                        className="absolute left-0 bottom-full mb-1 z-50 rounded-lg border shadow-lg overflow-y-auto"
+                        style={{
+                          backgroundColor: 'var(--color-bg-primary)',
+                          borderColor: 'var(--color-border)',
+                          minWidth: 140,
+                        }}
+                      >
+                        {ALL_DAYS.map(d => (
+                          <button
+                            key={d}
+                            disabled={d === currentDay}
+                            onClick={() => handleMoveToDay(d)}
+                            className="block w-full text-left text-xs px-3 py-1.5 hover:opacity-80 cursor-pointer transition-opacity disabled:opacity-40 disabled:cursor-default capitalize"
+                            style={{
+                              color: d === currentDay ? 'var(--color-accent-primary)' : 'var(--color-text-primary)',
+                              backgroundColor: d === currentDay ? 'var(--color-bg-tertiary)' : 'transparent',
+                            }}
+                          >
+                            {d}
+                          </button>
+                        ))}
+                        <button
+                          onClick={() => handleMoveToDay('')}
+                          disabled={!currentDay}
+                          className="block w-full text-left text-xs px-3 py-1.5 hover:opacity-80 cursor-pointer transition-opacity disabled:opacity-40 border-t capitalize"
+                          style={{ color: 'var(--color-text-tertiary)', borderColor: 'var(--color-border)' }}
+                        >
+                          Unschedule
+                        </button>
                       </div>
                     )}
                   </div>

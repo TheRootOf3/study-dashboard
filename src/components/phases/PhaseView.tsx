@@ -9,6 +9,10 @@ export function PhaseView() {
   const { state, projectSlug, studyPlan } = useProgress();
   const [expandedPhase, setExpandedPhase] = useState<string | null>(null);
 
+  if (state.loading) {
+    return <div className="text-center py-12 animate-pulse" style={{ color: "var(--color-text-tertiary)" }}>Loading...</div>;
+  }
+
   return (
     <div className="max-w-4xl mx-auto">
       <h2 className="text-2xl font-bold mb-6" style={{ color: 'var(--color-text-primary)' }}>Phases</h2>

@@ -23,6 +23,10 @@ const STATUS_CONFIG = {
 export function TargetView() {
   const { state, actualStartDate, studyPlan } = useProgress();
   const { weekNumber } = useCurrentWeek();
+
+  if (state.loading) {
+    return <div className="text-center py-12 animate-pulse" style={{ color: "var(--color-text-tertiary)" }}>Loading...</div>;
+  }
   const currentDay = getCurrentDayInPlan(actualStartDate);
 
   const chartData = getTargetChartData(currentDay, studyPlan.phases, state.completions);
